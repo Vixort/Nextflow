@@ -1,4 +1,57 @@
--- Seed Lumina Luxury Estate & Villa Architecture Multi-Page Studio Template into website_templates
+-- ====================================================================
+-- NEXTFLOW FULL SUPABASE DATABASE SETUP & SEED MIGRATION
+-- Single Master SQL File for Table Schema, Security Policies, & Templates
+-- Run this script in your Supabase SQL Editor (https://supabase.com/dashboard)
+-- ====================================================================
+
+-- 1. Enable UUID Extension
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- 2. Create website_templates Table
+CREATE TABLE IF NOT EXISTS public.website_templates (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name TEXT NOT NULL UNIQUE,
+  description TEXT,
+  category TEXT DEFAULT 'Landing Page',
+  thumbnail_url TEXT,
+  puck_data JSONB NOT NULL DEFAULT '{}'::jsonb,
+  global_css TEXT DEFAULT '',
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  created_by UUID REFERENCES public.users(id) ON DELETE SET NULL,
+  updated_by UUID REFERENCES public.users(id) ON DELETE SET NULL
+);
+
+-- 3. Row Level Security & Access Permissions
+ALTER TABLE public.website_templates ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Allow public select on website_templates" ON public.website_templates;
+DROP POLICY IF EXISTS "Allow public all on website_templates" ON public.website_templates;
+REVOKE ALL ON TABLE public.website_templates FROM anon, authenticated;
+
+-- 4. Create Index on updated_at
+CREATE INDEX IF NOT EXISTS website_templates_updated_at_idx 
+  ON public.website_templates (updated_at DESC);
+
+-- 5. Updated At Trigger Function & Trigger
+CREATE OR REPLACE FUNCTION public.update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS update_website_templates_updated_at ON public.website_templates;
+CREATE TRIGGER update_website_templates_updated_at
+  BEFORE UPDATE ON public.website_templates
+  FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+-- ====================================================================
+-- SEED DATA: LUMINA LUXURY ESTATE & VILLA ARCHITECTURE STUDIO
+-- Multi-page template with 4 pages (Home, Estates, Services, Inquiry)
+-- ====================================================================
+
 INSERT INTO public.website_templates (
   name,
   description,
