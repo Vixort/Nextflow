@@ -316,15 +316,8 @@ const puckConfig: Config<ComponentProps, RootProps> = {
     },
   },
 
-  // 10 CATEGORIES (155+ TOTAL PRESETS)
+  // 9 CATEGORIES (158+ TOTAL PRESETS)
   categories: {
-    luxuryEstates: {
-      title: '🏡 Luxury Estates & Architecture (8 Presets)',
-      components: [
-        'EstateFullBleedParallaxHero', 'EstateHeroEditorial', 'EstateImageRailEditorial', 'EstatePhilosophyQuote', 'EstateArchitecturalTimeline', 'EstateGridGallery', 'EstateSpecsDetail', 'EstateInquiryForm'
-      ],
-      defaultExpanded: true,
-    },
     navbars: {
       title: 'Header & Navbar (20 Presets)',
       components: [
@@ -333,27 +326,27 @@ const puckConfig: Config<ComponentProps, RootProps> = {
         'NavbarGradientBorder', 'NavbarMobileFriendly', 'NavbarECommerce', 'NavbarNewsMagazine', 'NavbarBrutalist',
         'NavbarFloatingGlass', 'NavbarMinimalMonochrome', 'NavbarGradientSubtle', 'NavbarCompactSearch', 'NavbarDrawerMenu'
       ],
-      defaultExpanded: false,
+      defaultExpanded: true,
     },
     heros: {
-      title: 'Hero-Section (21 Presets)',
+      title: 'Hero-Section (22 Presets)',
       components: [
         'Hero', 'HeroVideoModal', 'HeroSplitImage', 'HeroCyberpunkGlow', 'HeroMinimalSerif',
         'HeroAppMockup', 'HeroFormCapture', 'HeroGradientSphere', 'HeroNewsletterSignup', 'Hero3DCourse',
         'HeroBentoGrid', 'HeroFloatingCards', 'HeroCountdownLaunch', 'HeroEventConference', 'HeroBrutalistRaw',
         'HeroVideoBackground', 'HeroInteractiveCodeEditor', 'HeroMinimalistTypography', 'HeroProductCarousel', 'HeroIsometricIllustration',
-        'EstateHeroEditorial'
+        'EstateFullBleedParallaxHero', 'EstateHeroEditorial'
       ],
       defaultExpanded: false,
     },
     features: {
-      title: 'Features & Bento-Grid (21 Presets)',
+      title: 'Features & Bento-Grid (22 Presets)',
       components: [
         'BentoGrid', 'BentoAsymmetric4', 'BentoMetrics6', 'FeatureListSplit', 'FeatureGridCards',
         'FeatureComparisonTable', 'FeatureStepProcess', 'FeatureInteractiveTabs', 'StatsCounterGrid', 'StatsSplitChart',
         'FeatureIconRows', 'FeatureHoverCards', 'FeatureTimeline', 'FeatureTechStackGrid', 'FeatureBentoDarkVoid',
         'BentoFeatureHighlight3', 'FeatureComparisonGrid', 'FeatureInteractiveHoverGrid', 'FeatureTerminalSnippet', 'FeatureWorkflowPipeline',
-        'EstateSpecsDetail'
+        'EstateSpecsDetail', 'EstateArchitecturalTimeline'
       ],
       defaultExpanded: false,
     },
@@ -370,13 +363,14 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       defaultExpanded: false,
     },
     socialProof: {
-      title: 'Testimonials & FAQ (20 Presets)',
+      title: 'Testimonials & FAQ (21 Presets)',
       components: [
         'Testimonials', 'TestimonialGrid3', 'TestimonialSingleHero', 'TestimonialVideoCards', 'TestimonialTwitterCards',
         'FaqAccordion', 'FaqGrid2Column', 'FaqSearchable', 'FaqCategoryTabs', 'TrustSecurityBadges',
         'CommunityDiscordCard', 'WallOfLove',
         'TestimonialCarousel3D', 'TestimonialQuoteMinimal', 'TestimonialCompanyGrid', 'FaqTabbedAccordion',
-        'FaqInteractiveSearch', 'FaqCardGrid3Column', 'CommunityStatsBox', 'TrustCertificatesBadge'
+        'FaqInteractiveSearch', 'FaqCardGrid3Column', 'CommunityStatsBox', 'TrustCertificatesBadge',
+        'EstatePhilosophyQuote'
       ],
       defaultExpanded: false,
     },
