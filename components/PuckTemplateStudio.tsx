@@ -129,6 +129,9 @@ type ComponentProps = {
   EstateSpecsDetail: { title: string; subtitle: string; spec1Title: string; spec1Desc: string; spec2Title: string; spec2Desc: string; spec3Title: string; spec3Desc: string; spec4Title: string; spec4Desc: string }
   EstateInquiryForm: { title: string; subhead: string; buttonText: string; placeholder: string }
   EstateImageRailEditorial: { title: string; subtitle: string; item1Title: string; item1Loc: string; item1Price: string; item1Img: string; item2Title: string; item2Loc: string; item2Price: string; item2Img: string; item3Title: string; item3Loc: string; item3Price: string; item3Img: string; item4Title: string; item4Loc: string; item4Price: string; item4Img: string }
+  EstateFullBleedParallaxHero: { badge: string; title: string; subtitle: string; location: string; price: string; bgImg: string; ctaText: string; ctaUrl: string; secText: string; secUrl: string }
+  EstatePhilosophyQuote: { quote: string; author: string; monograph: string; bgImg: string }
+  EstateArchitecturalTimeline: { title: string; subtitle: string; step1Title: string; step1Desc: string; step2Title: string; step2Desc: string; step3Title: string; step3Desc: string; step4Title: string; step4Desc: string }
 
   // 5. TESTIMONIALS & FAQ (20 PRESETS)
   Testimonials: { title: string; quote1: string; author1: string; authorRole1: string; quote2: string; author2: string; authorRole2: string; padding: 'compact' | 'standard'; customClass: string; customCss: string }
@@ -316,9 +319,9 @@ const puckConfig: Config<ComponentProps, RootProps> = {
   // 10 CATEGORIES (155+ TOTAL PRESETS)
   categories: {
     luxuryEstates: {
-      title: '🏡 Luxury Estates & Architecture (5 Presets)',
+      title: '🏡 Luxury Estates & Architecture (8 Presets)',
       components: [
-        'EstateHeroEditorial', 'EstateImageRailEditorial', 'EstateGridGallery', 'EstateSpecsDetail', 'EstateInquiryForm'
+        'EstateFullBleedParallaxHero', 'EstateHeroEditorial', 'EstateImageRailEditorial', 'EstatePhilosophyQuote', 'EstateArchitecturalTimeline', 'EstateGridGallery', 'EstateSpecsDetail', 'EstateInquiryForm'
       ],
       defaultExpanded: true,
     },
@@ -1489,6 +1492,128 @@ const puckConfig: Config<ComponentProps, RootProps> = {
               <span className="font-sans text-[9px] font-mono tracking-widest uppercase text-[#9B805E] block mb-1">{item4Loc}</span>
               <h3 className="text-2xl font-normal text-[#111111] mb-2">{item4Title}</h3>
               <div className="font-sans text-xs font-semibold text-[#111111] border-t border-[#eaeaea] pt-3">{item4Price}</div>
+            </div>
+          </div>
+        </section>
+      )
+    },
+    EstateFullBleedParallaxHero: {
+      fields: {
+        badge: { type: 'text' },
+        title: { type: 'text' },
+        subtitle: { type: 'text' },
+        location: { type: 'text' },
+        price: { type: 'text' },
+        bgImg: { type: 'text' },
+        ctaText: { type: 'text' }, ctaUrl: { type: 'text' },
+        secText: { type: 'text' }, secUrl: { type: 'text' }
+      },
+      defaultProps: {
+        badge: 'LUMINA ARCHITECTURAL ATELIER • MONOGRAPH 2026',
+        title: 'THE ART OF STRUCTURAL PERMANENCE',
+        subtitle: 'Bespoke residential sanctuaries integrating natural Roman travertine, zero-carbon solar roofs, and panoramic alpine glass.',
+        location: 'LAKE COMO • ASPEN • KYOTO • BEL AIR',
+        price: 'PRIVATE COMMISSIONS FROM $12.5M',
+        bgImg: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&auto=format&fit=crop&q=80',
+        ctaText: 'INQUIRE PRIVATE BRIEF', ctaUrl: '/contact',
+        secText: 'EXPLORE MONOGRAPH', secUrl: '/services'
+      },
+      render: ({ badge, title, subtitle, location, price, bgImg, ctaText, ctaUrl, secText, secUrl }) => (
+        <section className="relative min-h-[85vh] flex items-center justify-center py-28 px-8 text-center text-white font-serif overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <img src={bgImg} alt={title} className="w-full h-full object-cover filter brightness-75 contrast-[1.05]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#111111] via-black/40 to-black/60" />
+          </div>
+          <div className="relative z-10 max-w-4xl mx-auto flex flex-col items-center">
+            <span className="text-[10px] font-sans font-bold uppercase tracking-[0.3em] text-[#C5A880] mb-4 bg-black/40 px-4 py-1.5 border border-[#C5A880]/30 backdrop-blur-md">{badge}</span>
+            <h1 className="text-4xl md:text-6xl font-normal leading-tight text-white mb-6 tracking-wide drop-shadow-lg">{title}</h1>
+            <p className="font-sans text-xs md:text-sm text-neutral-300 max-w-2xl font-light leading-relaxed mb-8">{subtitle}</p>
+            <div className="flex flex-wrap items-center justify-center gap-4 font-sans text-xs font-mono tracking-widest text-[#C5A880] uppercase mb-10 bg-black/50 p-3 border border-white/10">
+              <span>📍 {location}</span>
+              <span>•</span>
+              <span>💎 {price}</span>
+            </div>
+            <div className="flex flex-col sm:flex-row items-center gap-4 font-sans text-xs">
+              <a href={ctaUrl} className="px-8 py-3.5 bg-[#C5A880] text-[#111111] font-bold uppercase tracking-widest text-[10px] hover:bg-white transition-all shadow-xl">{ctaText}</a>
+              <a href={secUrl} className="px-8 py-3.5 bg-black/60 text-white font-bold uppercase tracking-widest text-[10px] border border-white/30 hover:bg-white hover:text-black transition-all backdrop-blur-md">{secText}</a>
+            </div>
+          </div>
+        </section>
+      )
+    },
+    EstatePhilosophyQuote: {
+      fields: {
+        quote: { type: 'textarea' },
+        author: { type: 'text' },
+        monograph: { type: 'text' },
+        bgImg: { type: 'text' }
+      },
+      defaultProps: {
+        quote: '"Architecture is the learned game, correct and magnificent, of forms assembled in the light. Purity is not the absence of detail, but the harmony of essential structure."',
+        author: 'LE CORBUSIER / LUMINA MONOGRAPH',
+        monograph: 'INTERNATIONAL ARCHITECTURAL ESSAY 2026',
+        bgImg: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&auto=format&fit=crop&q=80'
+      },
+      render: ({ quote, author, monograph, bgImg }) => (
+        <section className="relative py-32 px-8 text-center text-white font-serif border-y border-[#eaeaea]">
+          <div className="absolute inset-0 z-0">
+            <img src={bgImg} alt="Philosophy Background" className="w-full h-full object-cover filter brightness-[0.35] contrast-[1.1]" />
+            <div className="absolute inset-0 bg-black/50" />
+          </div>
+          <div className="relative z-10 max-w-4xl mx-auto">
+            <span className="text-[9px] font-sans font-bold uppercase tracking-[0.3em] text-[#C5A880] block mb-6">{monograph}</span>
+            <blockquote className="text-2xl md:text-3xl font-light italic leading-relaxed text-neutral-100 mb-8">{quote}</blockquote>
+            <div className="font-sans text-xs font-bold uppercase tracking-widest text-white">{author}</div>
+          </div>
+        </section>
+      )
+    },
+    EstateArchitecturalTimeline: {
+      fields: {
+        title: { type: 'text' },
+        subtitle: { type: 'text' },
+        step1Title: { type: 'text' }, step1Desc: { type: 'text' },
+        step2Title: { type: 'text' }, step2Desc: { type: 'text' },
+        step3Title: { type: 'text' }, step3Desc: { type: 'text' },
+        step4Title: { type: 'text' }, step4Desc: { type: 'text' }
+      },
+      defaultProps: {
+        title: 'Chronological Execution Monograph',
+        subtitle: 'Our 4-phase architectural process from raw land intake to structural commission handover.',
+        step1Title: '01. Land & Topography Mapping', step1Desc: 'Sub-centimeter drone LIDAR topography scanning and sun-path light analysis.',
+        step2Title: '02. Spatial Proportion & VR', step2Desc: 'Golden-ratio spatial blueprint modeling with 1:1 scale virtual reality walkthroughs.',
+        step3Title: '03. Authentic Material Quarrying', step3Desc: 'Direct quarrying of Italian travertine stone and triple-glazed panoramic acoustic glass.',
+        step4Title: '04. Off-Grid Solar Envelope', step4Desc: 'Integration of zero-carbon solar roofs, smart automation, and final atelier sign-off.'
+      },
+      render: ({ title, subtitle, step1Title, step1Desc, step2Title, step2Desc, step3Title, step3Desc, step4Title, step4Desc }) => (
+        <section className="py-24 px-8 bg-[#FBFBFA] text-[#111111] font-serif border-b border-[#eaeaea]">
+          <div className="max-w-6xl mx-auto text-left">
+            <div className="mb-16 max-w-2xl">
+              <span className="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#9B805E] block mb-2">COMMISSION PROCESS</span>
+              <h2 className="text-3xl font-normal text-[#111111]">{title}</h2>
+              <p className="font-sans text-xs text-[#787774] font-light mt-1">{subtitle}</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="p-6 bg-white border border-[#eaeaea]">
+                <span className="font-sans text-xs font-mono font-bold text-[#9B805E] block mb-3">PHASE 01</span>
+                <h3 className="text-lg font-normal text-[#111111] mb-2">{step1Title}</h3>
+                <p className="font-sans text-xs text-[#787774] font-light leading-relaxed">{step1Desc}</p>
+              </div>
+              <div className="p-6 bg-white border border-[#eaeaea]">
+                <span className="font-sans text-xs font-mono font-bold text-[#9B805E] block mb-3">PHASE 02</span>
+                <h3 className="text-lg font-normal text-[#111111] mb-2">{step2Title}</h3>
+                <p className="font-sans text-xs text-[#787774] font-light leading-relaxed">{step2Desc}</p>
+              </div>
+              <div className="p-6 bg-white border border-[#eaeaea]">
+                <span className="font-sans text-xs font-mono font-bold text-[#9B805E] block mb-3">PHASE 03</span>
+                <h3 className="text-lg font-normal text-[#111111] mb-2">{step3Title}</h3>
+                <p className="font-sans text-xs text-[#787774] font-light leading-relaxed">{step3Desc}</p>
+              </div>
+              <div className="p-6 bg-white border border-[#eaeaea]">
+                <span className="font-sans text-xs font-mono font-bold text-[#9B805E] block mb-3">PHASE 04</span>
+                <h3 className="text-lg font-normal text-[#111111] mb-2">{step4Title}</h3>
+                <p className="font-sans text-xs text-[#787774] font-light leading-relaxed">{step4Desc}</p>
+              </div>
             </div>
           </div>
         </section>
