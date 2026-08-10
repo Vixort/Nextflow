@@ -10,7 +10,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- 2. Create website_templates Table
 CREATE TABLE IF NOT EXISTS public.website_templates (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  name TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
   description TEXT,
   category TEXT DEFAULT 'Landing Page',
   thumbnail_url TEXT,
@@ -23,17 +23,21 @@ CREATE TABLE IF NOT EXISTS public.website_templates (
   updated_by UUID REFERENCES public.users(id) ON DELETE SET NULL
 );
 
--- 3. Row Level Security & Access Permissions
+-- 3. Create Unique Index on name (Fixes ERROR 42P10 for ON CONFLICT matching)
+CREATE UNIQUE INDEX IF NOT EXISTS website_templates_name_key 
+  ON public.website_templates (name);
+
+-- 4. Row Level Security & Access Permissions
 ALTER TABLE public.website_templates ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Allow public select on website_templates" ON public.website_templates;
 DROP POLICY IF EXISTS "Allow public all on website_templates" ON public.website_templates;
 REVOKE ALL ON TABLE public.website_templates FROM anon, authenticated;
 
--- 4. Create Index on updated_at
+-- 5. Create Index on updated_at
 CREATE INDEX IF NOT EXISTS website_templates_updated_at_idx 
   ON public.website_templates (updated_at DESC);
 
--- 5. Updated At Trigger Function & Trigger
+-- 6. Updated At Trigger Function & Trigger
 CREATE OR REPLACE FUNCTION public.update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
