@@ -128,6 +128,7 @@ type ComponentProps = {
   EstateGridGallery: { title: string; subtitle: string; e1Title: string; e1Loc: string; e1Price: string; e1Img: string; e2Title: string; e2Loc: string; e2Price: string; e2Img: string; e3Title: string; e3Loc: string; e3Price: string; e3Img: string }
   EstateSpecsDetail: { title: string; subtitle: string; spec1Title: string; spec1Desc: string; spec2Title: string; spec2Desc: string; spec3Title: string; spec3Desc: string; spec4Title: string; spec4Desc: string }
   EstateInquiryForm: { title: string; subhead: string; buttonText: string; placeholder: string }
+  EstateImageRailEditorial: { title: string; subtitle: string; item1Title: string; item1Loc: string; item1Price: string; item1Img: string; item2Title: string; item2Loc: string; item2Price: string; item2Img: string; item3Title: string; item3Loc: string; item3Price: string; item3Img: string; item4Title: string; item4Loc: string; item4Price: string; item4Img: string }
 
   // 5. TESTIMONIALS & FAQ (20 PRESETS)
   Testimonials: { title: string; quote1: string; author1: string; authorRole1: string; quote2: string; author2: string; authorRole2: string; padding: 'compact' | 'standard'; customClass: string; customCss: string }
@@ -1411,6 +1412,72 @@ const puckConfig: Config<ComponentProps, RootProps> = {
             <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto font-sans text-xs">
               <input type="email" readOnly placeholder={placeholder} className="flex-1 px-4 py-3 bg-[#111111] border border-neutral-700 text-white placeholder:text-neutral-500 focus:outline-none" />
               <button className="px-6 py-3 bg-[#C5A880] text-[#111111] font-bold uppercase tracking-wider text-[10px] hover:bg-[#b59870] transition-all">{buttonText}</button>
+            </div>
+          </div>
+        </section>
+      )
+    },
+    EstateImageRailEditorial: {
+      fields: {
+        title: { type: 'text' },
+        subtitle: { type: 'text' },
+        item1Title: { type: 'text' }, item1Loc: { type: 'text' }, item1Price: { type: 'text' }, item1Img: { type: 'text' },
+        item2Title: { type: 'text' }, item2Loc: { type: 'text' }, item2Price: { type: 'text' }, item2Img: { type: 'text' },
+        item3Title: { type: 'text' }, item3Loc: { type: 'text' }, item3Price: { type: 'text' }, item3Img: { type: 'text' },
+        item4Title: { type: 'text' }, item4Loc: { type: 'text' }, item4Price: { type: 'text' }, item4Img: { type: 'text' }
+      },
+      defaultProps: {
+        title: 'Selected Atelier Masterworks',
+        subtitle: 'Horizontal architectural photo monograph. Scroll to explore active estate commissions.',
+        item1Title: 'Villa Aura Glass Sanctuary', item1Loc: '01 // LAKE COMO, ITALY', item1Price: '€14,500,000', item1Img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&auto=format&fit=crop&q=80',
+        item2Title: 'Obsidian Alpine Pavilion', item2Loc: '02 // ASPEN, COLORADO', item2Price: '$18,500,000', item2Img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&auto=format&fit=crop&q=80',
+        item3Title: 'Kyoto Zen Sanctuary', item3Loc: '03 // KYOTO, JAPAN', item3Price: '$12,000,000', item3Img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&auto=format&fit=crop&q=80',
+        item4Title: 'Bel Air Horizon Residence', item4Loc: '04 // LOS ANGELES, CA', item4Price: '$24,000,000', item4Img: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=1200&auto=format&fit=crop&q=80'
+      },
+      render: ({ title, subtitle, item1Title, item1Loc, item1Price, item1Img, item2Title, item2Loc, item2Price, item2Img, item3Title, item3Loc, item3Price, item3Img, item4Title, item4Loc, item4Price, item4Img }) => (
+        <section className="py-24 px-8 bg-[#FBFBFA] text-[#111111] font-serif border-b border-[#eaeaea] overflow-hidden">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4 text-left">
+            <div>
+              <span className="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#9B805E] block mb-2">MONOGRAPH COLLECTION</span>
+              <h2 className="text-3xl font-normal text-[#111111]">{title}</h2>
+              <p className="font-sans text-xs text-[#787774] font-light mt-1">{subtitle}</p>
+            </div>
+            <div className="font-sans text-[10px] font-mono tracking-widest text-[#9B805E] uppercase flex items-center gap-2">
+              <span>SCROLL HORIZONTALLY</span> <span className="text-base">→</span>
+            </div>
+          </div>
+          <div className="max-w-6xl mx-auto flex gap-8 overflow-x-auto snap-x pb-6 scrollbar-none text-left">
+            <div className="min-w-[340px] md:min-w-[480px] snap-start bg-white border border-[#eaeaea] p-4 transition-all hover:border-[#111111]">
+              <div className="relative border border-[#eaeaea] mb-4 bg-[#FBFBFA]">
+                <img src={item1Img} alt={item1Title} className="w-full aspect-[16/10] object-cover filter contrast-[1.02]" />
+              </div>
+              <span className="font-sans text-[9px] font-mono tracking-widest uppercase text-[#9B805E] block mb-1">{item1Loc}</span>
+              <h3 className="text-2xl font-normal text-[#111111] mb-2">{item1Title}</h3>
+              <div className="font-sans text-xs font-semibold text-[#111111] border-t border-[#eaeaea] pt-3">{item1Price}</div>
+            </div>
+            <div className="min-w-[340px] md:min-w-[480px] snap-start bg-white border border-[#eaeaea] p-4 transition-all hover:border-[#111111]">
+              <div className="relative border border-[#eaeaea] mb-4 bg-[#FBFBFA]">
+                <img src={item2Img} alt={item2Title} className="w-full aspect-[16/10] object-cover filter contrast-[1.02]" />
+              </div>
+              <span className="font-sans text-[9px] font-mono tracking-widest uppercase text-[#9B805E] block mb-1">{item2Loc}</span>
+              <h3 className="text-2xl font-normal text-[#111111] mb-2">{item2Title}</h3>
+              <div className="font-sans text-xs font-semibold text-[#111111] border-t border-[#eaeaea] pt-3">{item2Price}</div>
+            </div>
+            <div className="min-w-[340px] md:min-w-[480px] snap-start bg-white border border-[#eaeaea] p-4 transition-all hover:border-[#111111]">
+              <div className="relative border border-[#eaeaea] mb-4 bg-[#FBFBFA]">
+                <img src={item3Img} alt={item3Title} className="w-full aspect-[16/10] object-cover filter contrast-[1.02]" />
+              </div>
+              <span className="font-sans text-[9px] font-mono tracking-widest uppercase text-[#9B805E] block mb-1">{item3Loc}</span>
+              <h3 className="text-2xl font-normal text-[#111111] mb-2">{item3Title}</h3>
+              <div className="font-sans text-xs font-semibold text-[#111111] border-t border-[#eaeaea] pt-3">{item3Price}</div>
+            </div>
+            <div className="min-w-[340px] md:min-w-[480px] snap-start bg-white border border-[#eaeaea] p-4 transition-all hover:border-[#111111]">
+              <div className="relative border border-[#eaeaea] mb-4 bg-[#FBFBFA]">
+                <img src={item4Img} alt={item4Title} className="w-full aspect-[16/10] object-cover filter contrast-[1.02]" />
+              </div>
+              <span className="font-sans text-[9px] font-mono tracking-widest uppercase text-[#9B805E] block mb-1">{item4Loc}</span>
+              <h3 className="text-2xl font-normal text-[#111111] mb-2">{item4Title}</h3>
+              <div className="font-sans text-xs font-semibold text-[#111111] border-t border-[#eaeaea] pt-3">{item4Price}</div>
             </div>
           </div>
         </section>
