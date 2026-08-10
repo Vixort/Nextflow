@@ -1830,7 +1830,7 @@ export default function PuckTemplateStudio({
       <div className="flex-1 min-h-0 overflow-hidden relative puck-dark-wrapper bg-[#06070a]">
         {mounted ? (
           <Puck
-            key="puck-studio-canvas"
+            key={`puck-canvas-${multiPageProject.activePageId}`}
             config={puckConfig}
             data={activePageData}
             onChange={(newData) => {
