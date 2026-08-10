@@ -123,6 +123,12 @@ type ComponentProps = {
   PortfolioTestimonialCard: { title: string; quote: string; clientName: string; clientRole: string }
   PortfolioHorizontalScroll: { title: string; item1: string; item2: string; item3: string }
 
+  // LUXURY ESTATE & REAL ESTATE ATELIER PRESETS
+  EstateHeroEditorial: { location: string; title: string; subtitle: string; price: string; specs: string; heroImg: string; ctaText: string; ctaUrl: string; secText: string; secUrl: string }
+  EstateGridGallery: { title: string; subtitle: string; e1Title: string; e1Loc: string; e1Price: string; e1Img: string; e2Title: string; e2Loc: string; e2Price: string; e2Img: string; e3Title: string; e3Loc: string; e3Price: string; e3Img: string }
+  EstateSpecsDetail: { title: string; subtitle: string; spec1Title: string; spec1Desc: string; spec2Title: string; spec2Desc: string; spec3Title: string; spec3Desc: string; spec4Title: string; spec4Desc: string }
+  EstateInquiryForm: { title: string; subhead: string; buttonText: string; placeholder: string }
+
   // 5. TESTIMONIALS & FAQ (20 PRESETS)
   Testimonials: { title: string; quote1: string; author1: string; authorRole1: string; quote2: string; author2: string; authorRole2: string; padding: 'compact' | 'standard'; customClass: string; customCss: string }
   TestimonialGrid3: { title: string; q1: string; a1: string; q2: string; a2: string; q3: string; a3: string }
@@ -1247,6 +1253,166 @@ const puckConfig: Config<ComponentProps, RootProps> = {
             <div className="min-w-[300px] p-6 rounded-2xl bg-[#0f111a] border border-purple-500/30 font-bold text-xs text-purple-300">{item2}</div>
             <div className="min-w-[300px] p-6 rounded-2xl bg-[#0f111a] border border-emerald-500/30 font-bold text-xs text-emerald-300">{item3}</div>
           </div></div>
+        </section>
+      )
+    },
+
+    // LUXURY ESTATE & ARCHITECTURAL ATELIER COMPONENTS
+    EstateHeroEditorial: {
+      fields: {
+        location: { type: 'text' },
+        title: { type: 'text' },
+        subtitle: { type: 'textarea' },
+        price: { type: 'text' },
+        specs: { type: 'text' },
+        heroImg: { type: 'text' },
+        ctaText: { type: 'text' },
+        ctaUrl: { type: 'text' },
+        secText: { type: 'text' },
+        secUrl: { type: 'text' }
+      },
+      defaultProps: {
+        location: 'LAKE COMO, ITALY',
+        title: 'Villa Aura Glass Sanctuary',
+        subtitle: 'A masterpiece of contemporary architectural design, seamlessly integrating raw travertine stone, floor-to-ceiling panoramic glass, and private alpine waterfront vistas.',
+        price: '€14,500,000',
+        specs: '6 BEDS • 7 BATHS • 12,400 SQ FT • PRIVATE DOCK',
+        heroImg: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&auto=format&fit=crop&q=80',
+        ctaText: 'Inquire Private Brief',
+        ctaUrl: '/contact',
+        secText: 'View Architectural Specs',
+        secUrl: '/services'
+      },
+      render: ({ location, title, subtitle, price, specs, heroImg, ctaText, ctaUrl, secText, secUrl }) => (
+        <section className="py-20 px-8 bg-[#FBFBFA] text-[#111111] font-serif border-b border-[#eaeaea]">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-5 space-y-6 text-left">
+              <div className="flex items-center gap-3">
+                <span className="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#9B805E]">{location}</span>
+                <span className="h-[1px] w-8 bg-[#C5A880]" />
+              </div>
+              <h1 className="text-4xl md:text-5xl font-normal leading-[1.15] text-[#111111] tracking-tight">{title}</h1>
+              <p className="font-sans text-xs text-[#787774] leading-relaxed font-light">{subtitle}</p>
+              <div className="pt-2 border-t border-[#eaeaea]">
+                <div className="text-2xl font-serif font-normal text-[#111111] mb-1">{price}</div>
+                <div className="font-sans text-[10px] font-mono tracking-wider uppercase text-[#787774]">{specs}</div>
+              </div>
+              <div className="pt-4 flex flex-wrap items-center gap-4 font-sans text-xs font-medium">
+                <a href={ctaUrl || '/contact'} className="px-6 py-3 bg-[#111111] text-[#FBFBFA] hover:bg-[#333333] transition-all rounded-none uppercase tracking-widest text-[10px]">{ctaText}</a>
+                <a href={secUrl || '/services'} className="px-6 py-3 border border-[#111111] text-[#111111] hover:bg-[#111111] hover:text-white transition-all rounded-none uppercase tracking-widest text-[10px]">{secText}</a>
+              </div>
+            </div>
+            <div className="lg:col-span-7">
+              <div className="relative border border-[#eaeaea] p-2 bg-white">
+                <img src={heroImg} alt={title} className="w-full aspect-[4/3] object-cover filter contrast-[1.02]" />
+              </div>
+            </div>
+          </div>
+        </section>
+      )
+    },
+    EstateGridGallery: {
+      fields: {
+        title: { type: 'text' },
+        subtitle: { type: 'text' },
+        e1Title: { type: 'text' }, e1Loc: { type: 'text' }, e1Price: { type: 'text' }, e1Img: { type: 'text' },
+        e2Title: { type: 'text' }, e2Loc: { type: 'text' }, e2Price: { type: 'text' }, e2Img: { type: 'text' },
+        e3Title: { type: 'text' }, e3Loc: { type: 'text' }, e3Price: { type: 'text' }, e3Img: { type: 'text' }
+      },
+      defaultProps: {
+        title: 'Featured Private Estates Collection',
+        subtitle: 'Curated architectural residences crafted by Lumina Atelier.',
+        e1Title: 'Obsidian Alpine Pavilion', e1Loc: 'ASPEN, COLORADO', e1Price: '$18,500,000', e1Img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&auto=format&fit=crop&q=80',
+        e2Title: 'Kyoto Zen Sanctuary', e2Loc: 'KYOTO, JAPAN', e2Price: '$12,000,000', e2Img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&auto=format&fit=crop&q=80',
+        e3Title: 'Bel Air Horizon Residence', e3Loc: 'LOS ANGELES, CA', e3Price: '$24,000,000', e3Img: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=900&auto=format&fit=crop&q=80'
+      },
+      render: ({ title, subtitle, e1Title, e1Loc, e1Price, e1Img, e2Title, e2Loc, e2Price, e2Img, e3Title, e3Loc, e3Price, e3Img }) => (
+        <section className="py-24 px-8 bg-[#ffffff] text-[#111111] font-serif border-b border-[#eaeaea]">
+          <div className="max-w-6xl mx-auto text-left mb-16">
+            <span className="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#9B805E] block mb-2">CURATED LISTINGS</span>
+            <h2 className="text-3xl font-normal text-[#111111] mb-2">{title}</h2>
+            <p className="font-sans text-xs text-[#787774] font-light">{subtitle}</p>
+          </div>
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-[#FBFBFA] border border-[#eaeaea] p-4 text-left hover:border-[#111111] transition-all">
+              <img src={e1Img} alt={e1Title} className="w-full aspect-[3/2] object-cover mb-4" />
+              <span className="font-sans text-[9px] font-mono tracking-widest uppercase text-[#9B805E] block mb-1">{e1Loc}</span>
+              <h3 className="text-xl font-normal text-[#111111] mb-2">{e1Title}</h3>
+              <div className="font-sans text-xs font-semibold text-[#111111] border-t border-[#eaeaea] pt-3 mt-3">{e1Price}</div>
+            </div>
+            <div className="bg-[#FBFBFA] border border-[#eaeaea] p-4 text-left hover:border-[#111111] transition-all">
+              <img src={e2Img} alt={e2Title} className="w-full aspect-[3/2] object-cover mb-4" />
+              <span className="font-sans text-[9px] font-mono tracking-widest uppercase text-[#9B805E] block mb-1">{e2Loc}</span>
+              <h3 className="text-xl font-normal text-[#111111] mb-2">{e2Title}</h3>
+              <div className="font-sans text-xs font-semibold text-[#111111] border-t border-[#eaeaea] pt-3 mt-3">{e2Price}</div>
+            </div>
+            <div className="bg-[#FBFBFA] border border-[#eaeaea] p-4 text-left hover:border-[#111111] transition-all">
+              <img src={e3Img} alt={e3Title} className="w-full aspect-[3/2] object-cover mb-4" />
+              <span className="font-sans text-[9px] font-mono tracking-widest uppercase text-[#9B805E] block mb-1">{e3Loc}</span>
+              <h3 className="text-xl font-normal text-[#111111] mb-2">{e3Title}</h3>
+              <div className="font-sans text-xs font-semibold text-[#111111] border-t border-[#eaeaea] pt-3 mt-3">{e3Price}</div>
+            </div>
+          </div>
+        </section>
+      )
+    },
+    EstateSpecsDetail: {
+      fields: {
+        title: { type: 'text' },
+        subtitle: { type: 'text' },
+        spec1Title: { type: 'text' }, spec1Desc: { type: 'text' },
+        spec2Title: { type: 'text' }, spec2Desc: { type: 'text' },
+        spec3Title: { type: 'text' }, spec3Desc: { type: 'text' },
+        spec4Title: { type: 'text' }, spec4Desc: { type: 'text' }
+      },
+      defaultProps: {
+        title: 'Architectural Materiality & Engineering',
+        subtitle: 'Uncompromising structural precision engineered for generations.',
+        spec1Title: 'Natural Italian Travertine', spec1Desc: 'Hand-selected Roman travertine stone slabs with precision thermal isolation.',
+        spec2Title: 'Triple-Glazed Panoramic Glass', spec2Desc: 'Floor-to-ceiling UV-protected acoustic glass panels with invisible framing.',
+        spec3Title: 'Zero-Carbon Solar Envelope', spec3Desc: 'Integrated photovoltaic roof tiles generating 100% clean off-grid power.',
+        spec4Title: 'Smart Atelier Automation', spec4Desc: 'Sub-millisecond climate, security, and ambient light automation engine.'
+      },
+      render: ({ title, subtitle, spec1Title, spec1Desc, spec2Title, spec2Desc, spec3Title, spec3Desc, spec4Title, spec4Desc }) => (
+        <section className="py-24 px-8 bg-[#FBFBFA] text-[#111111] font-serif border-b border-[#eaeaea]">
+          <div className="max-w-6xl mx-auto text-left mb-16">
+            <span className="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#9B805E] block mb-2">MATERIAL SPECIFICATIONS</span>
+            <h2 className="text-3xl font-normal text-[#111111] mb-2">{title}</h2>
+            <p className="font-sans text-xs text-[#787774] font-light">{subtitle}</p>
+          </div>
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6 text-left">
+            <div className="p-6 bg-white border border-[#eaeaea]"><strong className="text-sm font-normal text-[#111111] block mb-2">{spec1Title}</strong><p className="font-sans text-xs text-[#787774] leading-relaxed font-light">{spec1Desc}</p></div>
+            <div className="p-6 bg-white border border-[#eaeaea]"><strong className="text-sm font-normal text-[#111111] block mb-2">{spec2Title}</strong><p className="font-sans text-xs text-[#787774] leading-relaxed font-light">{spec2Desc}</p></div>
+            <div className="p-6 bg-white border border-[#eaeaea]"><strong className="text-sm font-normal text-[#111111] block mb-2">{spec3Title}</strong><p className="font-sans text-xs text-[#787774] leading-relaxed font-light">{spec3Desc}</p></div>
+            <div className="p-6 bg-white border border-[#eaeaea]"><strong className="text-sm font-normal text-[#111111] block mb-2">{spec4Title}</strong><p className="font-sans text-xs text-[#787774] leading-relaxed font-light">{spec4Desc}</p></div>
+          </div>
+        </section>
+      )
+    },
+    EstateInquiryForm: {
+      fields: {
+        title: { type: 'text' },
+        subhead: { type: 'textarea' },
+        buttonText: { type: 'text' },
+        placeholder: { type: 'text' }
+      },
+      defaultProps: {
+        title: 'Inquire for Private Estate Commissions',
+        subhead: 'Our principal architects review incoming private commission briefs weekly. Confidentiality assured.',
+        buttonText: 'Submit Commission Inquiry',
+        placeholder: 'your.name@company.com'
+      },
+      render: ({ title, subhead, buttonText, placeholder }) => (
+        <section className="py-24 px-8 bg-[#111111] text-[#FBFBFA] font-serif text-center">
+          <div className="max-w-3xl mx-auto p-12 bg-[#1A1A1A] border border-neutral-800">
+            <span className="text-[10px] font-sans font-bold uppercase tracking-[0.2em] text-[#C5A880] block mb-3">CONFIDENTIAL CONSULTATION</span>
+            <h2 className="text-3xl font-normal mb-4 text-white">{title}</h2>
+            <p className="font-sans text-xs text-neutral-400 mb-8 max-w-xl mx-auto font-light leading-relaxed">{subhead}</p>
+            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto font-sans text-xs">
+              <input type="email" readOnly placeholder={placeholder} className="flex-1 px-4 py-3 bg-[#111111] border border-neutral-700 text-white placeholder:text-neutral-500 focus:outline-none" />
+              <button className="px-6 py-3 bg-[#C5A880] text-[#111111] font-bold uppercase tracking-wider text-[10px] hover:bg-[#b59870] transition-all">{buttonText}</button>
+            </div>
+          </div>
         </section>
       )
     },

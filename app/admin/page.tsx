@@ -665,37 +665,6 @@ function TemplatesTab({ onOpenStudio }: { onOpenStudio: (tpl: Partial<WebsiteTem
     }
   }
 
-  const handleLoadLuminaWhiteTemplate = async () => {
-    setCreating(true)
-    try {
-      const res = await fetch('/api/admin/templates', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: 'Lumina Architecture Studio',
-          category: 'Architecture & Design Studio',
-          description: 'Luxury minimalist white-theme multi-page website template featuring pure white aesthetics, serif typography, 4 full pages (Home, About Us, Services, Contact), and offline ZIP export support.',
-          thumbnail_url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80',
-          puck_data: LUMINA_WHITE_STUDIO_PROJECT,
-          global_css: '/* Lumina White Theme Global CSS */ body { background-color: #ffffff; color: #0f172a; font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif; } .puck-canvas { background-color: #ffffff !important; }',
-        }),
-      })
-
-      const data = await res.json()
-      if (res.ok && data?.data?.template) {
-        await fetchTemplates()
-        onOpenStudio(data.data.template)
-      } else {
-        const errMsg = data?.details ? `${data.error}: ${typeof data.details === 'string' ? data.details : JSON.stringify(data.details)}` : (data?.error || 'Failed to create template')
-        alert(errMsg)
-      }
-    } catch (err) {
-      alert(err instanceof Error ? err.message : 'Network error')
-    } finally {
-      setCreating(false)
-    }
-  }
-
   const filtered = useMemo(() => {
     if (!search.trim()) return templates
     const q = search.toLowerCase()
@@ -710,21 +679,12 @@ function TemplatesTab({ onOpenStudio }: { onOpenStudio: (tpl: Partial<WebsiteTem
           <h1 className="text-xl font-extrabold text-white tracking-tight">Website Templates Studio</h1>
           <p className="text-xs text-slate-400 mt-0.5">Build and customize high-converting landing pages using Puck Studio visual editor.</p>
         </div>
-        <div className="flex items-center gap-3">
-          <button
-            onClick={handleLoadLuminaWhiteTemplate}
-            disabled={creating}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-white text-slate-950 hover:bg-slate-200 transition-all shadow-md cursor-pointer disabled:opacity-50"
-          >
-            <Sparkles size={15} className="text-amber-500" /> ⚡ Load Lumina White Studio (Multi-Page)
-          </button>
-          <button
-            onClick={() => setCreateModalOpen(true)}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-cyan-500 text-slate-950 hover:bg-cyan-400 transition-all shadow-md cursor-pointer"
-          >
-            <Plus size={15} /> Create Website Template
-          </button>
-        </div>
+        <button
+          onClick={() => setCreateModalOpen(true)}
+          className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-cyan-500 text-slate-950 hover:bg-cyan-400 transition-all shadow-md cursor-pointer"
+        >
+          <Plus size={15} /> Create Website Template
+        </button>
       </div>
 
       {/* Search */}

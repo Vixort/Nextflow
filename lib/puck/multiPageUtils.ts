@@ -158,7 +158,7 @@ export const DEFAULT_HOME_PAGE_DATA: Data = ensureContentIds({
   },
 })
 
-// LUMINA LUXURY WHITE MULTI-PAGE STUDIO TEMPLATE
+// LUMINA LUXURY ESTATE & VILLA ARCHITECTURE MULTI-PAGE STUDIO TEMPLATE
 export const LUMINA_WHITE_STUDIO_PROJECT: MultiPageProjectData = {
   activePageId: 'lumina-home-page',
   pages: [
@@ -169,44 +169,43 @@ export const LUMINA_WHITE_STUDIO_PROJECT: MultiPageProjectData = {
       isHome: true,
       data: ensureContentIds({
         content: [
-          { id: 'nav-lumina', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Portfolio', link1Url: '/#portfolio', link2: 'Services', link2Url: '/services', ctaText: 'Inquire', ctaUrl: '/contact' } },
-          { id: 'hero-lumina', type: 'HeroMinimalSerif', props: { badge: 'MONOGRAPH 2026', headline: 'PURITY IN ARCHITECTURAL FORM', subheadline: 'Bespoke architectural design systems engineered with mathematical precision and natural light.', ctaText: 'EXPLORE ATELIER WORK', ctaUrl: '/services' } },
-          { id: 'portfolio-lumina', type: 'PortfolioMasonryGrid', props: { title: 'Selected Atelier Works', p1Title: 'Villa Aura Glass Residence', p1Img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1000&auto=format&fit=crop&q=80', p2Title: 'Obsidian Minimalist Pavilion', p2Img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1000&auto=format&fit=crop&q=80', p3Title: 'Kyoto Zen Sanctuary', p3Img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1000&auto=format&fit=crop&q=80' } },
-          { id: 'bento-lumina', type: 'BentoAsymmetric4', props: { title: 'Architectural Philosophy & Principles', card1Title: 'Pure Light Palette', card1Desc: 'Pure white #ffffff background with high-contrast slate #0f172a typography.', card2Title: 'Sustainable Materials', card2Desc: 'Zero carbon footprint design and natural ventilation.', card3Title: 'Spatial Harmony', card3Desc: 'Proportional balance following golden ratio geometry.', card4Title: 'Sub-Millisecond Speed', card4Desc: 'Powered by Nextflow multi-page visual engine.' } },
-          { id: 'testimonial-lumina', type: 'TestimonialSingleHero', props: { quote: '"Lumina Atelier redefines modern minimalist architecture with absolute visual clarity and structural perfection."', authorName: 'Architectural Digest', authorRole: 'Issue 2026 Selection', companyLogo: 'AD' } },
-          { id: 'footer-lumina', type: 'FooterMinimalInline', props: { brandName: 'LUMINA ATELIER', copyrightText: '© 2026 Lumina Architecture Studio. All rights reserved.', link1: 'Documentation', link1Url: '/services', link2: 'Contact Atelier', link2Url: '/contact' } }
+          { id: 'nav-lumina', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Estates', link1Url: '/#estates', link2: 'Services', link2Url: '/services', ctaText: 'Inquire Brief', ctaUrl: '/contact' } },
+          { id: 'hero-lumina', type: 'EstateHeroEditorial', props: { location: 'LAKE COMO, ITALY', title: 'Villa Aura Glass Sanctuary', subtitle: 'A masterpiece of contemporary architectural design, seamlessly integrating raw travertine stone, floor-to-ceiling panoramic glass, and private alpine waterfront vistas.', price: '€14,500,000', specs: '6 BEDS • 7 BATHS • 12,400 SQ FT • PRIVATE DOCK', heroImg: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&auto=format&fit=crop&q=80', ctaText: 'Inquire Private Brief', ctaUrl: '/contact', secText: 'View Architectural Specs', secUrl: '/services' } },
+          { id: 'estates-lumina', type: 'EstateGridGallery', props: { title: 'Curated Private Estates Collection', subtitle: 'Explore active private villa commissions available for acquisition or bespoke architectural development.', e1Title: 'Obsidian Alpine Pavilion', e1Loc: 'ASPEN, COLORADO', e1Price: '$18,500,000', e1Img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&auto=format&fit=crop&q=80', e2Title: 'Kyoto Zen Sanctuary', e2Loc: 'KYOTO, JAPAN', e2Price: '$12,000,000', e2Img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&auto=format&fit=crop&q=80', e3Title: 'Bel Air Horizon Residence', e3Loc: 'LOS ANGELES, CA', e3Price: '$24,000,000', e3Img: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=900&auto=format&fit=crop&q=80' } },
+          { id: 'specs-lumina', type: 'EstateSpecsDetail', props: { title: 'Architectural Materiality & Structural Precision', subtitle: 'Every Lumina estate is built with authentic natural stone, thermal glass, and sustainable off-grid power.', spec1Title: 'Natural Italian Travertine', spec1Desc: 'Hand-selected Roman travertine stone slabs with precision thermal isolation.', spec2Title: 'Triple-Glazed Panoramic Glass', spec2Desc: 'Floor-to-ceiling UV-protected acoustic glass panels with invisible framing.', spec3Title: 'Zero-Carbon Solar Envelope', spec3Desc: 'Integrated photovoltaic roof tiles generating 100% clean off-grid power.', spec4Title: 'Smart Atelier Automation', spec4Desc: 'Sub-millisecond climate, security, and ambient light automation engine.' } },
+          { id: 'testimonial-lumina', type: 'TestimonialQuoteMinimal', props: { quote: '"Lumina Atelier redefines luxury residential architecture with absolute visual purity, structural permanence, and harmony with surrounding nature."', author: 'ARCHITECTURAL DIGEST', role: 'INTERNATIONAL MONOGRAPH REVIEW 2026' } },
+          { id: 'footer-lumina', type: 'FooterMinimalCentered', props: { brandName: 'LUMINA ARCHITECTURAL ATELIER', tagline: 'GENEVA • KYOTO • NEW YORK • MILAN', copyrightText: 'MMXXVI ALL RIGHTS RESERVED.' } }
         ] as any,
         zones: {},
         root: {
           props: {
-            title: 'Lumina Architecture Studio - Home',
-            bodyBackground: '#ffffff',
-            bodyTextColor: '#0f172a',
+            title: 'Lumina Atelier - Luxury Estate & Architecture Studio',
+            bodyBackground: '#FBFBFA',
+            bodyTextColor: '#111111',
             fontFamily: 'font-serif'
           } as any
         }
       })
     },
     {
-      id: 'lumina-about-page',
-      name: 'About Us',
+      id: 'lumina-estates-page',
+      name: 'Estates Directory',
       slug: '/about',
       isHome: false,
       data: ensureContentIds({
         content: [
-          { id: 'nav-lumina-about', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Portfolio', link1Url: '/#portfolio', link2: 'Services', link2Url: '/services', ctaText: 'Inquire', ctaUrl: '/contact' } },
-          { id: 'hero-lumina-about', type: 'HeroMinimalistTypography', props: { badge: 'STUDIO CULTURE', mainHeading: 'PHILOSOPHY & CRAFTSMANSHIP', subhead: 'Founded in 2018, Lumina is a global design collective operating at the intersection of architecture, digital form, and structural engineering.', ctaText: 'VIEW STUDIO SPECS', ctaUrl: '/services' } },
-          { id: 'manifesto-lumina-about', type: 'FeatureListSplit', props: { badge: 'OUR MANIFESTO', title: 'Form Follows Purity', description: 'We eliminate all unnecessary ornamentation to reveal the intrinsic beauty of structural materials and natural light.', feature1Title: '01. Mathematical Ratio', feature1Desc: 'Strict adherence to golden ratio spatial proportion scales.', feature2Title: '02. Material Integrity', feature2Desc: 'Authentic stone, glass, and carbon structures.', feature3Title: '03. Digital Precision', feature3Desc: 'Integrated visual WebGL and Nextflow architecture.', cardImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1000&auto=format&fit=crop&q=80' } },
-          { id: 'stats-lumina-about', type: 'StatsCounterGrid', props: { stat1Value: '15+', stat1Label: 'Years Studio Heritage', stat2Value: '240+', stat2Label: 'Global Projects Built', stat3Value: '12', stat3Label: 'International Awards', stat4Value: '100%', stat4Label: 'Client Satisfaction' } },
-          { id: 'awards-lumina-about', type: 'PortfolioAwardBadges', props: { title: 'Accolades & Global Recognition', award1: 'Red Dot Best of Best 2026', award2: 'Awwwards Site of the Year', award3: 'Mies van der Rohe Nominee' } },
-          { id: 'footer-lumina-about', type: 'FooterMinimalInline', props: { brandName: 'LUMINA ATELIER', copyrightText: '© 2026 Lumina Architecture Studio.', link1: 'Services', link1Url: '/services', link2: 'Inquire', link2Url: '/contact' } }
+          { id: 'nav-lumina-estates', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Estates', link1Url: '/#estates', link2: 'Services', link2Url: '/services', ctaText: 'Inquire Brief', ctaUrl: '/contact' } },
+          { id: 'hero-lumina-estates', type: 'HeroMinimalistTypography', props: { badge: 'PRIVATE DIRECTORY', mainHeading: 'THE ESTATES COLLECTION', subhead: 'A private portfolio of ultra-luxury residential developments, alpine retreats, and coastal sanctuaries built across 4 continents.', ctaText: 'INQUIRE ACQUISITION', ctaUrl: '/contact' } },
+          { id: 'gallery-lumina-estates', type: 'EstateGridGallery', props: { title: 'Private Villa Portfolio', subtitle: 'Detailed specifications and private tour requests.', e1Title: 'Villa Aura Glass Residence', e1Loc: 'LAKE COMO, ITALY', e1Price: '€14,500,000', e1Img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=900&auto=format&fit=crop&q=80', e2Title: 'Obsidian Alpine Pavilion', e2Loc: 'ASPEN, COLORADO', e2Price: '$18,500,000', e2Img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&auto=format&fit=crop&q=80', e3Title: 'Kyoto Zen Sanctuary', e3Loc: 'KYOTO, JAPAN', e3Price: '$12,000,000', e3Img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&auto=format&fit=crop&q=80' } },
+          { id: 'specs-lumina-estates', type: 'EstateSpecsDetail', props: { title: 'Master Atelier Specifications', subtitle: 'Engineered with sustainable materials and mathematical proportion.', spec1Title: '01. Spatial Proportion', spec1Desc: 'Proportional balance following golden ratio geometry.', spec2Title: '02. Authentic Stone', spec2Desc: 'Hand-chiselled granite and Roman travertine.', spec3Title: '03. Acoustic Isolation', spec3Desc: 'Triple acoustic insulation for complete interior tranquility.', spec4Title: '04. Solar Independence', spec4Desc: 'Integrated clean energy generation.' } },
+          { id: 'footer-lumina-estates', type: 'FooterMinimalCentered', props: { brandName: 'LUMINA ARCHITECTURAL ATELIER', tagline: 'GENEVA • KYOTO • NEW YORK • MILAN', copyrightText: 'MMXXVI ALL RIGHTS RESERVED.' } }
         ] as any,
         zones: {},
         root: {
           props: {
-            title: 'About Us | Lumina Architecture Studio',
-            bodyBackground: '#f8fafc',
-            bodyTextColor: '#0f172a',
+            title: 'Estates Collection | Lumina Atelier',
+            bodyBackground: '#ffffff',
+            bodyTextColor: '#111111',
             fontFamily: 'font-serif'
           } as any
         }
@@ -214,24 +213,23 @@ export const LUMINA_WHITE_STUDIO_PROJECT: MultiPageProjectData = {
     },
     {
       id: 'lumina-services-page',
-      name: 'Services',
+      name: 'Atelier Services',
       slug: '/services',
       isHome: false,
       data: ensureContentIds({
         content: [
-          { id: 'nav-lumina-services', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Home', link1Url: '/', link2: 'About Us', link2Url: '/about', ctaText: 'Inquire', ctaUrl: '/contact' } },
-          { id: 'hero-lumina-services', type: 'Hero', props: { badge: 'ATELIER SERVICES', title: 'Bespoke Architectural Engineering', gradientTitle: '& Interior Systems', description: 'End-to-end architectural design, 3D spatial modelling, and modern web presence integration.', primaryCta: 'Book Atelier Consultation', primaryUrl: '/contact', secondaryCta: 'View Pricing Matrix', secondaryUrl: '/services#pricing', align: 'center', themeStyle: 'glass', padding: 'standard' } },
-          { id: 'comparison-lumina-services', type: 'FeatureComparisonGrid', props: { title: 'Service Tiers & Deliverables', col1Name: 'Full Atelier Retainer', col2Name: 'Standard Concept', row1: '3D Spatial Modeling', row2: 'On-site Construction Supervision', row3: 'Custom Web & VR Presentation' } },
-          { id: 'pricing-lumina-services', type: 'PricingTable', props: { title: 'Atelier Engagement Tiers', subhead: 'Transparent retainer plans for residential and commercial developments.', proPrice: '$12,500', proFeatures: 'Concept Design, 3D Renderings, Material Specs, Web Portfolio', enterprisePrice: '$35,000', enterpriseFeatures: 'Full Architectural Blueprint, Construction Oversight, Dedicated Team, VR Walkthrough', highlightPro: true, padding: 'standard' } },
-          { id: 'calendar-lumina-services', type: 'CtaBookDemoCalendar', props: { title: 'Schedule a 1-on-1 Atelier Consultation', subhead: 'Discuss your architectural project vision with our principal partners.', calendarCta: 'Book 30-Min Consultation' } },
-          { id: 'footer-lumina-services', type: 'FooterMinimalInline', props: { brandName: 'LUMINA ATELIER', copyrightText: '© 2026 Lumina Architecture Studio.', link1: 'Home', link1Url: '/', link2: 'Contact', link2Url: '/contact' } }
+          { id: 'nav-lumina-services', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Home', link1Url: '/', link2: 'Estates', link2Url: '/about', ctaText: 'Inquire Brief', ctaUrl: '/contact' } },
+          { id: 'hero-lumina-services', type: 'HeroMinimalSerif', props: { badge: 'BESPOKE COMMISSIONS', headline: 'ARCHITECTURAL SERVICES & ATELIER FEES', subheadline: 'End-to-end master planning, structural engineering, interior architecture, and custom estate construction oversight.', ctaText: 'BOOK CONSULTATION', ctaUrl: '/contact' } },
+          { id: 'comparison-lumina-services', type: 'FeatureComparisonGrid', props: { title: 'Atelier Retainer Deliverables Matrix', col1Name: 'Full Atelier Masterplan', col2Name: 'Concept Specification', row1: '3D Spatial Modeling & VR Walkthrough', row2: 'On-site Structural Construction Supervision', row3: 'Custom Interior & Landscape Architecture' } },
+          { id: 'pricing-lumina-services', type: 'PricingTable', props: { title: 'Architectural Retainer Tiers', subhead: 'Transparent retainer structures for bespoke residential developments.', proPrice: '$25,000', proFeatures: 'Concept Masterplan, 3D Renderings, Material Specifications, Zoning Permits', enterprisePrice: '$75,000', enterpriseFeatures: 'Complete Architectural Blueprint, Structural Engineering, On-site Supervision, Custom Interior Design', highlightPro: true, padding: 'standard' } },
+          { id: 'footer-lumina-services', type: 'FooterMinimalCentered', props: { brandName: 'LUMINA ARCHITECTURAL ATELIER', tagline: 'GENEVA • KYOTO • NEW YORK • MILAN', copyrightText: 'MMXXVI ALL RIGHTS RESERVED.' } }
         ] as any,
         zones: {},
         root: {
           props: {
-            title: 'Services | Lumina Architecture Studio',
-            bodyBackground: '#ffffff',
-            bodyTextColor: '#0f172a',
+            title: 'Atelier Services & Fee Matrix | Lumina Atelier',
+            bodyBackground: '#FBFBFA',
+            bodyTextColor: '#111111',
             fontFamily: 'font-serif'
           } as any
         }
@@ -239,22 +237,22 @@ export const LUMINA_WHITE_STUDIO_PROJECT: MultiPageProjectData = {
     },
     {
       id: 'lumina-contact-page',
-      name: 'Contact',
+      name: 'Private Inquiry',
       slug: '/contact',
       isHome: false,
       data: ensureContentIds({
         content: [
-          { id: 'nav-lumina-contact', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Home', link1Url: '/', link2: 'Services', link2Url: '/services', ctaText: 'Back to Home', ctaUrl: '/' } },
-          { id: 'hero-lumina-contact', type: 'HeroFormCapture', props: { badge: 'START A PROJECT', title: 'Inquire for Atelier Commissions', description: 'Our principal architects review incoming briefs weekly. Leave your email or project summary below.', formButtonText: 'Submit Project Inquiry', formPlaceholder: 'your.name@company.com' } },
-          { id: 'faq-lumina-contact', type: 'FaqAccordion', props: { title: 'Frequently Asked Questions', subhead: 'Common questions regarding Atelier commissions and project timelines.', q1Title: 'What is the typical project timeline?', q1Answer: 'Concept design takes 4-6 weeks, followed by blueprint specification.', q2Title: 'Do you accept international projects?', q2Answer: 'Yes, Lumina operates globally across Asia, Europe, and the Americas.', q3Title: 'Can we license Nextflow web templates?', q3Answer: 'All Lumina digital presences are built using Nextflow Studio templates.' } },
-          { id: 'footer-lumina-contact', type: 'FooterMinimalInline', props: { brandName: 'LUMINA ATELIER', copyrightText: '© 2026 Lumina Architecture Studio.', link1: 'Home', link1Url: '/', link2: 'Services', link2Url: '/services' } }
+          { id: 'nav-lumina-contact', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Home', link1Url: '/', link2: 'Estates', link2Url: '/about', ctaText: 'Back to Home', ctaUrl: '/' } },
+          { id: 'inquiry-lumina-contact', type: 'EstateInquiryForm', props: { title: 'Inquire for Private Estate Commissions', subhead: 'Our principal architects review incoming private commission briefs weekly. Confidentiality assured.', buttonText: 'Submit Commission Inquiry', placeholder: 'your.name@company.com' } },
+          { id: 'faq-lumina-contact', type: 'FaqAccordion', props: { title: 'Private Commission FAQs', subhead: 'Essential details regarding project intake, timelines, and confidentiality.', q1Title: 'What is the typical timeline for a private estate commission?', q1Answer: 'Masterplan concept development takes 6-8 weeks, followed by full engineering specifications.', q2Title: 'Does Lumina handle international land acquisition and permits?', q2Answer: 'Yes, our global legal and architectural team coordinates all local municipal permits across Europe, US, and Asia.', q3Title: 'Are estate commissions strictly confidential?', q3Answer: 'All inquiries are bound by non-disclosure agreements prior to initial architectural consultation.' } },
+          { id: 'footer-lumina-contact', type: 'FooterMinimalCentered', props: { brandName: 'LUMINA ARCHITECTURAL ATELIER', tagline: 'GENEVA • KYOTO • NEW YORK • MILAN', copyrightText: 'MMXXVI ALL RIGHTS RESERVED.' } }
         ] as any,
         zones: {},
         root: {
           props: {
-            title: 'Contact Atelier | Lumina Architecture Studio',
-            bodyBackground: '#f8fafc',
-            bodyTextColor: '#0f172a',
+            title: 'Private Inquiry | Lumina Atelier',
+            bodyBackground: '#111111',
+            bodyTextColor: '#FBFBFA',
             fontFamily: 'font-serif'
           } as any
         }
