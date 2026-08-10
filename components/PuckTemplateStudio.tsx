@@ -954,9 +954,28 @@ const puckConfig: Config<ComponentProps, RootProps> = {
     },
     StatsCounterGrid: {
       fields: { stat1Value: { type: 'text' }, stat1Label: { type: 'text' }, stat2Value: { type: 'text' }, stat2Label: { type: 'text' }, stat3Value: { type: 'text' }, stat3Label: { type: 'text' }, stat4Value: { type: 'text' }, stat4Label: { type: 'text' } },
-      defaultProps: { stat1Value: '99.99%', stat1Label: 'Uptime SLA Guarantee', stat2Value: '< 1ms', stat2Label: 'Sub-millisecond Latency', stat3Value: '500K+', stat3Label: 'Active Workflows Built', stat4Value: '24/7', stat4Label: 'Automated Supabase Sync' },
+      defaultProps: { stat1Value: '15+', stat1Label: 'Years Atelier Heritage', stat2Value: '240+', stat2Label: 'Global Villas Built', stat3Value: '12', stat3Label: 'Monograph Awards', stat4Value: '100%', stat4Label: 'Carbon Neutrality' },
       render: ({ stat1Value, stat1Label, stat2Value, stat2Label, stat3Value, stat3Label, stat4Value, stat4Label }) => (
-        <section className="py-16 px-6 bg-[#0f111a] border-y border-white/10 text-white font-sans"><div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center"><div className="p-6 rounded-2xl bg-[#090a0f] border border-white/10"><div className="text-3xl font-black text-cyan-400 mb-2">{stat1Value}</div><p className="text-xs text-slate-400">{stat1Label}</p></div><div className="p-6 rounded-2xl bg-[#090a0f] border border-white/10"><div className="text-3xl font-black text-sky-400 mb-2">{stat2Value}</div><p className="text-xs text-slate-400">{stat2Label}</p></div><div className="p-6 rounded-2xl bg-[#090a0f] border border-white/10"><div className="text-3xl font-black text-purple-400 mb-2">{stat3Value}</div><p className="text-xs text-slate-400">{stat3Label}</p></div><div className="p-6 rounded-2xl bg-[#090a0f] border border-white/10"><div className="text-3xl font-black text-emerald-400 mb-2">{stat4Value}</div><p className="text-xs text-slate-400">{stat4Label}</p></div></div></section>
+        <section className="py-24 px-6 bg-[#111111] border-y border-zinc-800 text-[#FBFBFA]">
+          <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div className="p-8 rounded-none bg-zinc-900/40 border border-zinc-800 flex flex-col items-center justify-center transition-colors hover:border-[#C5A880]/50">
+              <div className="text-4xl md:text-5xl font-light font-serif text-[#FBFBFA] tracking-tight mb-3">{stat1Value}</div>
+              <p className="text-[11px] font-sans uppercase tracking-[0.2em] text-zinc-400 font-medium">{stat1Label}</p>
+            </div>
+            <div className="p-8 rounded-none bg-zinc-900/40 border border-zinc-800 flex flex-col items-center justify-center transition-colors hover:border-[#C5A880]/50">
+              <div className="text-4xl md:text-5xl font-light font-serif text-[#FBFBFA] tracking-tight mb-3">{stat2Value}</div>
+              <p className="text-[11px] font-sans uppercase tracking-[0.2em] text-zinc-400 font-medium">{stat2Label}</p>
+            </div>
+            <div className="p-8 rounded-none bg-zinc-900/40 border border-zinc-800 flex flex-col items-center justify-center transition-colors hover:border-[#C5A880]/50">
+              <div className="text-4xl md:text-5xl font-light font-serif text-[#FBFBFA] tracking-tight mb-3">{stat3Value}</div>
+              <p className="text-[11px] font-sans uppercase tracking-[0.2em] text-zinc-400 font-medium">{stat3Label}</p>
+            </div>
+            <div className="p-8 rounded-none bg-zinc-900/40 border border-zinc-800 flex flex-col items-center justify-center transition-colors hover:border-[#C5A880]/50">
+              <div className="text-4xl md:text-5xl font-light font-serif text-[#FBFBFA] tracking-tight mb-3">{stat4Value}</div>
+              <p className="text-[11px] font-sans uppercase tracking-[0.2em] text-zinc-400 font-medium">{stat4Label}</p>
+            </div>
+          </div>
+        </section>
       )
     },
     StatsSplitChart: {
@@ -1017,15 +1036,33 @@ const puckConfig: Config<ComponentProps, RootProps> = {
     },
     FeatureComparisonGrid: {
       fields: { title: { type: 'text' }, col1Name: { type: 'text' }, col2Name: { type: 'text' }, row1: { type: 'text' }, row2: { type: 'text' }, row3: { type: 'text' } },
-      defaultProps: { title: 'Feature Comparison', col1Name: 'Nextflow Engine', col2Name: 'Traditional CMS', row1: 'Multi-Page JSON Sync', row2: 'Zero Dependency Export', row3: 'Tailwind CSS Built-in' },
+      defaultProps: { title: 'Villa Structural Comparison', col1Name: 'Monograph Alpine Villa', col2Name: 'Coastal Glass Pavilion', row1: 'Triple-Glazed Acoustic Glass Panels', row2: 'Zero-Carbon Solar Roof Integration', row3: 'Private Waterfront / Helipad Dock' },
       render: ({ title, col1Name, col2Name, row1, row2, row3 }) => (
-        <section className="py-20 px-6 bg-[#0c0d16] font-sans text-white">
-          <div className="max-w-4xl mx-auto text-center mb-10"><h2 className="text-3xl font-extrabold">{title}</h2></div>
-          <div className="max-w-3xl mx-auto bg-[#06070a] rounded-2xl border border-white/10 overflow-hidden text-xs">
-            <div className="grid grid-cols-3 p-4 bg-white/5 font-bold border-b border-white/10"><div>Feature</div><div className="text-cyan-400">{col1Name}</div><div className="text-slate-400">{col2Name}</div></div>
-            <div className="grid grid-cols-3 p-4 border-b border-white/5"><div>{row1}</div><div className="text-emerald-400 font-bold">✓ Included</div><div className="text-rose-400">✗ Limited</div></div>
-            <div className="grid grid-cols-3 p-4 border-b border-white/5"><div>{row2}</div><div className="text-emerald-400 font-bold">✓ Included</div><div className="text-rose-400">✗ Complex</div></div>
-            <div className="grid grid-cols-3 p-4"><div>{row3}</div><div className="text-emerald-400 font-bold">✓ Included</div><div className="text-slate-400">Optional</div></div>
+        <section className="py-24 px-6 bg-[#111111] text-[#FBFBFA]">
+          <div className="max-w-4xl mx-auto text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif font-normal tracking-tight text-[#FBFBFA]">{title}</h2>
+          </div>
+          <div className="max-w-3xl mx-auto border border-zinc-800 rounded-none overflow-hidden text-xs">
+            <div className="grid grid-cols-3 p-5 bg-zinc-900/60 font-sans font-medium border-b border-zinc-800 text-zinc-400 uppercase tracking-widest text-[11px] items-center">
+              <div>SPECIFICATION</div>
+              <div className="text-[#C5A880] font-serif tracking-normal text-sm font-semibold">{col1Name}</div>
+              <div className="text-zinc-400 font-serif tracking-normal text-sm">{col2Name}</div>
+            </div>
+            <div className="grid grid-cols-3 p-5 border-b border-zinc-900 text-zinc-300 items-center font-serif text-sm">
+              <div>{row1}</div>
+              <div className="text-[#C5A880] font-sans text-xs uppercase tracking-wider font-medium">✓ Included</div>
+              <div className="text-zinc-500 font-sans text-xs uppercase tracking-wider">— Limited</div>
+            </div>
+            <div className="grid grid-cols-3 p-5 border-b border-zinc-900 text-zinc-300 items-center font-serif text-sm">
+              <div>{row2}</div>
+              <div className="text-[#C5A880] font-sans text-xs uppercase tracking-wider font-medium">✓ Included</div>
+              <div className="text-zinc-500 font-sans text-xs uppercase tracking-wider">— Complex</div>
+            </div>
+            <div className="grid grid-cols-3 p-5 text-zinc-300 items-center font-serif text-sm">
+              <div>{row3}</div>
+              <div className="text-[#C5A880] font-sans text-xs uppercase tracking-wider font-medium">✓ Included</div>
+              <div className="text-zinc-500 font-sans text-xs uppercase tracking-wider">Optional</div>
+            </div>
           </div>
         </section>
       )
