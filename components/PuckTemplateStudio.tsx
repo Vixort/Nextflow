@@ -313,8 +313,15 @@ const puckConfig: Config<ComponentProps, RootProps> = {
     },
   },
 
-  // 9 CATEGORIES (150+ TOTAL PRESETS)
+  // 10 CATEGORIES (155+ TOTAL PRESETS)
   categories: {
+    luxuryEstates: {
+      title: '🏡 Luxury Estates & Architecture (5 Presets)',
+      components: [
+        'EstateHeroEditorial', 'EstateImageRailEditorial', 'EstateGridGallery', 'EstateSpecsDetail', 'EstateInquiryForm'
+      ],
+      defaultExpanded: true,
+    },
     navbars: {
       title: 'Header & Navbar (20 Presets)',
       components: [
@@ -323,36 +330,39 @@ const puckConfig: Config<ComponentProps, RootProps> = {
         'NavbarGradientBorder', 'NavbarMobileFriendly', 'NavbarECommerce', 'NavbarNewsMagazine', 'NavbarBrutalist',
         'NavbarFloatingGlass', 'NavbarMinimalMonochrome', 'NavbarGradientSubtle', 'NavbarCompactSearch', 'NavbarDrawerMenu'
       ],
-      defaultExpanded: true,
+      defaultExpanded: false,
     },
     heros: {
-      title: 'Hero-Section (20 Presets)',
+      title: 'Hero-Section (21 Presets)',
       components: [
         'Hero', 'HeroVideoModal', 'HeroSplitImage', 'HeroCyberpunkGlow', 'HeroMinimalSerif',
         'HeroAppMockup', 'HeroFormCapture', 'HeroGradientSphere', 'HeroNewsletterSignup', 'Hero3DCourse',
         'HeroBentoGrid', 'HeroFloatingCards', 'HeroCountdownLaunch', 'HeroEventConference', 'HeroBrutalistRaw',
-        'HeroVideoBackground', 'HeroInteractiveCodeEditor', 'HeroMinimalistTypography', 'HeroProductCarousel', 'HeroIsometricIllustration'
+        'HeroVideoBackground', 'HeroInteractiveCodeEditor', 'HeroMinimalistTypography', 'HeroProductCarousel', 'HeroIsometricIllustration',
+        'EstateHeroEditorial'
       ],
       defaultExpanded: false,
     },
     features: {
-      title: 'Features & Bento-Grid (20 Presets)',
+      title: 'Features & Bento-Grid (21 Presets)',
       components: [
         'BentoGrid', 'BentoAsymmetric4', 'BentoMetrics6', 'FeatureListSplit', 'FeatureGridCards',
         'FeatureComparisonTable', 'FeatureStepProcess', 'FeatureInteractiveTabs', 'StatsCounterGrid', 'StatsSplitChart',
         'FeatureIconRows', 'FeatureHoverCards', 'FeatureTimeline', 'FeatureTechStackGrid', 'FeatureBentoDarkVoid',
-        'BentoFeatureHighlight3', 'FeatureComparisonGrid', 'FeatureInteractiveHoverGrid', 'FeatureTerminalSnippet', 'FeatureWorkflowPipeline'
+        'BentoFeatureHighlight3', 'FeatureComparisonGrid', 'FeatureInteractiveHoverGrid', 'FeatureTerminalSnippet', 'FeatureWorkflowPipeline',
+        'EstateSpecsDetail'
       ],
       defaultExpanded: false,
     },
     showcases: {
-      title: 'Portfolio & Showcase (20 Presets)',
+      title: 'Portfolio & Showcase (22 Presets)',
       components: [
         'PortfolioShowcase', 'PortfolioMasonryGrid', 'PortfolioClientCarousel', 'PortfolioAppStoreScreens',
         'ClientLogosMarquee', 'ClientLogosGrid', 'CaseStudyDetailCard', 'PortfolioFilterTabs',
         'PortfolioBeforeAfter', 'PortfolioVideoGrid', 'PortfolioAwardBadges', 'PortfolioClientQuotes',
         'PortfolioInteractiveGrid', 'Portfolio3DTiltCard', 'PortfolioMetricsShowcase', 'PortfolioLogoWallDark',
-        'PortfolioBeforeAfterSlider', 'PortfolioFullBleedBanner', 'PortfolioTestimonialCard', 'PortfolioHorizontalScroll'
+        'PortfolioBeforeAfterSlider', 'PortfolioFullBleedBanner', 'PortfolioTestimonialCard', 'PortfolioHorizontalScroll',
+        'EstateImageRailEditorial', 'EstateGridGallery'
       ],
       defaultExpanded: false,
     },
@@ -368,12 +378,13 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       defaultExpanded: false,
     },
     pricing: {
-      title: 'Pricing & CTA-Section (20 Presets)',
+      title: 'Pricing & CTA-Section (21 Presets)',
       components: [
         'PricingTable', 'Pricing3TierToggle', 'PricingComparisonMatrix', 'PricingUsageBased', 'PricingSinglePlan',
         'CtaBanner', 'CtaSplitForm', 'CtaAppDownload', 'CtaUrgencyTimer', 'CtaGlassCard',
         'CtaNewsletterPill', 'CtaFullWidthVideo', 'CtaBookDemoCalendar', 'CtaFreeTrialCard', 'CtaDarkCyberpunk',
-        'PricingSliderTier', 'PricingEnterpriseCustom', 'CtaInteractiveNewsletter', 'CtaFullWidthGradient', 'CtaFloatingBar'
+        'PricingSliderTier', 'PricingEnterpriseCustom', 'CtaInteractiveNewsletter', 'CtaFullWidthGradient', 'CtaFloatingBar',
+        'EstateInquiryForm'
       ],
       defaultExpanded: false,
     },
