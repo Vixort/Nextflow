@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef, useMemo } from 'react'
+import Link from 'next/link'
 import { Puck, Config, Data, DropZone } from '@puckeditor/core'
 import '@puckeditor/core/dist/index.css'
 import {
@@ -18,6 +19,7 @@ import {
   MultiPageProjectData, SitePage, normalizeMultiPageData, exportMultiPageZip,
   PAGE_PRESETS, generatePageSlug, DEFAULT_HOME_PAGE_DATA, ensureContentIds
 } from '@/lib/puck/multiPageUtils'
+import { createId } from '@/lib/puck/project'
 
 interface PuckTemplateStudioProps {
   template: Partial<WebsiteTemplate>
@@ -26,9 +28,7 @@ interface PuckTemplateStudioProps {
     name: string
     category: string
     description: string
-    grapesjs_data: any
-    html_code: string
-    css_code: string
+    puck_data: MultiPageProjectData
     global_css: string
   }) => Promise<void>
 }
@@ -341,7 +341,7 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       render: ({ brandName, ctaText, fixedTop, customClass, customCss }) => (
         <header className={`px-4 sm:px-8 py-4 bg-[#090a0f]/90 backdrop-blur-xl border-b border-white/10 flex items-center justify-between font-sans text-white ${fixedTop ? 'sticky top-0 z-40' : ''} ${customClass}`} style={parseCustomCss(customCss)}>
           <div className="text-base font-black tracking-tight text-white flex items-center gap-1">{brandName}<span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /></div>
-          <nav className="hidden md:flex gap-8 text-xs text-slate-300 font-semibold"><a href="/" className="hover:text-cyan-400">Home</a><a href="/about" className="hover:text-cyan-400">About</a><a href="/services" className="hover:text-cyan-400">Services</a><a href="/pricing" className="hover:text-cyan-400">Pricing</a><a href="/contact" className="hover:text-cyan-400">Contact</a></nav>
+          <nav className="hidden md:flex gap-8 text-xs text-slate-300 font-semibold"><Link href="/" className="hover:text-cyan-400">Home</Link><a href="/about" className="hover:text-cyan-400">About</a><a href="/services" className="hover:text-cyan-400">Services</a><a href="/pricing" className="hover:text-cyan-400">Pricing</a><a href="/contact" className="hover:text-cyan-400">Contact</a></nav>
           <a href="/pricing" className="px-4 py-2 rounded-xl bg-cyan-500 text-slate-950 font-extrabold text-xs shadow-md">{ctaText}</a>
         </header>
       )
@@ -362,7 +362,7 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       render: ({ brandName, link1, link2, link3, link4, ctaText }) => (
         <header className="px-4 sm:px-8 py-4 bg-[#0f111a]/80 backdrop-blur-2xl border-b border-white/10 font-sans text-white">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
-            <nav className="hidden sm:flex gap-6 text-xs text-slate-300"><a href="/">{link1}</a><a href="/services">{link2}</a></nav>
+            <nav className="hidden sm:flex gap-6 text-xs text-slate-300"><Link href="/">{link1}</Link><a href="/services">{link2}</a></nav>
             <div className="text-sm font-black tracking-[0.25em] text-white uppercase">{brandName}</div>
             <div className="flex items-center gap-6 text-xs"><a href="/about" className="hidden sm:inline text-slate-300">{link3}</a><a href="/pricing" className="px-4 py-2 rounded-xl bg-white/10 border border-white/15 text-white font-bold">{ctaText}</a></div>
           </div>
@@ -376,7 +376,7 @@ const puckConfig: Config<ComponentProps, RootProps> = {
         <div className="py-4 px-4 bg-transparent">
           <header className={`max-w-4xl mx-auto px-6 py-3 rounded-full bg-[#0f111a]/90 backdrop-blur-2xl flex items-center justify-between font-sans text-white ${pillGlow ? 'border border-cyan-500/40 shadow-[0_0_30px_rgba(6,182,212,0.15)]' : 'border border-white/15'}`}>
             <div className="text-sm font-black text-white">{brandName}</div>
-            <nav className="hidden sm:flex gap-6 text-xs text-slate-300"><a href="/">{link1}</a><a href="/services">{link2}</a><a href="/pricing">{link3}</a></nav>
+            <nav className="hidden sm:flex gap-6 text-xs text-slate-300"><Link href="/">{link1}</Link><a href="/services">{link2}</a><a href="/pricing">{link3}</a></nav>
             <a href="/contact" className="px-5 py-2 rounded-full bg-cyan-500 text-slate-950 font-extrabold text-xs">{ctaText}</a>
           </header>
         </div>
@@ -440,7 +440,7 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       render: ({ brandName, ctaText }) => (
         <header className="px-8 py-4 bg-white/5 backdrop-blur-3xl border-b border-white/10 font-sans text-white flex items-center justify-between">
           <div className="text-base font-extrabold text-white">{brandName}</div>
-          <nav className="hidden sm:flex gap-8 text-xs text-slate-300 font-medium"><a href="/">Architecture</a><a href="/services">Ecosystem</a><a href="/pricing">Pricing</a></nav>
+          <nav className="hidden sm:flex gap-8 text-xs text-slate-300 font-medium"><Link href="/">Architecture</Link><a href="/services">Ecosystem</a><a href="/pricing">Pricing</a></nav>
           <a href="/contact" className="px-5 py-2.5 rounded-2xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold text-xs">{ctaText}</a>
         </header>
       )
@@ -450,7 +450,7 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       defaultProps: { brandName: 'STREAMLINE.', gradientPreset: 'cyan-blue', ctaText: 'Get Started' },
       render: ({ brandName, ctaText }) => (
         <header className="bg-[#090a0f] font-sans text-white relative">
-          <div className="px-8 py-4 flex items-center justify-between"><div className="text-base font-black text-white">{brandName}</div><nav className="hidden sm:flex gap-8 text-xs text-slate-300 font-semibold"><a href="/">Overview</a><a href="/services">Specs</a><a href="/about">Docs</a></nav><a href="/pricing" className="px-5 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-extrabold text-xs">{ctaText}</a></div>
+          <div className="px-8 py-4 flex items-center justify-between"><div className="text-base font-black text-white">{brandName}</div><nav className="hidden sm:flex gap-8 text-xs text-slate-300 font-semibold"><Link href="/">Overview</Link><a href="/services">Specs</a><a href="/about">Docs</a></nav><a href="/pricing" className="px-5 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-extrabold text-xs">{ctaText}</a></div>
           <div className="h-[2px] w-full bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500" />
         </header>
       )
@@ -825,7 +825,7 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       fields: { quote: { type: 'textarea' }, authorName: { type: 'text' }, authorRole: { type: 'text' }, companyLogo: { type: 'text' } },
       defaultProps: { quote: '"Nextflow Studio allowed our design and engineering teams to ship 20 landing pages in a single afternoon with zero bugs."', authorName: 'Dr. Aris Thorne', authorRole: 'Chief Technology Officer', companyLogo: 'CYBERPULSE LABS' },
       render: ({ quote, authorName, authorRole, companyLogo }) => (
-        <section className="py-24 px-6 bg-[#090a0f] text-white font-sans text-center border-y border-white/10"><div className="max-w-4xl mx-auto"><div className="text-cyan-400 font-extrabold tracking-widest text-xs uppercase mb-6">{companyLogo}</div><blockquote className="text-2xl font-bold text-slate-200 mb-8 italic">"{quote}"</blockquote><div className="font-bold text-sm text-white">{authorName}</div><div className="text-xs text-cyan-400">{authorRole}</div></div></section>
+        <section className="py-24 px-6 bg-[#090a0f] text-white font-sans text-center border-y border-white/10"><div className="max-w-4xl mx-auto"><div className="text-cyan-400 font-extrabold tracking-widest text-xs uppercase mb-6">{companyLogo}</div><blockquote className="text-2xl font-bold text-slate-200 mb-8 italic">&ldquo;{quote}&rdquo;</blockquote><div className="font-bold text-sm text-white">{authorName}</div><div className="text-xs text-cyan-400">{authorRole}</div></div></section>
       )
     },
     TestimonialVideoCards: {
@@ -1046,7 +1046,7 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       fields: { brandName: { type: 'text' }, col1Title: { type: 'text' }, col2Title: { type: 'text' }, copyrightText: { type: 'text' } },
       defaultProps: { brandName: 'ENTERPRISE MAP', col1Title: 'Platform Modules', col2Title: 'Developer Hub', copyrightText: '© 2026 Enterprise Flow Inc.' },
       render: ({ brandName, col1Title, col2Title, copyrightText }) => (
-        <footer className="py-12 px-8 bg-[#090a0f] border-t border-white/10 text-white font-sans"><div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-xs"><div><strong className="text-white text-sm block mb-2">{brandName}</strong><span className="text-slate-400 text-[10px]">Multi-tenant Web Studio</span></div><div><strong className="text-cyan-400 block mb-2">{col1Title}</strong><ul className="space-y-1 text-slate-400 text-[11px]"><li key="fm1"><a href="/">Home</a></li><li key="fm2"><a href="/about">About Us</a></li><li key="fm3"><a href="/services">Services</a></li></ul></div><div><strong className="text-sky-400 block mb-2">{col2Title}</strong><ul className="space-y-1 text-slate-400 text-[11px]"><li key="fm4"><a href="/pricing">Pricing</a></li><li key="fm5"><a href="/contact">Contact</a></li></ul></div><div><strong className="text-purple-400 block mb-2">Legal</strong><ul className="space-y-1 text-slate-400 text-[11px]"><li key="fm6">Privacy Policy</li><li key="fm7">Terms of Service</li></ul></div></div><div className="border-t border-white/5 mt-8 pt-4 text-center text-[10px] text-slate-500">{copyrightText}</div></footer>
+        <footer className="py-12 px-8 bg-[#090a0f] border-t border-white/10 text-white font-sans"><div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-xs"><div><strong className="text-white text-sm block mb-2">{brandName}</strong><span className="text-slate-400 text-[10px]">Multi-tenant Web Studio</span></div><div><strong className="text-cyan-400 block mb-2">{col1Title}</strong><ul className="space-y-1 text-slate-400 text-[11px]"><li key="fm1"><Link href="/">Home</Link></li><li key="fm2"><a href="/about">About Us</a></li><li key="fm3"><a href="/services">Services</a></li></ul></div><div><strong className="text-sky-400 block mb-2">{col2Title}</strong><ul className="space-y-1 text-slate-400 text-[11px]"><li key="fm4"><a href="/pricing">Pricing</a></li><li key="fm5"><a href="/contact">Contact</a></li></ul></div><div><strong className="text-purple-400 block mb-2">Legal</strong><ul className="space-y-1 text-slate-400 text-[11px]"><li key="fm6">Privacy Policy</li><li key="fm7">Terms of Service</li></ul></div></div><div className="border-t border-white/5 mt-8 pt-4 text-center text-[10px] text-slate-500">{copyrightText}</div></footer>
       )
     },
     FooterSocialIconsOnly: {
@@ -1441,7 +1441,7 @@ export default function PuckTemplateStudio({
 
   // MULTI-PAGE SYSTEM STATE
   const [multiPageProject, setMultiPageProject] = useState<MultiPageProjectData>(() =>
-    normalizeMultiPageData(template.grapesjs_data, template.name || 'Home')
+    normalizeMultiPageData(template.puck_data, template.name || 'Home')
   )
   const [pageManagerOpen, setPageManagerOpen] = useState(false)
 
@@ -1493,91 +1493,18 @@ export default function PuckTemplateStudio({
     return ensureContentIds(currentActivePage.data)
   }, [currentActivePage.id, currentActivePage.data])
 
-  const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
-  // Hover Component Preview State
-  const [hoveredComponent, setHoveredComponent] = useState<{ type: string; y: number } | null>(null)
+  const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
 
   // Track Puck instance / current data state
   const currentPuckDataRef = useRef<Data>(currentActivePage.data)
 
-  // Event listener for sidebar hover component preview & internal link navigation
-  useEffect(() => {
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement
-      if (!target) return
-
-      // Limit hover detection strictly to left sidebar drawer region (x < 320px)
-      if (e.clientX > 320) {
-        setHoveredComponent(null)
-        return
-      }
-
-      // Target individual item buttons or item text nodes
-      const itemEl = target.closest('button, [class*="DrawerItem"], [class*="item"], [data-puck-component]') as HTMLElement
-      
-      let text = (target.textContent || itemEl?.textContent || '').trim()
-
-      if (text.includes('\n')) {
-        const lines = text.split('\n').map(l => l.trim()).filter(Boolean)
-        const compKeys = Object.keys(puckConfig.components)
-        const foundLine = lines.find(line => compKeys.some(k => k.toLowerCase() === line.toLowerCase()))
-        text = foundLine || lines[0] || ''
-      }
-
-      if (text) {
-        const compKeys = Object.keys(puckConfig.components)
-        let matchedKey = compKeys.find(k => k.toLowerCase() === text.toLowerCase())
-        if (!matchedKey) {
-          matchedKey = compKeys.find(k => text.includes(k) && text.length < k.length + 15)
-        }
-
-        if (matchedKey) {
-          const rect = (itemEl || target).getBoundingClientRect()
-          setHoveredComponent({
-            type: matchedKey,
-            y: Math.max(60, Math.min(window.innerHeight - 320, rect.top - 10)),
-          })
-          return
-        }
-      }
-      setHoveredComponent(null)
-    }
-
-    const wrapper = document.querySelector('.puck-dark-wrapper')
-    if (wrapper) {
-      wrapper.addEventListener('mouseover', handleMouseOver as any)
-      return () => wrapper.removeEventListener('mouseover', handleMouseOver as any)
-    }
-  }, [])
-
-  // Listen to link clicks inside Puck preview canvas to handle internal page navigation
-  useEffect(() => {
-    const handleLinkClick = (e: MouseEvent) => {
-      const anchor = (e.target as HTMLElement)?.closest('a')
-      if (!anchor) return
-      const href = anchor.getAttribute('href')
-      if (!href) return
-
-      // Check if href matches any page slug in the project
-      const targetPage = multiPageProject.pages.find(p => p.slug === href || (href === '/' && p.isHome))
-      if (targetPage && targetPage.id !== multiPageProject.activePageId) {
-        e.preventDefault()
-        handleSwitchPage(targetPage.id)
-      }
-    }
-
-    window.addEventListener('click', handleLinkClick)
-    return () => window.removeEventListener('click', handleLinkClick)
-  }, [multiPageProject])
-
-  const [mounted, setMounted] = useState(false)
-  React.useEffect(() => {
-    setMounted(true)
-  }, [])
-
   // SWITCH ACTIVE PAGE
-  const handleSwitchPage = (newPageId: string) => {
+  function handleSwitchPage(newPageId: string) {
     if (newPageId === multiPageProject.activePageId) return
 
     // Save current active page data first
@@ -1597,7 +1524,7 @@ export default function PuckTemplateStudio({
     const pageCount = multiPageProject.pages.length
     const pageName = `${preset.name} ${pageCount > 1 ? pageCount : ''}`.trim()
     const pageSlug = generatePageSlug(pageName)
-    const newPageId = `page-${Date.now()}`
+    const newPageId = createId('page')
 
     const newPage: SitePage = {
       id: newPageId,
@@ -1655,7 +1582,7 @@ export default function PuckTemplateStudio({
 
     const newName = `${sourcePage.name} Copy`
     const newSlug = generatePageSlug(newName)
-    const newPageId = `page-${Date.now()}`
+    const newPageId = createId('page')
 
     const duplicated: SitePage = {
       id: newPageId,
@@ -1712,17 +1639,15 @@ export default function PuckTemplateStudio({
         name: templateName,
         category,
         description,
-        grapesjs_data: finalProjectData,
-        html_code: JSON.stringify(puckData.content),
-        css_code: '',
+        puck_data: finalProjectData,
         global_css: globalCssCode,
       })
 
       setMultiPageProject(finalProjectData)
       setFeedback({ type: 'success', message: 'Multi-Page Website saved to Supabase successfully!' })
       setTimeout(() => setFeedback(null), 3000)
-    } catch (err: any) {
-      setFeedback({ type: 'error', message: err?.message || 'Failed to save template' })
+    } catch (error: unknown) {
+      setFeedback({ type: 'error', message: error instanceof Error ? error.message : 'Failed to save template' })
     }
   }
 
@@ -1762,96 +1687,52 @@ export default function PuckTemplateStudio({
           </div>
         </div>
 
-        {/* Center: PAGE SELECTOR DROPDOWN & RESPONSIVE VIEWPORT TOGGLES */}
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 bg-[#090a0f] p-1.5 rounded-xl border border-cyan-500/30">
-            <FileText size={14} className="text-cyan-400 ml-1" />
-            <span className="text-[11px] font-bold text-slate-400">Page:</span>
-            <select
-              value={multiPageProject.activePageId}
-              onChange={e => handleSwitchPage(e.target.value)}
-              className="bg-[#0f111a] text-cyan-300 font-extrabold text-xs px-2.5 py-1 rounded-lg border border-white/10 focus:outline-none focus:border-cyan-400 cursor-pointer"
-            >
-              {multiPageProject.pages.map(page => (
-                <option key={page.id} value={page.id}>
-                  {page.isHome ? '🏠 ' : '📄 '}{page.name} ({page.slug})
-                </option>
-              ))}
-            </select>
+        {/* Center: PAGE SELECTOR DROPDOWN & PAGE MANAGER */}
+        <div className="flex items-center gap-2 bg-[#06070a] p-1.5 rounded-xl border border-cyan-500/30">
+          <FileText size={14} className="text-cyan-400 ml-1" />
+          <span className="text-[11px] font-bold text-slate-400">Page:</span>
+          <select
+            value={multiPageProject.activePageId}
+            onChange={e => handleSwitchPage(e.target.value)}
+            className="bg-[#0f111a] text-cyan-300 font-extrabold text-xs px-3 py-1 rounded-lg border border-white/10 focus:outline-none focus:border-cyan-400 cursor-pointer"
+          >
+            {multiPageProject.pages.map(page => (
+              <option key={page.id} value={page.id}>
+                {page.isHome ? '🏠 ' : '📄 '}{page.name} ({page.slug})
+              </option>
+            ))}
+          </select>
 
-            <button
-              onClick={() => setPageManagerOpen(true)}
-              className="flex items-center gap-1 px-2 py-1 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 font-bold transition-all text-xs cursor-pointer ml-1"
-            >
-              <Settings2 size={13} /> Pages ({multiPageProject.pages.length})
-            </button>
-          </div>
-
-          {/* RESPONSIVE VIEWPORT SWITCHER */}
-          <div className="hidden md:flex items-center p-1 rounded-xl bg-[#090a0f] border border-white/10 gap-1">
-            <button
-              onClick={() => setViewport('desktop')}
-              className={`flex items-center gap-1 px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${viewport === 'desktop' ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40' : 'text-slate-400 hover:text-white'}`}
-              title="Desktop Viewport (100%)"
-            >
-              <Monitor size={13} /> Desktop
-            </button>
-            <button
-              onClick={() => setViewport('tablet')}
-              className={`flex items-center gap-1 px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${viewport === 'tablet' ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40' : 'text-slate-400 hover:text-white'}`}
-              title="Tablet Viewport (768px)"
-            >
-              <Layout size={13} /> Tablet
-            </button>
-            <button
-              onClick={() => setViewport('mobile')}
-              className={`flex items-center gap-1 px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer ${viewport === 'mobile' ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40' : 'text-slate-400 hover:text-white'}`}
-              title="Mobile Viewport (375px)"
-            >
-              <Smartphone size={13} /> Mobile
-            </button>
-          </div>
+          <button
+            onClick={() => setPageManagerOpen(true)}
+            className="flex items-center gap-1 px-3 py-1 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 font-bold transition-all text-xs cursor-pointer ml-1"
+          >
+            <Settings2 size={13} /> Pages ({multiPageProject.pages.length})
+          </button>
         </div>
 
-        {/* Right: Theme Selector, Live Preview & Actions */}
-        <div className="flex items-center gap-2">
-          {/* THEME PALETTE QUICK SELECTOR */}
-          <div className="hidden lg:flex items-center gap-1 bg-[#090a0f] px-2 py-1 rounded-xl border border-white/10">
-            <Sparkles size={13} className="text-amber-400" />
-            <select
-              value={themePalette}
-              onChange={e => handleApplyGlobalTheme(e.target.value)}
-              className="bg-transparent text-amber-300 font-bold text-xs focus:outline-none cursor-pointer"
-            >
-              {Object.entries(THEME_PALETTES).map(([key, pal]) => (
-                <option key={key} value={key} className="bg-[#0f111a] text-slate-200">
-                  {pal.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <button
-            onClick={() => setPreviewModalOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-purple-500/30 bg-purple-500/10 text-purple-300 hover:bg-purple-500/20 font-bold transition-all cursor-pointer"
-            title="Open Interactive Full-Screen Live Preview"
-          >
-            <Eye size={14} /> Preview
-          </button>
-
+        {/* Right: Global CSS, Export & Save */}
+        <div className="flex items-center gap-3">
           <button
             onClick={() => setGlobalCssOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20 font-bold transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20 font-bold transition-all cursor-pointer text-xs"
           >
             <Globe size={14} /> Global CSS
           </button>
 
           <button
             onClick={handleDownloadZip}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 cursor-pointer font-bold transition-all"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 cursor-pointer font-extrabold text-xs transition-all"
             title="Export Multi-Page ZIP Website"
           >
             <Download size={14} /> Export ZIP
+          </button>
+
+          <button
+            onClick={() => handlePublish(currentPuckDataRef.current)}
+            className="flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-cyan-500 text-slate-950 font-black hover:bg-cyan-400 cursor-pointer text-xs shadow-[0_0_15px_rgba(6,182,212,0.3)] transition-all"
+          >
+            <Save size={14} /> Save Template
           </button>
         </div>
       </header>
@@ -1866,12 +1747,8 @@ export default function PuckTemplateStudio({
         </div>
       )}
 
-      {/* MAIN PUCK EDITOR WORKSPACE (RENDER ACTIVE PAGE DATA) */}
-      <div className={`flex-1 min-h-0 overflow-hidden relative puck-dark-wrapper bg-[#06070a] transition-all duration-300 ${
-        viewport === 'tablet' ? 'max-w-[768px] mx-auto border-x border-cyan-500/30 my-2 rounded-2xl shadow-[0_0_80px_rgba(0,0,0,0.9)]' :
-        viewport === 'mobile' ? 'max-w-[375px] mx-auto border-x border-cyan-500/30 my-2 rounded-2xl shadow-[0_0_80px_rgba(0,0,0,0.9)]' :
-        'w-full'
-      }`}>
+      {/* MAIN PUCK EDITOR WORKSPACE */}
+      <div className="flex-1 min-h-0 overflow-hidden relative puck-dark-wrapper bg-[#06070a]">
         {mounted ? (
           <Puck
             key="puck-studio-canvas"
@@ -1883,46 +1760,11 @@ export default function PuckTemplateStudio({
             onPublish={handlePublish}
             headerTitle={`Editing: ${templateName} -> ${currentActivePage.name} (${currentActivePage.slug})`}
             iframe={{ enabled: false }}
-            overrides={{
-              outline: () => <div className="hidden" />,
-            }}
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-cyan-400 font-bold">Loading 105 Studio Presets Engine...</div>
-        )}
-
-        {/* LIVE SIDEBAR HOVER COMPONENT PREVIEW FLOATING CARD */}
-        {hoveredComponent && puckConfig.components[hoveredComponent.type as keyof ComponentProps] && (
-          <div
-            className="fixed left-[310px] z-50 w-[500px] bg-[#0d0f19]/95 backdrop-blur-2xl border border-cyan-500/50 rounded-2xl shadow-[0_0_60px_rgba(6,182,212,0.4)] p-4 pointer-events-none transition-all duration-150 animate-in fade-in zoom-in-95"
-            style={{ top: `${hoveredComponent.y}px` }}
-          >
-            <div className="flex items-center justify-between border-b border-cyan-500/25 pb-2.5 mb-3">
-              <div className="flex items-center gap-2">
-                <Eye size={14} className="text-cyan-400" />
-                <span className="text-xs font-black uppercase text-cyan-300 tracking-wider">
-                  Live Preview: {hoveredComponent.type}
-                </span>
-              </div>
-              <span className="text-[10px] text-slate-400 bg-white/10 px-2 py-0.5 rounded font-mono">
-                Desktop View (1150px)
-              </span>
-            </div>
-
-            {/* Minified Live Render Window */}
-            <div className="w-full h-[220px] bg-[#090a0f] rounded-xl border border-white/10 overflow-hidden relative p-0">
-              <div className="w-[1150px] min-h-[520px] transform scale-[0.4] origin-top-left pointer-events-none select-none bg-[#090a0f]">
-                {(() => {
-                  const compConfig = puckConfig.components[hoveredComponent.type as keyof ComponentProps] as any
-                  if (!compConfig || typeof compConfig.render !== 'function') return null
-                  return compConfig.render(compConfig.defaultProps || {})
-                })()}
-              </div>
-            </div>
-
-            <div className="mt-2.5 text-[10px] text-cyan-300 text-center font-semibold flex items-center justify-center gap-1">
-              <Sparkles size={11} /> Drag or click block to insert into page canvas
-            </div>
+          <div className="flex items-center justify-center h-full text-slate-400">
+            <span className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-400 mr-3"></span>
+            Loading Puck Studio...
           </div>
         )}
       </div>
@@ -2115,76 +1957,6 @@ export default function PuckTemplateStudio({
               <button onClick={() => setGlobalCssOpen(false)} className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white">
                 Close
               </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* INTERACTIVE LIVE PREVIEW MODAL */}
-      {previewModalOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col bg-[#090a0f] text-slate-200">
-          {/* Preview Header */}
-          <div className="h-14 px-6 bg-[#0f111a] border-b border-white/10 flex items-center justify-between shrink-0">
-            <div className="flex items-center gap-3">
-              <span className="flex items-center gap-2 font-bold text-white text-sm">
-                <Eye size={16} className="text-purple-400" /> Live Interactive Preview
-              </span>
-              <span className="text-xs text-slate-400 font-mono">({templateName})</span>
-            </div>
-
-            {/* Page Navigation Tabs inside Preview */}
-            <div className="flex items-center gap-2 bg-[#06070a] p-1 rounded-xl border border-white/10">
-              {multiPageProject.pages.map(page => (
-                <button
-                  key={page.id}
-                  onClick={() => handleSwitchPage(page.id)}
-                  className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${page.id === multiPageProject.activePageId ? 'bg-purple-500/20 text-purple-300 border border-purple-500/40' : 'text-slate-400 hover:text-white'}`}
-                >
-                  {page.isHome ? '🏠 Home' : page.name}
-                </button>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-3">
-              <button
-                onClick={handleDownloadZip}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 text-xs font-bold transition-all cursor-pointer"
-              >
-                <Download size={14} /> Export Site ZIP
-              </button>
-              <button
-                onClick={() => setPreviewModalOpen(false)}
-                className="p-2 rounded-lg border border-white/10 bg-white/5 text-slate-300 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
-                title="Exit Preview"
-              >
-                <X size={16} />
-              </button>
-            </div>
-          </div>
-
-          {/* Preview Body Canvas */}
-          <div className="flex-1 overflow-y-auto bg-[#090a0f] p-4 md:p-8">
-            <style dangerouslySetInnerHTML={{ __html: globalCssCode }} />
-            <div className={`mx-auto bg-[#090a0f] transition-all duration-300 ${
-              viewport === 'tablet' ? 'max-w-[768px] border border-cyan-500/30 rounded-2xl shadow-2xl overflow-hidden' :
-              viewport === 'mobile' ? 'max-w-[375px] border border-cyan-500/30 rounded-2xl shadow-2xl overflow-hidden' :
-              'max-w-7xl'
-            }`}>
-              {Array.isArray(activePageData.content) && activePageData.content.length > 0 ? (
-                activePageData.content.map((item: any, idx: number) => {
-                  const compConfig = puckConfig.components[item.type as keyof ComponentProps] as any
-                  if (!compConfig || typeof compConfig.render !== 'function') return null
-                  return (
-                    <div key={item.id || idx} className="w-full relative">
-                      {compConfig.render({ ...(compConfig.defaultProps || {}), ...(item.props || {}) })}
-                    </div>
-                  )
-                })
-              ) : (
-                <div className="py-32 text-center text-slate-500 font-bold">
-                  This page has no elements yet. Close preview and drag blocks from the left sidebar.
-                </div>
-              )}
             </div>
           </div>
         </div>
