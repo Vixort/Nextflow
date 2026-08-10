@@ -163,14 +163,9 @@ export const PAGE_PRESETS: { name: string; slug: string; description: string; ge
   {
     name: 'Blank Page',
     slug: '/new-page',
-    description: 'Empty page layout canvas',
+    description: 'Completely empty canvas with zero elements',
     getStarterData: (name: string) => ensureContentIds({
-      content: [
-        { id: `navbar-${Date.now()}`, type: 'Navbar', props: { brandName: 'NEXTFLOW.', ctaText: 'Sign In', fixedTop: false } },
-        { id: `heading-${Date.now()}`, type: 'Heading', props: { text: name, level: 'h1', fontSize: '4xl', fontWeight: 'bold', color: '#ffffff', align: 'center', gradient: true } },
-        { id: `spacer-${Date.now()}`, type: 'Spacer', props: { height: '40px' } },
-        { id: `footer-${Date.now()}`, type: 'Footer', props: { brandName: 'NEXTFLOW.', description: 'Next-generation digital workspace.', copyrightText: '© 2026 Nextflow Inc.', link1: 'Privacy', link2: 'Terms', link3: 'Docs', link4: 'Status' } },
-      ] as any,
+      content: [],
       zones: {},
       root: { props: { title: name, bodyBackground: '#090a0f', bodyTextColor: '#e2e8f0', fontFamily: 'font-sans' } as any },
     }),
