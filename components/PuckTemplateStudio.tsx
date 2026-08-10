@@ -35,7 +35,7 @@ interface PuckTemplateStudioProps {
 
 // 105 AWWWARDS-GRADE PRESET COMPONENT PROPS TYPES
 type ComponentProps = {
-  // 1. HEADER & NAVBARS (15 PRESETS)
+  // 1. HEADER & NAVBARS (20 PRESETS)
   Navbar: { brandName: string; ctaText: string; ctaUrl: string; link1Text: string; link1Url: string; link2Text: string; link2Url: string; link3Text: string; link3Url: string; link4Text: string; link4Url: string; link5Text: string; link5Url: string; fixedTop: boolean; customClass: string; customCss: string }
   NavbarMinimal: { brandName: string; linkText: string; linkUrl: string; ctaText: string; ctaUrl: string; fixedTop: boolean }
   NavbarCentred: { brandName: string; link1: string; link1Url: string; link2: string; link2Url: string; link3: string; link3Url: string; link4: string; link4Url: string; ctaText: string; ctaUrl: string }
@@ -51,8 +51,13 @@ type ComponentProps = {
   NavbarECommerce: { brandName: string; searchPlaceholder: string; cartCount: string; ctaText: string }
   NavbarNewsMagazine: { dateText: string; breakingNews: string; brandName: string; ctaText: string }
   NavbarBrutalist: { brandName: string; tagText: string; ctaText: string }
+  NavbarFloatingGlass: { brandName: string; link1: string; link1Url: string; link2: string; link2Url: string; link3: string; link3Url: string; ctaText: string; ctaUrl: string }
+  NavbarMinimalMonochrome: { brandName: string; link1: string; link1Url: string; link2: string; link2Url: string; ctaText: string; ctaUrl: string }
+  NavbarGradientSubtle: { brandName: string; tagText: string; ctaText: string; ctaUrl: string }
+  NavbarCompactSearch: { brandName: string; searchPlaceholder: string; ctaText: string; ctaUrl: string }
+  NavbarDrawerMenu: { brandName: string; menuLabel: string; ctaText: string; ctaUrl: string }
 
-  // 2. HERO SECTIONS (15 PRESETS)
+  // 2. HERO SECTIONS (20 PRESETS)
   Hero: { badge: string; title: string; gradientTitle: string; description: string; primaryCta: string; primaryUrl: string; secondaryCta: string; secondaryUrl: string; align: 'center' | 'left'; themeStyle: 'dark' | 'glass' | 'neon' | 'carbon'; padding: 'compact' | 'standard' | 'spacious'; customClass: string; customCss: string }
   HeroVideoModal: { badge: string; title: string; description: string; videoPosterUrl: string; ctaLabel: string; ctaUrl: string }
   HeroSplitImage: { badge: string; title: string; description: string; imageSrc: string; primaryCta: string; primaryUrl: string; secondaryCta: string; secondaryUrl: string }
@@ -68,8 +73,13 @@ type ComponentProps = {
   HeroCountdownLaunch: { badge: string; title: string; countdownTime: string; notifyCta: string }
   HeroEventConference: { badge: string; title: string; dateLocation: string; ticketCta: string }
   HeroBrutalistRaw: { bigTitle: string; tagText: string; description: string; ctaText: string }
+  HeroVideoBackground: { badge: string; title: string; description: string; ctaText: string; ctaUrl: string; secondaryCta: string; secondaryUrl: string }
+  HeroInteractiveCodeEditor: { badge: string; title: string; subhead: string; codeSnippet: string; ctaText: string; ctaUrl: string }
+  HeroMinimalistTypography: { badge: string; mainHeading: string; subhead: string; ctaText: string; ctaUrl: string }
+  HeroProductCarousel: { badge: string; title: string; description: string; ctaText: string; ctaUrl: string }
+  HeroIsometricIllustration: { badge: string; title: string; description: string; ctaText: string; ctaUrl: string }
 
-  // 3. FEATURES & BENTO (15 PRESETS)
+  // 3. FEATURES & BENTO (20 PRESETS)
   BentoGrid: { title: string; gradientTitle: string; subhead: string; card1Title: string; card1Desc: string; card2Title: string; card2Desc: string; card3Title: string; card3Desc: string; themeStyle: 'dark' | 'glass' | 'neon'; padding: 'compact' | 'standard'; customClass: string; customCss: string }
   BentoAsymmetric4: { title: string; card1Title: string; card1Desc: string; card2Title: string; card2Desc: string; card3Title: string; card3Desc: string; card4Title: string; card4Desc: string }
   BentoMetrics6: { title: string; stat1Val: string; stat1Lbl: string; stat2Val: string; stat2Lbl: string; stat3Val: string; stat3Lbl: string; stat4Val: string; stat4Lbl: string }
@@ -85,8 +95,13 @@ type ComponentProps = {
   FeatureTimeline: { title: string; milestone1: string; milestone2: string; milestone3: string }
   FeatureTechStackGrid: { title: string; tech1: string; tech2: string; tech3: string; tech4: string; tech5: string; tech6: string }
   FeatureBentoDarkVoid: { title: string; subhead: string; card1: string; card2: string; card3: string }
+  BentoFeatureHighlight3: { title: string; card1Title: string; card1Desc: string; card2Title: string; card2Desc: string; card3Title: string; card3Desc: string }
+  FeatureComparisonGrid: { title: string; col1Name: string; col2Name: string; row1: string; row2: string; row3: string }
+  FeatureInteractiveHoverGrid: { title: string; item1: string; item2: string; item3: string; item4: string }
+  FeatureTerminalSnippet: { title: string; codeContent: string; description: string }
+  FeatureWorkflowPipeline: { title: string; step1: string; step2: string; step3: string; step4: string }
 
-  // 4. PORTFOLIO & SHOWCASE (12 PRESETS)
+  // 4. PORTFOLIO & SHOWCASE (20 PRESETS)
   PortfolioShowcase: { title: string; subhead: string; project1Title: string; project1Img: string; project1Tag: string; project2Title: string; project2Img: string; project2Tag: string; padding: 'compact' | 'standard'; customClass: string; customCss: string }
   PortfolioMasonryGrid: { title: string; p1Title: string; p1Img: string; p2Title: string; p2Img: string; p3Title: string; p3Img: string }
   PortfolioClientCarousel: { title: string; item1Title: string; item2Title: string; item3Title: string }
@@ -99,8 +114,16 @@ type ComponentProps = {
   PortfolioVideoGrid: { title: string; video1Title: string; video2Title: string }
   PortfolioAwardBadges: { title: string; award1: string; award2: string; award3: string }
   PortfolioClientQuotes: { title: string; clientName: string; resultText: string; quote: string }
+  PortfolioInteractiveGrid: { title: string; p1Name: string; p1Category: string; p2Name: string; p2Category: string }
+  Portfolio3DTiltCard: { title: string; cardTitle: string; cardTag: string; description: string }
+  PortfolioMetricsShowcase: { title: string; metric1: string; label1: string; metric2: string; label2: string }
+  PortfolioLogoWallDark: { title: string; logo1: string; logo2: string; logo3: string; logo4: string }
+  PortfolioBeforeAfterSlider: { title: string; beforeLabel: string; afterLabel: string }
+  PortfolioFullBleedBanner: { title: string; subtitle: string; ctaText: string; ctaUrl: string }
+  PortfolioTestimonialCard: { title: string; quote: string; clientName: string; clientRole: string }
+  PortfolioHorizontalScroll: { title: string; item1: string; item2: string; item3: string }
 
-  // 5. TESTIMONIALS & FAQ (12 PRESETS)
+  // 5. TESTIMONIALS & FAQ (20 PRESETS)
   Testimonials: { title: string; quote1: string; author1: string; authorRole1: string; quote2: string; author2: string; authorRole2: string; padding: 'compact' | 'standard'; customClass: string; customCss: string }
   TestimonialGrid3: { title: string; q1: string; a1: string; q2: string; a2: string; q3: string; a3: string }
   TestimonialSingleHero: { quote: string; authorName: string; authorRole: string; companyLogo: string }
@@ -113,8 +136,16 @@ type ComponentProps = {
   TrustSecurityBadges: { title: string; badge1: string; badge2: string; badge3: string; badge4: string }
   CommunityDiscordCard: { title: string; memberCount: string; description: string; ctaText: string }
   WallOfLove: { title: string; tweet1: string; tweet2: string; tweet3: string }
+  TestimonialCarousel3D: { title: string; quote1: string; name1: string; quote2: string; name2: string }
+  TestimonialQuoteMinimal: { quote: string; author: string; role: string }
+  TestimonialCompanyGrid: { title: string; company1: string; company2: string; company3: string }
+  FaqTabbedAccordion: { title: string; tab1: string; q1: string; a1: string; tab2: string; q2: string; a2: string }
+  FaqInteractiveSearch: { title: string; searchPlaceholder: string; q1: string; a1: string }
+  FaqCardGrid3Column: { title: string; q1: string; a1: string; q2: string; a2: string; q3: string; a3: string }
+  CommunityStatsBox: { title: string; count: string; description: string; joinCta: string; joinUrl: string }
+  TrustCertificatesBadge: { title: string; cert1: string; cert2: string; cert3: string }
 
-  // 6. PRICING & CTA (15 PRESETS)
+  // 6. PRICING & CTA (20 PRESETS)
   PricingTable: { title: string; subhead: string; proPrice: string; proFeatures: string; enterprisePrice: string; enterpriseFeatures: string; highlightPro: boolean; padding: 'compact' | 'standard'; customClass: string; customCss: string }
   Pricing3TierToggle: { title: string; plan1Price: string; plan2Price: string; plan3Price: string }
   PricingComparisonMatrix: { title: string; feat1: string; feat2: string; feat3: string }
@@ -130,8 +161,13 @@ type ComponentProps = {
   CtaBookDemoCalendar: { title: string; subhead: string; calendarCta: string }
   CtaFreeTrialCard: { title: string; subhead: string; freeTrialText: string; buttonText: string }
   CtaDarkCyberpunk: { title: string; subhead: string; executeCta: string }
+  PricingSliderTier: { title: string; minPrice: string; maxPrice: string; unitLabel: string }
+  PricingEnterpriseCustom: { title: string; subtitle: string; feature1: string; feature2: string; ctaText: string; ctaUrl: string }
+  CtaInteractiveNewsletter: { title: string; description: string; buttonText: string }
+  CtaFullWidthGradient: { title: string; subhead: string; buttonText: string; buttonUrl: string }
+  CtaFloatingBar: { message: string; buttonText: string; buttonUrl: string }
 
-  // 7. FOOTERS (11 PRESETS)
+  // 7. FOOTERS (20 PRESETS)
   Footer: { brandName: string; description: string; copyrightText: string; link1: string; link1Url: string; link2: string; link2Url: string; link3: string; link3Url: string; link4: string; link4Url: string }
   FooterMinimalRail: { brandName: string; copyrightText: string; link1: string; link1Url: string; link2: string; link2Url: string }
   FooterNewsletterBig: { brandName: string; newsletterSubhead: string; copyrightText: string }
@@ -143,13 +179,22 @@ type ComponentProps = {
   FooterGradientBorder: { brandName: string; copyrightText: string }
   FooterBrutalistBox: { brandName: string; tag: string; copyrightText: string }
   FooterCenteredBrand: { brandName: string; tagline: string; copyrightText: string }
+  FooterMinimalInline: { brandName: string; copyrightText: string; link1: string; link1Url: string; link2: string; link2Url: string }
+  FooterMultiColumnMap: { brandName: string; col1Title: string; col2Title: string; copyrightText: string }
+  FooterCyberpunkTerminal: { brandName: string; systemLog: string; copyrightText: string }
+  FooterNewsletterInline: { brandName: string; placeholder: string; copyrightText: string }
+  FooterBadgeRow: { brandName: string; badge1: string; badge2: string; copyrightText: string }
+  FooterMinimalCentered: { brandName: string; tagline: string; copyrightText: string }
+  FooterDarkGrid: { brandName: string; description: string; copyrightText: string }
+  FooterFloatingPill: { brandName: string; copyrightText: string; link1: string; link1Url: string }
+  FooterCompactBar: { brandName: string; copyrightText: string }
 
-  // 8. CONTAINERS (3 PRESETS)
+  // 8. CONTAINERS & LAYOUT (3 PRESETS)
   FlexSection: { direction: 'row' | 'column'; justifyContent: string; alignItems: string; gap: string; width: string; customWidth: string; height: string; customHeight: string; minHeight: string; paddingTop: string; paddingBottom: string; paddingHorizontal: string; padding: string; background: string; bgColor?: string; textColor?: string; borderColor?: string; customClass: string; customCss: string }
   GridColumns: { columns: '2' | '3' | '4'; gap: string; width: string; customWidth: string; height: string; customHeight: string; paddingTop: string; paddingBottom: string; paddingHorizontal: string; padding: string; background: string; bgColor?: string; textColor?: string; borderColor?: string; customClass: string; customCss: string }
   CardBox: { title: string; variant: 'glass' | 'neon' | 'carbon'; width: string; customWidth: string; height: string; customHeight: string; paddingTop: string; paddingBottom: string; paddingHorizontal: string; padding: string; bgColor?: string; textColor?: string; borderColor?: string; customClass: string; customCss: string }
 
-  // 9. BASIC UI ELEMENTS (7 PRESETS)
+  // 9. BASIC UI ELEMENTS (12 PRESETS)
   Heading: { text: string; level: 'h1' | 'h2' | 'h3' | 'h4'; fontSize: string; fontWeight: string; color: string; bgColor?: string; align: 'left' | 'center' | 'right'; gradient: boolean; customClass: string; customCss: string }
   Text: { text: string; fontSize: string; color: string; bgColor?: string; align: 'left' | 'center' | 'right'; customClass: string; customCss: string }
   Button: { label: string; url: string; variant: 'cyan' | 'glass' | 'outline' | 'gradient'; size: 'sm' | 'md' | 'lg'; bgColor?: string; textColor?: string; borderColor?: string; customClass: string; customCss: string }
@@ -157,6 +202,11 @@ type ComponentProps = {
   PillBadge: { badgeText: string; variant: 'cyan' | 'purple' | 'emerald'; bgColor?: string; textColor?: string; borderColor?: string; customClass?: string; customCss?: string }
   Spacer: { height: string; bgColor?: string; customClass?: string; customCss?: string }
   Divider: { variant: 'solid' | 'dashed' | 'gradient'; color: string; thickness?: string; customClass?: string; customCss?: string }
+  DividerGradient: { height: string; gradient: string }
+  StatBadgePill: { label: string; value: string; variant: 'cyan' | 'purple' | 'emerald' }
+  ImageLightboxFrame: { src: string; caption: string }
+  VideoPlayerEmbed: { videoUrl: string; posterSrc: string }
+  CodeBlockTerminal: { title: string; code: string; language: string }
 }
 
 // PAGE BODY ROOT SETTINGS PROPS TYPE
@@ -256,68 +306,78 @@ const puckConfig: Config<ComponentProps, RootProps> = {
     },
   },
 
-  // 9 CATEGORIES (105 TOTAL PRESETS)
+  // 9 CATEGORIES (150+ TOTAL PRESETS)
   categories: {
     navbars: {
-      title: 'Header & Navbar (15 Presets)',
+      title: 'Header & Navbar (20 Presets)',
       components: [
         'Navbar', 'NavbarMinimal', 'NavbarCentred', 'NavbarFloatingPill', 'NavbarMegaMenu',
         'NavbarCyberpunk', 'NavbarLuxuryDark', 'NavbarSplitCTA', 'NavbarAppHeader', 'NavbarGlassmorphism',
-        'NavbarGradientBorder', 'NavbarMobileFriendly', 'NavbarECommerce', 'NavbarNewsMagazine', 'NavbarBrutalist'
+        'NavbarGradientBorder', 'NavbarMobileFriendly', 'NavbarECommerce', 'NavbarNewsMagazine', 'NavbarBrutalist',
+        'NavbarFloatingGlass', 'NavbarMinimalMonochrome', 'NavbarGradientSubtle', 'NavbarCompactSearch', 'NavbarDrawerMenu'
       ],
       defaultExpanded: true,
     },
     heros: {
-      title: 'Hero-Section (15 Presets)',
+      title: 'Hero-Section (20 Presets)',
       components: [
         'Hero', 'HeroVideoModal', 'HeroSplitImage', 'HeroCyberpunkGlow', 'HeroMinimalSerif',
         'HeroAppMockup', 'HeroFormCapture', 'HeroGradientSphere', 'HeroNewsletterSignup', 'Hero3DCourse',
-        'HeroBentoGrid', 'HeroFloatingCards', 'HeroCountdownLaunch', 'HeroEventConference', 'HeroBrutalistRaw'
+        'HeroBentoGrid', 'HeroFloatingCards', 'HeroCountdownLaunch', 'HeroEventConference', 'HeroBrutalistRaw',
+        'HeroVideoBackground', 'HeroInteractiveCodeEditor', 'HeroMinimalistTypography', 'HeroProductCarousel', 'HeroIsometricIllustration'
       ],
       defaultExpanded: false,
     },
     features: {
-      title: 'Features & Bento-Grid (15 Presets)',
+      title: 'Features & Bento-Grid (20 Presets)',
       components: [
         'BentoGrid', 'BentoAsymmetric4', 'BentoMetrics6', 'FeatureListSplit', 'FeatureGridCards',
         'FeatureComparisonTable', 'FeatureStepProcess', 'FeatureInteractiveTabs', 'StatsCounterGrid', 'StatsSplitChart',
-        'FeatureIconRows', 'FeatureHoverCards', 'FeatureTimeline', 'FeatureTechStackGrid', 'FeatureBentoDarkVoid'
+        'FeatureIconRows', 'FeatureHoverCards', 'FeatureTimeline', 'FeatureTechStackGrid', 'FeatureBentoDarkVoid',
+        'BentoFeatureHighlight3', 'FeatureComparisonGrid', 'FeatureInteractiveHoverGrid', 'FeatureTerminalSnippet', 'FeatureWorkflowPipeline'
       ],
       defaultExpanded: false,
     },
     showcases: {
-      title: 'Portfolio & Showcase (12 Presets)',
+      title: 'Portfolio & Showcase (20 Presets)',
       components: [
         'PortfolioShowcase', 'PortfolioMasonryGrid', 'PortfolioClientCarousel', 'PortfolioAppStoreScreens',
         'ClientLogosMarquee', 'ClientLogosGrid', 'CaseStudyDetailCard', 'PortfolioFilterTabs',
-        'PortfolioBeforeAfter', 'PortfolioVideoGrid', 'PortfolioAwardBadges', 'PortfolioClientQuotes'
+        'PortfolioBeforeAfter', 'PortfolioVideoGrid', 'PortfolioAwardBadges', 'PortfolioClientQuotes',
+        'PortfolioInteractiveGrid', 'Portfolio3DTiltCard', 'PortfolioMetricsShowcase', 'PortfolioLogoWallDark',
+        'PortfolioBeforeAfterSlider', 'PortfolioFullBleedBanner', 'PortfolioTestimonialCard', 'PortfolioHorizontalScroll'
       ],
       defaultExpanded: false,
     },
     socialProof: {
-      title: 'Testimonials & FAQ (12 Presets)',
+      title: 'Testimonials & FAQ (20 Presets)',
       components: [
         'Testimonials', 'TestimonialGrid3', 'TestimonialSingleHero', 'TestimonialVideoCards', 'TestimonialTwitterCards',
         'FaqAccordion', 'FaqGrid2Column', 'FaqSearchable', 'FaqCategoryTabs', 'TrustSecurityBadges',
-        'CommunityDiscordCard', 'WallOfLove'
+        'CommunityDiscordCard', 'WallOfLove',
+        'TestimonialCarousel3D', 'TestimonialQuoteMinimal', 'TestimonialCompanyGrid', 'FaqTabbedAccordion',
+        'FaqInteractiveSearch', 'FaqCardGrid3Column', 'CommunityStatsBox', 'TrustCertificatesBadge'
       ],
       defaultExpanded: false,
     },
     pricing: {
-      title: 'Pricing & CTA-Section (15 Presets)',
+      title: 'Pricing & CTA-Section (20 Presets)',
       components: [
         'PricingTable', 'Pricing3TierToggle', 'PricingComparisonMatrix', 'PricingUsageBased', 'PricingSinglePlan',
         'CtaBanner', 'CtaSplitForm', 'CtaAppDownload', 'CtaUrgencyTimer', 'CtaGlassCard',
-        'CtaNewsletterPill', 'CtaFullWidthVideo', 'CtaBookDemoCalendar', 'CtaFreeTrialCard', 'CtaDarkCyberpunk'
+        'CtaNewsletterPill', 'CtaFullWidthVideo', 'CtaBookDemoCalendar', 'CtaFreeTrialCard', 'CtaDarkCyberpunk',
+        'PricingSliderTier', 'PricingEnterpriseCustom', 'CtaInteractiveNewsletter', 'CtaFullWidthGradient', 'CtaFloatingBar'
       ],
       defaultExpanded: false,
     },
     footers: {
-      title: 'Footer-Section (11 Presets)',
+      title: 'Footer-Section (20 Presets)',
       components: [
         'Footer', 'FooterMinimalRail', 'FooterNewsletterBig', 'FooterCyberpunkMono', 'FooterAppStoreLinks',
         'FooterLuxurySerif', 'FooterMegaSiteMap', 'FooterSocialIconsOnly', 'FooterGradientBorder', 'FooterBrutalistBox',
-        'FooterCenteredBrand'
+        'FooterCenteredBrand',
+        'FooterMinimalInline', 'FooterMultiColumnMap', 'FooterCyberpunkTerminal', 'FooterNewsletterInline',
+        'FooterBadgeRow', 'FooterMinimalCentered', 'FooterDarkGrid', 'FooterFloatingPill', 'FooterCompactBar'
       ],
       defaultExpanded: false,
     },
@@ -327,8 +387,8 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       defaultExpanded: false,
     },
     atomic: {
-      title: 'Basic UI Elements (7 Presets)',
-      components: ['Heading', 'Text', 'Button', 'Image', 'PillBadge', 'Spacer', 'Divider'],
+      title: 'Basic UI Elements (12 Presets)',
+      components: ['Heading', 'Text', 'Button', 'Image', 'PillBadge', 'Spacer', 'Divider', 'DividerGradient', 'StatBadgePill', 'ImageLightboxFrame', 'VideoPlayerEmbed', 'CodeBlockTerminal'],
       defaultExpanded: false,
     },
   },
@@ -533,6 +593,95 @@ const puckConfig: Config<ComponentProps, RootProps> = {
         </header>
       )
     },
+    NavbarFloatingGlass: {
+      fields: {
+        brandName: { type: 'text' },
+        link1: { type: 'text' }, link1Url: { type: 'text' },
+        link2: { type: 'text' }, link2Url: { type: 'text' },
+        link3: { type: 'text' }, link3Url: { type: 'text' },
+        ctaText: { type: 'text' }, ctaUrl: { type: 'text' }
+      },
+      defaultProps: {
+        brandName: 'AETHER.GLASS',
+        link1: 'Features', link1Url: '/services',
+        link2: 'Showcase', link2Url: '/about',
+        link3: 'Pricing', link3Url: '/pricing',
+        ctaText: 'Get Early Access', ctaUrl: '/contact'
+      },
+      render: ({ brandName, link1, link1Url, link2, link2Url, link3, link3Url, ctaText, ctaUrl }) => (
+        <div className="py-4 px-6 bg-[#06070a] font-sans">
+          <header className="max-w-5xl mx-auto px-6 py-3 bg-white/5 backdrop-blur-2xl border border-white/10 rounded-2xl flex items-center justify-between text-white text-xs shadow-2xl">
+            <div className="font-extrabold text-cyan-400 text-sm tracking-wider">{brandName}</div>
+            <nav className="hidden md:flex items-center gap-6 text-slate-300 font-medium">
+              <a href={link1Url || '/services'} className="hover:text-white transition-colors">{link1}</a>
+              <a href={link2Url || '/about'} className="hover:text-white transition-colors">{link2}</a>
+              <a href={link3Url || '/pricing'} className="hover:text-white transition-colors">{link3}</a>
+            </nav>
+            <a href={ctaUrl || '/contact'} className="px-4 py-2 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs hover:bg-cyan-400 transition-all">{ctaText}</a>
+          </header>
+        </div>
+      )
+    },
+    NavbarMinimalMonochrome: {
+      fields: {
+        brandName: { type: 'text' },
+        link1: { type: 'text' }, link1Url: { type: 'text' },
+        link2: { type: 'text' }, link2Url: { type: 'text' },
+        ctaText: { type: 'text' }, ctaUrl: { type: 'text' }
+      },
+      defaultProps: { brandName: 'STUDIO NOIR', link1: 'Projects', link1Url: '/services', link2: 'About', link2Url: '/about', ctaText: 'Contact', ctaUrl: '/contact' },
+      render: ({ brandName, link1, link1Url, link2, link2Url, ctaText, ctaUrl }) => (
+        <header className="px-8 py-5 bg-[#050505] border-b border-neutral-900 font-serif text-white flex justify-between items-center text-xs">
+          <div className="font-semibold text-sm tracking-widest uppercase">{brandName}</div>
+          <div className="flex items-center gap-8 font-sans uppercase tracking-widest text-[11px] text-neutral-400">
+            <a href={link1Url || '/services'} className="hover:text-white">{link1}</a>
+            <a href={link2Url || '/about'} className="hover:text-white">{link2}</a>
+            <a href={ctaUrl || '/contact'} className="text-white border-b border-white pb-0.5">{ctaText}</a>
+          </div>
+        </header>
+      )
+    },
+    NavbarGradientSubtle: {
+      fields: { brandName: { type: 'text' }, tagText: { type: 'text' }, ctaText: { type: 'text' }, ctaUrl: { type: 'text' } },
+      defaultProps: { brandName: 'LUMINA', tagText: 'v2.4 PRO', ctaText: 'Launch Studio', ctaUrl: '/pricing' },
+      render: ({ brandName, tagText, ctaText, ctaUrl }) => (
+        <header className="px-6 py-3 bg-gradient-to-r from-[#0d0e15] via-[#121524] to-[#0d0e15] border-b border-cyan-500/20 font-sans text-white flex justify-between items-center text-xs">
+          <div className="flex items-center gap-3">
+            <span className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 text-sm">{brandName}</span>
+            <span className="px-2 py-0.5 rounded text-[9px] font-mono bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">{tagText}</span>
+          </div>
+          <a href={ctaUrl || '/pricing'} className="px-4 py-2 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-bold">{ctaText}</a>
+        </header>
+      )
+    },
+    NavbarCompactSearch: {
+      fields: { brandName: { type: 'text' }, searchPlaceholder: { type: 'text' }, ctaText: { type: 'text' }, ctaUrl: { type: 'text' } },
+      defaultProps: { brandName: 'VAULT ENGINE', searchPlaceholder: 'Search components...', ctaText: 'Sign In', ctaUrl: '/login' },
+      render: ({ brandName, searchPlaceholder, ctaText, ctaUrl }) => (
+        <header className="px-6 py-3 bg-[#0a0c14] border-b border-white/10 font-sans text-white flex justify-between items-center text-xs">
+          <div className="flex items-center gap-6">
+            <span className="font-black text-cyan-400">{brandName}</span>
+            <div className="relative w-56 hidden sm:block">
+              <input type="text" readOnly placeholder={searchPlaceholder} className="w-full px-3 py-1 bg-[#06070a] border border-white/10 rounded-lg text-xs text-slate-400" />
+            </div>
+          </div>
+          <a href={ctaUrl || '/login'} className="px-4 py-1.5 rounded-lg bg-white/10 border border-white/15 text-white font-bold">{ctaText}</a>
+        </header>
+      )
+    },
+    NavbarDrawerMenu: {
+      fields: { brandName: { type: 'text' }, menuLabel: { type: 'text' }, ctaText: { type: 'text' }, ctaUrl: { type: 'text' } },
+      defaultProps: { brandName: 'NEXUS HUB', menuLabel: 'MENU', ctaText: 'Explore System', ctaUrl: '/services' },
+      render: ({ brandName, menuLabel, ctaText, ctaUrl }) => (
+        <header className="px-8 py-4 bg-[#090a0f] border-b border-white/10 font-sans text-white flex justify-between items-center text-xs">
+          <div className="flex items-center gap-4">
+            <button className="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 font-mono text-[10px] text-slate-300">☰ {menuLabel}</button>
+            <span className="font-black text-sm">{brandName}</span>
+          </div>
+          <a href={ctaUrl || '/services'} className="px-4 py-2 rounded-xl bg-cyan-500 text-slate-950 font-black">{ctaText}</a>
+        </header>
+      )
+    },
 
     // 2. HERO SECTIONS (15 PRESETS)
     Hero: {
@@ -650,6 +799,86 @@ const puckConfig: Config<ComponentProps, RootProps> = {
         <section className="py-24 px-8 bg-black text-white font-mono border-b-2 border-white"><div className="max-w-5xl mx-auto"><span className="text-cyan-400 text-xs mb-2 block">{tagText}</span><h1 className="text-6xl font-black mb-4 tracking-tighter">{bigTitle}</h1><p className="text-xs text-slate-400 mb-8">{description}</p><a href="/pricing" className="px-6 py-3 bg-white text-black font-black text-xs border border-white inline-block">{ctaText}</a></div></section>
       )
     },
+    HeroVideoBackground: {
+      fields: { badge: { type: 'text' }, title: { type: 'text' }, description: { type: 'textarea' }, ctaText: { type: 'text' }, ctaUrl: { type: 'text' }, secondaryCta: { type: 'text' }, secondaryUrl: { type: 'text' } },
+      defaultProps: { badge: 'CINEMATIC EXPERIENCE', title: 'Next-Gen Visual Web Engine', description: 'Experience sub-millisecond dynamic component rendering in real-time.', ctaText: 'Start Free Trial', ctaUrl: '/pricing', secondaryCta: 'Learn More', secondaryUrl: '/about' },
+      render: ({ badge, title, description, ctaText, ctaUrl, secondaryCta, secondaryUrl }) => (
+        <section className="relative py-32 px-6 bg-[#040508] text-white font-sans text-center overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-b from-cyan-900/10 via-black to-[#090a0f] pointer-events-none" />
+          <div className="max-w-4xl mx-auto relative z-10">
+            <span className="px-4 py-1.5 rounded-full text-[10px] font-mono font-extrabold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 uppercase tracking-widest inline-block mb-6">{badge}</span>
+            <h1 className="text-5xl font-black mb-6 leading-tight text-white">{title}</h1>
+            <p className="text-slate-400 text-base max-w-2xl mx-auto mb-10">{description}</p>
+            <div className="flex justify-center gap-4">
+              <a href={ctaUrl || '/pricing'} className="px-8 py-3.5 rounded-2xl bg-cyan-500 text-slate-950 font-black text-xs shadow-lg">{ctaText}</a>
+              <a href={secondaryUrl || '/about'} className="px-8 py-3.5 rounded-2xl bg-white/10 text-white font-bold text-xs border border-white/15">{secondaryCta}</a>
+            </div>
+          </div>
+        </section>
+      )
+    },
+    HeroInteractiveCodeEditor: {
+      fields: { badge: { type: 'text' }, title: { type: 'text' }, subhead: { type: 'textarea' }, codeSnippet: { type: 'textarea' }, ctaText: { type: 'text' }, ctaUrl: { type: 'text' } },
+      defaultProps: { badge: 'DEV FIRST ENGINE', title: 'Code & Visual Studio Unified', subhead: 'Export production-ready TypeScript code directly from your Puck canvas.', codeSnippet: 'import { Puck } from "@puckeditor/core";\n\nexport default function App() {\n  return <Puck config={puckConfig} data={pageData} />;\n}', ctaText: 'Copy Starter Kit', ctaUrl: '/services' },
+      render: ({ badge, title, subhead, codeSnippet, ctaText, ctaUrl }) => (
+        <section className="py-24 px-6 bg-[#08090e] font-sans text-white">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <span className="px-3 py-1 rounded-md text-xs font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 mb-4 inline-block">{badge}</span>
+              <h1 className="text-4xl font-extrabold mb-4">{title}</h1>
+              <p className="text-slate-400 text-sm mb-8 leading-relaxed">{subhead}</p>
+              <a href={ctaUrl || '/services'} className="px-6 py-3 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs inline-block">{ctaText}</a>
+            </div>
+            <div className="bg-[#040508] border border-cyan-500/30 rounded-2xl p-4 font-mono text-xs text-cyan-300 shadow-2xl">
+              <div className="flex gap-1.5 mb-3"><div className="w-3 h-3 rounded-full bg-rose-500/80"/><div className="w-3 h-3 rounded-full bg-amber-500/80"/><div className="w-3 h-3 rounded-full bg-emerald-500/80"/></div>
+              <pre className="overflow-x-auto text-slate-300"><code>{codeSnippet}</code></pre>
+            </div>
+          </div>
+        </section>
+      )
+    },
+    HeroMinimalistTypography: {
+      fields: { badge: { type: 'text' }, mainHeading: { type: 'text' }, subhead: { type: 'text' }, ctaText: { type: 'text' }, ctaUrl: { type: 'text' } },
+      defaultProps: { badge: 'ISSUE 2026', mainHeading: 'CLARITY IN DIGITAL FORM', subhead: 'Purity of typography meets modern web architecture.', ctaText: 'READ MONOGRAPH', ctaUrl: '/about' },
+      render: ({ badge, mainHeading, subhead, ctaText, ctaUrl }) => (
+        <section className="py-32 px-8 bg-[#090a0f] font-serif text-white text-center border-b border-white/10">
+          <div className="max-w-3xl mx-auto">
+            <span className="text-[10px] font-sans tracking-[0.3em] text-slate-400 uppercase mb-8 block">{badge}</span>
+            <h1 className="text-5xl font-light leading-tight mb-6 tracking-wide">{mainHeading}</h1>
+            <p className="font-sans text-xs text-slate-400 max-w-lg mx-auto mb-10 tracking-widest uppercase">{subhead}</p>
+            <a href={ctaUrl || '/about'} className="font-sans text-xs uppercase tracking-widest text-slate-200 border-b border-white/50 pb-1 hover:border-white">{ctaText}</a>
+          </div>
+        </section>
+      )
+    },
+    HeroProductCarousel: {
+      fields: { badge: { type: 'text' }, title: { type: 'text' }, description: { type: 'textarea' }, ctaText: { type: 'text' }, ctaUrl: { type: 'text' } },
+      defaultProps: { badge: 'FEATURED CATALOGUE', title: 'Explore Premium Site Presets', description: 'Over 150+ pre-built components designed for SaaS, E-Commerce, and Portfolios.', ctaText: 'Browse Templates', ctaUrl: '/pricing' },
+      render: ({ badge, title, description, ctaText, ctaUrl }) => (
+        <section className="py-20 px-6 bg-[#0a0c14] text-white font-sans text-center">
+          <div className="max-w-4xl mx-auto">
+            <span className="px-3 py-1 rounded-full text-xs font-bold bg-sky-500/20 text-sky-300 border border-sky-500/30 mb-4 inline-block">{badge}</span>
+            <h1 className="text-4xl font-extrabold mb-4">{title}</h1>
+            <p className="text-slate-400 text-sm max-w-xl mx-auto mb-8">{description}</p>
+            <a href={ctaUrl || '/pricing'} className="px-6 py-3 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs inline-block">{ctaText}</a>
+          </div>
+        </section>
+      )
+    },
+    HeroIsometricIllustration: {
+      fields: { badge: { type: 'text' }, title: { type: 'text' }, description: { type: 'textarea' }, ctaText: { type: 'text' }, ctaUrl: { type: 'text' } },
+      defaultProps: { badge: 'SYSTEM ARCHITECTURE', title: 'Visual Multi-Page Canvas Engine', description: 'Synchronize page state, routing, and database JSON payload cleanly.', ctaText: 'Deploy Platform', ctaUrl: '/services' },
+      render: ({ badge, title, description, ctaText, ctaUrl }) => (
+        <section className="py-24 px-6 bg-[#06070a] text-white font-sans border-b border-white/10">
+          <div className="max-w-5xl mx-auto text-center">
+            <span className="px-3 py-1 rounded-md text-xs font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30 mb-6 inline-block">{badge}</span>
+            <h1 className="text-4xl font-black mb-4">{title}</h1>
+            <p className="text-slate-400 text-sm max-w-xl mx-auto mb-8">{description}</p>
+            <a href={ctaUrl || '/services'} className="px-8 py-3.5 rounded-2xl bg-cyan-500 text-slate-950 font-extrabold text-xs inline-block">{ctaText}</a>
+          </div>
+        </section>
+      )
+    },
 
     // 3. FEATURES & BENTO (15 PRESETS)
     BentoGrid: {
@@ -757,6 +986,80 @@ const puckConfig: Config<ComponentProps, RootProps> = {
         <section className="py-20 px-6 bg-[#050608] text-white font-sans text-center border-y border-white/10"><div className="max-w-4xl mx-auto"><h2 className="text-3xl font-black mb-3">{title}</h2><p className="text-slate-400 text-xs mb-10">{subhead}</p><div className="grid grid-cols-1 md:grid-cols-3 gap-6"><div className="p-6 rounded-2xl bg-[#090a0f] border border-white/10 text-xs font-bold">{card1}</div><div className="p-6 rounded-2xl bg-[#090a0f] border border-white/10 text-xs font-bold">{card2}</div><div className="p-6 rounded-2xl bg-[#090a0f] border border-white/10 text-xs font-bold">{card3}</div></div></div></section>
       )
     },
+    BentoFeatureHighlight3: {
+      fields: { title: { type: 'text' }, card1Title: { type: 'text' }, card1Desc: { type: 'text' }, card2Title: { type: 'text' }, card2Desc: { type: 'text' }, card3Title: { type: 'text' }, card3Desc: { type: 'text' } },
+      defaultProps: { title: 'High-Impact Bento Cards', card1Title: '99.99% Reliability', card1Desc: 'Enterprise SLA uptime.', card2Title: 'Sub-Millisecond Sync', card2Desc: 'Fast memory cache.', card3Title: 'Zero Lock-in', card3Desc: 'Clean JSON export.' },
+      render: ({ title, card1Title, card1Desc, card2Title, card2Desc, card3Title, card3Desc }) => (
+        <section className="py-20 px-6 bg-[#090a0f] font-sans text-white text-center">
+          <div className="max-w-5xl mx-auto mb-10"><h2 className="text-3xl font-black text-white">{title}</h2></div>
+          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            <div className="p-6 rounded-3xl bg-gradient-to-br from-cyan-950/40 to-[#0f111a] border border-cyan-500/30"><h3 className="text-lg font-bold text-cyan-300 mb-2">{card1Title}</h3><p className="text-xs text-slate-400">{card1Desc}</p></div>
+            <div className="p-6 rounded-3xl bg-gradient-to-br from-purple-950/40 to-[#0f111a] border border-purple-500/30"><h3 className="text-lg font-bold text-purple-300 mb-2">{card2Title}</h3><p className="text-xs text-slate-400">{card2Desc}</p></div>
+            <div className="p-6 rounded-3xl bg-gradient-to-br from-emerald-950/40 to-[#0f111a] border border-emerald-500/30"><h3 className="text-lg font-bold text-emerald-300 mb-2">{card3Title}</h3><p className="text-xs text-slate-400">{card3Desc}</p></div>
+          </div>
+        </section>
+      )
+    },
+    FeatureComparisonGrid: {
+      fields: { title: { type: 'text' }, col1Name: { type: 'text' }, col2Name: { type: 'text' }, row1: { type: 'text' }, row2: { type: 'text' }, row3: { type: 'text' } },
+      defaultProps: { title: 'Feature Comparison', col1Name: 'Nextflow Engine', col2Name: 'Traditional CMS', row1: 'Multi-Page JSON Sync', row2: 'Zero Dependency Export', row3: 'Tailwind CSS Built-in' },
+      render: ({ title, col1Name, col2Name, row1, row2, row3 }) => (
+        <section className="py-20 px-6 bg-[#0c0d16] font-sans text-white">
+          <div className="max-w-4xl mx-auto text-center mb-10"><h2 className="text-3xl font-extrabold">{title}</h2></div>
+          <div className="max-w-3xl mx-auto bg-[#06070a] rounded-2xl border border-white/10 overflow-hidden text-xs">
+            <div className="grid grid-cols-3 p-4 bg-white/5 font-bold border-b border-white/10"><div>Feature</div><div className="text-cyan-400">{col1Name}</div><div className="text-slate-400">{col2Name}</div></div>
+            <div className="grid grid-cols-3 p-4 border-b border-white/5"><div>{row1}</div><div className="text-emerald-400 font-bold">✓ Included</div><div className="text-rose-400">✗ Limited</div></div>
+            <div className="grid grid-cols-3 p-4 border-b border-white/5"><div>{row2}</div><div className="text-emerald-400 font-bold">✓ Included</div><div className="text-rose-400">✗ Complex</div></div>
+            <div className="grid grid-cols-3 p-4"><div>{row3}</div><div className="text-emerald-400 font-bold">✓ Included</div><div className="text-slate-400">Optional</div></div>
+          </div>
+        </section>
+      )
+    },
+    FeatureInteractiveHoverGrid: {
+      fields: { title: { type: 'text' }, item1: { type: 'text' }, item2: { type: 'text' }, item3: { type: 'text' }, item4: { type: 'text' } },
+      defaultProps: { title: 'Interactive Capabilities', item1: 'Dynamic Link Interceptor', item2: 'Multi-Page Canvas Re-keying', item3: 'Supabase DDL Migrations', item4: 'ZIP Offline Renderer' },
+      render: ({ title, item1, item2, item3, item4 }) => (
+        <section className="py-20 px-6 bg-[#080a10] font-sans text-white text-center">
+          <div className="max-w-5xl mx-auto"><h2 className="text-3xl font-bold mb-10">{title}</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs font-bold">
+            <div className="p-5 rounded-2xl bg-[#0f111a] border border-white/10 hover:border-cyan-500 transition-all text-cyan-300">{item1}</div>
+            <div className="p-5 rounded-2xl bg-[#0f111a] border border-white/10 hover:border-sky-500 transition-all text-sky-300">{item2}</div>
+            <div className="p-5 rounded-2xl bg-[#0f111a] border border-white/10 hover:border-purple-500 transition-all text-purple-300">{item3}</div>
+            <div className="p-5 rounded-2xl bg-[#0f111a] border border-white/10 hover:border-emerald-500 transition-all text-emerald-300">{item4}</div>
+          </div></div>
+        </section>
+      )
+    },
+    FeatureTerminalSnippet: {
+      fields: { title: { type: 'text' }, codeContent: { type: 'textarea' }, description: { type: 'text' } },
+      defaultProps: { title: 'CLI Integration', codeContent: '$ npx nextflow init --template=aether\n$ npm run dev\n> Ready on http://localhost:3000', description: 'Deploy your visual template project in under 30 seconds.' },
+      render: ({ title, codeContent, description }) => (
+        <section className="py-20 px-6 bg-[#050608] font-mono text-white text-center border-y border-cyan-500/20">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-2xl font-bold text-cyan-400 mb-2">{title}</h2>
+            <p className="text-xs text-slate-400 mb-6 font-sans">{description}</p>
+            <div className="p-4 rounded-xl bg-black border border-white/15 text-left text-xs text-slate-300 overflow-x-auto">
+              <pre><code>{codeContent}</code></pre>
+            </div>
+          </div>
+        </section>
+      )
+    },
+    FeatureWorkflowPipeline: {
+      fields: { title: { type: 'text' }, step1: { type: 'text' }, step2: { type: 'text' }, step3: { type: 'text' }, step4: { type: 'text' } },
+      defaultProps: { title: '4-Step Production Pipeline', step1: '1. Select Preset', step2: '2. Customize Props', step3: '3. Add Pages', step4: '4. Export ZIP' },
+      render: ({ title, step1, step2, step3, step4 }) => (
+        <section className="py-20 px-6 bg-[#090a0f] font-sans text-white text-center">
+          <div className="max-w-5xl mx-auto"><h2 className="text-3xl font-extrabold mb-10">{title}</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs font-bold">
+            <div className="p-5 rounded-2xl bg-[#0f111a] border border-cyan-500/30 text-cyan-300">{step1}</div>
+            <div className="p-5 rounded-2xl bg-[#0f111a] border border-sky-500/30 text-sky-300">{step2}</div>
+            <div className="p-5 rounded-2xl bg-[#0f111a] border border-purple-500/30 text-purple-300">{step3}</div>
+            <div className="p-5 rounded-2xl bg-[#0f111a] border border-emerald-500/30 text-emerald-300">{step4}</div>
+          </div></div>
+        </section>
+      )
+    },
 
     // 4. PORTFOLIO & SHOWCASE (12 PRESETS)
     PortfolioShowcase: {
@@ -843,6 +1146,110 @@ const puckConfig: Config<ComponentProps, RootProps> = {
         <section className="py-20 px-6 bg-[#0d0f19] text-white font-sans text-center"><div className="max-w-3xl mx-auto p-8 rounded-3xl bg-[#0f111a] border border-cyan-500/30"><div className="text-xs font-bold text-cyan-400 mb-2">{clientName}</div><div className="text-3xl font-black text-emerald-400 mb-4">{resultText}</div><p className="text-sm italic text-slate-300 leading-relaxed">{quote}</p></div></section>
       )
     },
+    PortfolioInteractiveGrid: {
+      fields: { title: { type: 'text' }, p1Name: { type: 'text' }, p1Category: { type: 'text' }, p2Name: { type: 'text' }, p2Category: { type: 'text' } },
+      defaultProps: { title: 'Interactive Portfolio Grid', p1Name: 'Fintech Dashboard v4', p1Category: 'Web App', p2Name: 'Cyberpunk E-Commerce', p2Category: 'Storefront' },
+      render: ({ title, p1Name, p1Category, p2Name, p2Category }) => (
+        <section className="py-20 px-6 bg-[#090a0f] font-sans text-white text-center">
+          <div className="max-w-5xl mx-auto mb-8"><h2 className="text-3xl font-black">{title}</h2></div>
+          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+            <div className="p-8 rounded-3xl bg-[#0f111a] border border-cyan-500/30 hover:border-cyan-400 transition-all"><span className="text-[10px] font-bold text-cyan-400 uppercase block mb-1">{p1Category}</span><h3 className="text-xl font-bold">{p1Name}</h3></div>
+            <div className="p-8 rounded-3xl bg-[#0f111a] border border-purple-500/30 hover:border-purple-400 transition-all"><span className="text-[10px] font-bold text-purple-400 uppercase block mb-1">{p2Category}</span><h3 className="text-xl font-bold">{p2Name}</h3></div>
+          </div>
+        </section>
+      )
+    },
+    Portfolio3DTiltCard: {
+      fields: { title: { type: 'text' }, cardTitle: { type: 'text' }, cardTag: { type: 'text' }, description: { type: 'textarea' } },
+      defaultProps: { title: '3D Card Perspective', cardTitle: 'Aether Holographic Studio', cardTag: 'AR / VR WEB', description: 'Real-time 3D web showcase running WebGL 60FPS.' },
+      render: ({ title, cardTitle, cardTag, description }) => (
+        <section className="py-20 px-6 bg-[#050608] font-sans text-white text-center">
+          <div className="max-w-4xl mx-auto"><h2 className="text-3xl font-extrabold mb-8">{title}</h2>
+          <div className="p-10 rounded-3xl bg-gradient-to-br from-[#121524] to-[#08090e] border border-cyan-500/40 shadow-[0_0_50px_rgba(6,182,212,0.2)] text-left">
+            <span className="text-[10px] font-mono text-cyan-400 uppercase block mb-2">{cardTag}</span>
+            <h3 className="text-2xl font-black mb-3">{cardTitle}</h3>
+            <p className="text-xs text-slate-400">{description}</p>
+          </div></div>
+        </section>
+      )
+    },
+    PortfolioMetricsShowcase: {
+      fields: { title: { type: 'text' }, metric1: { type: 'text' }, label1: { type: 'text' }, metric2: { type: 'text' }, label2: { type: 'text' } },
+      defaultProps: { title: 'Showcase Impact Metrics', metric1: '+240%', label1: 'Conversion Increase', metric2: '0.12s', label2: 'Largest Contentful Paint' },
+      render: ({ title, metric1, label1, metric2, label2 }) => (
+        <section className="py-16 px-6 bg-[#0a0c14] font-sans text-white text-center">
+          <div className="max-w-4xl mx-auto"><h2 className="text-2xl font-bold mb-8">{title}</h2>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="p-6 rounded-2xl bg-[#06070a] border border-cyan-500/30"><div className="text-4xl font-black text-cyan-400 mb-1">{metric1}</div><div className="text-xs text-slate-400">{label1}</div></div>
+            <div className="p-6 rounded-2xl bg-[#06070a] border border-emerald-500/30"><div className="text-4xl font-black text-emerald-400 mb-1">{metric2}</div><div className="text-xs text-slate-400">{label2}</div></div>
+          </div></div>
+        </section>
+      )
+    },
+    PortfolioLogoWallDark: {
+      fields: { title: { type: 'text' }, logo1: { type: 'text' }, logo2: { type: 'text' }, logo3: { type: 'text' }, logo4: { type: 'text' } },
+      defaultProps: { title: 'Trusted By Leading Design Studios', logo1: 'AETHER', logo2: 'CYBERPULSE', logo3: 'NEXUS', logo4: 'LUMINA' },
+      render: ({ title, logo1, logo2, logo3, logo4 }) => (
+        <section className="py-16 px-6 bg-[#050608] font-sans text-white text-center border-y border-white/10">
+          <div className="max-w-5xl mx-auto"><span className="text-xs text-slate-400 uppercase tracking-widest block mb-8">{title}</span>
+          <div className="flex flex-wrap justify-center gap-12 font-black text-lg text-slate-400"><span>{logo1}</span><span>{logo2}</span><span>{logo3}</span><span>{logo4}</span></div></div>
+        </section>
+      )
+    },
+    PortfolioBeforeAfterSlider: {
+      fields: { title: { type: 'text' }, beforeLabel: { type: 'text' }, afterLabel: { type: 'text' } },
+      defaultProps: { title: 'Visual Redesign Comparison', beforeLabel: 'Legacy Wordpress Layout', afterLabel: 'Nextflow Studio Awwwards Preset' },
+      render: ({ title, beforeLabel, afterLabel }) => (
+        <section className="py-20 px-6 bg-[#090a0f] font-sans text-white text-center">
+          <div className="max-w-4xl mx-auto"><h2 className="text-3xl font-extrabold mb-8">{title}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+            <div className="p-6 rounded-2xl bg-rose-950/20 border border-rose-500/30 text-rose-300 font-bold text-xs">{beforeLabel}</div>
+            <div className="p-6 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 text-emerald-300 font-bold text-xs">{afterLabel}</div>
+          </div></div>
+        </section>
+      )
+    },
+    PortfolioFullBleedBanner: {
+      fields: { title: { type: 'text' }, subtitle: { type: 'text' }, ctaText: { type: 'text' }, ctaUrl: { type: 'text' } },
+      defaultProps: { title: 'Transform Your Digital Presense Today', subtitle: 'Ship 10x faster with production-ready Nextflow templates.', ctaText: 'Explore Template Collection', ctaUrl: '/pricing' },
+      render: ({ title, subtitle, ctaText, ctaUrl }) => (
+        <section className="py-24 px-8 bg-gradient-to-r from-cyan-950 via-[#090a0f] to-blue-950 font-sans text-white text-center border-y border-cyan-500/30">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-4xl font-black mb-4">{title}</h2>
+            <p className="text-slate-300 text-sm mb-8">{subtitle}</p>
+            <a href={ctaUrl || '/pricing'} className="px-8 py-3.5 rounded-2xl bg-cyan-500 text-slate-950 font-black text-xs inline-block">{ctaText}</a>
+          </div>
+        </section>
+      )
+    },
+    PortfolioTestimonialCard: {
+      fields: { title: { type: 'text' }, quote: { type: 'textarea' }, clientName: { type: 'text' }, clientRole: { type: 'text' } },
+      defaultProps: { title: 'Featured Review', quote: '"The multi-page routing and zip export system in Nextflow Studio completely changed our project delivery workflow."', clientName: 'Sarah Jenkins', clientRole: 'Head of Product, Lumina' },
+      render: ({ title, quote, clientName, clientRole }) => (
+        <section className="py-20 px-6 bg-[#08090e] font-sans text-white text-center">
+          <div className="max-w-3xl mx-auto p-8 rounded-3xl bg-[#0f111a] border border-white/10">
+            <span className="text-xs text-cyan-400 font-bold uppercase tracking-widest block mb-4">{title}</span>
+            <p className="text-base italic text-slate-200 mb-6 leading-relaxed">{quote}</p>
+            <div className="text-xs font-bold text-white">{clientName}</div>
+            <div className="text-[10px] text-slate-400">{clientRole}</div>
+          </div>
+        </section>
+      )
+    },
+    PortfolioHorizontalScroll: {
+      fields: { title: { type: 'text' }, item1: { type: 'text' }, item2: { type: 'text' }, item3: { type: 'text' } },
+      defaultProps: { title: 'Horizontal Work Rail', item1: 'Project 01: Cyberpunk Dashboard', item2: 'Project 02: Luxury Monograph', item3: 'Project 03: E-Commerce Storefront' },
+      render: ({ title, item1, item2, item3 }) => (
+        <section className="py-20 px-6 bg-[#06070a] font-sans text-white text-center">
+          <div className="max-w-5xl mx-auto"><h2 className="text-3xl font-bold mb-8">{title}</h2>
+          <div className="flex gap-6 overflow-x-auto pb-4 text-left">
+            <div className="min-w-[300px] p-6 rounded-2xl bg-[#0f111a] border border-cyan-500/30 font-bold text-xs text-cyan-300">{item1}</div>
+            <div className="min-w-[300px] p-6 rounded-2xl bg-[#0f111a] border border-purple-500/30 font-bold text-xs text-purple-300">{item2}</div>
+            <div className="min-w-[300px] p-6 rounded-2xl bg-[#0f111a] border border-emerald-500/30 font-bold text-xs text-emerald-300">{item3}</div>
+          </div></div>
+        </section>
+      )
+    },
 
     // 5. TESTIMONIALS & FAQ (12 PRESETS)
     Testimonials: {
@@ -927,6 +1334,106 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       defaultProps: { title: 'Wall of Love From Developers', tweet1: '"Nextflow is the fastest way to turn visual ideas into Next.js code."', tweet2: '"100 presets out of the box saved us weeks of UI design."', tweet3: '"Supabase sync works like magic."' },
       render: ({ title, tweet1, tweet2, tweet3 }) => (
         <section className="py-20 px-6 bg-[#090a0f] text-white font-sans text-center"><div className="max-w-6xl mx-auto"><h2 className="text-3xl font-extrabold mb-10">{title}</h2><div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left"><div className="p-6 rounded-2xl bg-[#0f111a] border border-white/10 text-xs text-slate-300 italic">{tweet1}</div><div className="p-6 rounded-2xl bg-[#0f111a] border border-white/10 text-xs text-slate-300 italic">{tweet2}</div><div className="p-6 rounded-2xl bg-[#0f111a] border border-white/10 text-xs text-slate-300 italic">{tweet3}</div></div></div></section>
+      )
+    },
+    TestimonialCarousel3D: {
+      fields: { title: { type: 'text' }, quote1: { type: 'textarea' }, name1: { type: 'text' }, quote2: { type: 'textarea' }, name2: { type: 'text' } },
+      defaultProps: { title: '3D Testimonial Perspective', quote1: '"The speed at which we deployed our multi-page marketing site was unmatched."', name1: 'Alex Vance', quote2: '"Puck Studio components allowed us to customize every prop seamlessly."', name2: 'Elena Rostova' },
+      render: ({ title, quote1, name1, quote2, name2 }) => (
+        <section className="py-20 px-6 bg-[#06070a] font-sans text-white text-center">
+          <div className="max-w-4xl mx-auto"><h2 className="text-3xl font-black mb-8">{title}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+            <div className="p-6 rounded-3xl bg-[#0f111a] border border-cyan-500/30"><p className="text-xs text-slate-300 italic mb-4">{quote1}</p><strong className="text-xs text-cyan-400 font-bold">{name1}</strong></div>
+            <div className="p-6 rounded-3xl bg-[#0f111a] border border-purple-500/30"><p className="text-xs text-slate-300 italic mb-4">{quote2}</p><strong className="text-xs text-purple-400 font-bold">{name2}</strong></div>
+          </div></div>
+        </section>
+      )
+    },
+    TestimonialQuoteMinimal: {
+      fields: { quote: { type: 'textarea' }, author: { type: 'text' }, role: { type: 'text' } },
+      defaultProps: { quote: '"Design systems should feel weightless. Nextflow gives us exact architectural control without code bloat."', author: 'David Kim', role: 'Principal Architect, Cyberpulse' },
+      render: ({ quote, author, role }) => (
+        <section className="py-20 px-8 bg-[#090a0f] font-serif text-white text-center border-y border-white/10">
+          <div className="max-w-3xl mx-auto">
+            <p className="text-xl font-light text-slate-200 italic mb-6 leading-relaxed">{quote}</p>
+            <div className="font-sans text-xs font-bold uppercase tracking-widest text-cyan-400">{author}</div>
+            <div className="font-sans text-[10px] text-slate-500 tracking-wider uppercase">{role}</div>
+          </div>
+        </section>
+      )
+    },
+    TestimonialCompanyGrid: {
+      fields: { title: { type: 'text' }, company1: { type: 'text' }, company2: { type: 'text' }, company3: { type: 'text' } },
+      defaultProps: { title: 'Enterprise Clients Endorsement', company1: 'VORTEX AI', company2: 'AETHER LABS', company3: 'LUMINA OS' },
+      render: ({ title, company1, company2, company3 }) => (
+        <section className="py-16 px-6 bg-[#08090e] font-sans text-white text-center">
+          <div className="max-w-4xl mx-auto"><span className="text-xs font-bold text-slate-400 uppercase tracking-widest block mb-6">{title}</span>
+          <div className="flex justify-center gap-8 text-xs font-extrabold text-cyan-300"><span>{company1}</span><span>{company2}</span><span>{company3}</span></div></div>
+        </section>
+      )
+    },
+    FaqTabbedAccordion: {
+      fields: { title: { type: 'text' }, tab1: { type: 'text' }, q1: { type: 'text' }, a1: { type: 'text' }, tab2: { type: 'text' }, q2: { type: 'text' }, a2: { type: 'text' } },
+      defaultProps: { title: 'Tabbed Knowledge Center', tab1: 'General', q1: 'How do I add new pages?', a1: 'Use the Page Manager modal in the top studio header bar.', tab2: 'Export', q2: 'What is included in the ZIP?', a2: 'Offline ready HTML files with relative internal page link routing.' },
+      render: ({ title, tab1, q1, a1, tab2, q2, a2 }) => (
+        <section className="py-20 px-6 bg-[#0d0f19] font-sans text-white text-center">
+          <div className="max-w-4xl mx-auto"><h2 className="text-3xl font-extrabold mb-8">{title}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+            <div className="p-6 rounded-2xl bg-[#0f111a] border border-cyan-500/30"><span className="text-[10px] font-bold text-cyan-400 uppercase block mb-1">{tab1}</span><strong className="text-xs text-white block mb-1">{q1}</strong><p className="text-xs text-slate-400">{a1}</p></div>
+            <div className="p-6 rounded-2xl bg-[#0f111a] border border-sky-500/30"><span className="text-[10px] font-bold text-sky-400 uppercase block mb-1">{tab2}</span><strong className="text-xs text-white block mb-1">{q2}</strong><p className="text-xs text-slate-400">{a2}</p></div>
+          </div></div>
+        </section>
+      )
+    },
+    FaqInteractiveSearch: {
+      fields: { title: { type: 'text' }, searchPlaceholder: { type: 'text' }, q1: { type: 'text' }, a1: { type: 'text' } },
+      defaultProps: { title: 'Searchable FAQ Directory', searchPlaceholder: 'Type question topic...', q1: 'Can I import project-data.json back into Puck?', a1: 'Yes, the ZIP export includes raw project-data.json for complete re-hydration.' },
+      render: ({ title, searchPlaceholder, q1, a1 }) => (
+        <section className="py-20 px-6 bg-[#06070a] font-sans text-white text-center">
+          <div className="max-w-3xl mx-auto"><h2 className="text-3xl font-extrabold mb-4">{title}</h2>
+          <input type="text" readOnly placeholder={searchPlaceholder} className="w-full px-4 py-3 rounded-xl bg-[#0f111a] border border-white/15 text-xs text-slate-300 mb-6" />
+          <div className="p-6 rounded-2xl bg-[#0f111a] border border-white/10 text-left"><strong className="text-xs text-cyan-300 block mb-1">{q1}</strong><p className="text-xs text-slate-400">{a1}</p></div></div>
+        </section>
+      )
+    },
+    FaqCardGrid3Column: {
+      fields: { title: { type: 'text' }, q1: { type: 'text' }, a1: { type: 'text' }, q2: { type: 'text' }, a2: { type: 'text' }, q3: { type: 'text' }, a3: { type: 'text' } },
+      defaultProps: { title: '3-Column FAQ Matrix', q1: 'Security SLA', a1: 'Zero-trust database RLS rules applied.', q2: 'Custom Presets', a2: 'Over 150+ visual block presets included.', q3: 'Tailwind Support', a3: 'Native Tailwind CSS v4 styling.' },
+      render: ({ title, q1, a1, q2, a2, q3, a3 }) => (
+        <section className="py-20 px-6 bg-[#090a0f] font-sans text-white text-center">
+          <div className="max-w-5xl mx-auto"><h2 className="text-3xl font-extrabold mb-10">{title}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            <div className="p-6 rounded-2xl bg-[#0f111a] border border-white/10"><strong className="text-xs text-cyan-400 block mb-1">{q1}</strong><p className="text-xs text-slate-400">{a1}</p></div>
+            <div className="p-6 rounded-2xl bg-[#0f111a] border border-white/10"><strong className="text-xs text-sky-400 block mb-1">{q2}</strong><p className="text-xs text-slate-400">{a2}</p></div>
+            <div className="p-6 rounded-2xl bg-[#0f111a] border border-white/10"><strong className="text-xs text-purple-400 block mb-1">{q3}</strong><p className="text-xs text-slate-400">{a3}</p></div>
+          </div></div>
+        </section>
+      )
+    },
+    CommunityStatsBox: {
+      fields: { title: { type: 'text' }, count: { type: 'text' }, description: { type: 'text' }, joinCta: { type: 'text' }, joinUrl: { type: 'text' } },
+      defaultProps: { title: 'Global Creator Network', count: '100,000+ Active Builders', description: 'Collaborate with visual web developers across 40+ countries.', joinCta: 'Join Global Network', joinUrl: '/contact' },
+      render: ({ title, count, description, joinCta, joinUrl }) => (
+        <section className="py-20 px-6 bg-[#0b0c16] font-sans text-white text-center">
+          <div className="max-w-3xl mx-auto p-8 rounded-3xl bg-cyan-950/20 border border-cyan-500/30">
+            <span className="text-3xl font-black text-cyan-400 block mb-2">{count}</span>
+            <h2 className="text-xl font-bold mb-3">{title}</h2>
+            <p className="text-xs text-slate-300 mb-6">{description}</p>
+            <a href={joinUrl || '/contact'} className="px-6 py-3 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs inline-block">{joinCta}</a>
+          </div>
+        </section>
+      )
+    },
+    TrustCertificatesBadge: {
+      fields: { title: { type: 'text' }, cert1: { type: 'text' }, cert2: { type: 'text' }, cert3: { type: 'text' } },
+      defaultProps: { title: 'Verified Security Certification', cert1: 'SOC2 Compliant', cert2: 'GDPR Verified', cert3: 'ISO 27001' },
+      render: ({ title, cert1, cert2, cert3 }) => (
+        <section className="py-12 px-6 bg-[#050608] font-sans text-white text-center border-y border-white/10">
+          <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-bold text-slate-400">
+            <span>{title}</span>
+            <div className="flex gap-4 text-emerald-400"><span>✓ {cert1}</span><span>✓ {cert2}</span><span>✓ {cert3}</span></div>
+          </div>
+        </section>
       )
     },
 
@@ -1034,6 +1541,73 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       defaultProps: { title: '// EXECUTE_SYSTEM_DEPLOY', subhead: 'Initialize production environment and sync schema in < 1ms.', executeCta: '[ RUN DEPLOYMENT ]' },
       render: ({ title, subhead, executeCta }) => (
         <section className="py-20 px-6 bg-[#050608] text-white font-mono text-center border-t border-cyan-500/30"><div className="max-w-3xl mx-auto"><h2 className="text-3xl font-extrabold text-cyan-400 mb-3">{title}</h2><p className="text-xs text-slate-500 mb-8">{subhead}</p><a href="/pricing" className="px-8 py-3.5 bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 font-bold text-xs inline-block">{executeCta}</a></div></section>
+      )
+    },
+    PricingSliderTier: {
+      fields: { title: { type: 'text' }, minPrice: { type: 'text' }, maxPrice: { type: 'text' }, unitLabel: { type: 'text' } },
+      defaultProps: { title: 'Dynamic Usage Pricing Calculator', minPrice: '$19/mo', maxPrice: '$299/mo', unitLabel: '10K - 1M API Calls' },
+      render: ({ title, minPrice, maxPrice, unitLabel }) => (
+        <section className="py-20 px-6 bg-[#0a0c14] font-sans text-white text-center">
+          <div className="max-w-3xl mx-auto p-8 rounded-3xl bg-[#06070a] border border-cyan-500/30">
+            <h2 className="text-3xl font-black mb-3">{title}</h2>
+            <div className="text-xs font-mono text-slate-400 mb-6">{unitLabel}</div>
+            <div className="text-4xl font-extrabold text-cyan-400 mb-6">{minPrice} - {maxPrice}</div>
+            <a href="/pricing" className="px-6 py-3 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs inline-block">Configure Usage Plan</a>
+          </div>
+        </section>
+      )
+    },
+    PricingEnterpriseCustom: {
+      fields: { title: { type: 'text' }, subtitle: { type: 'text' }, feature1: { type: 'text' }, feature2: { type: 'text' }, ctaText: { type: 'text' }, ctaUrl: { type: 'text' } },
+      defaultProps: { title: 'Custom Enterprise License', subtitle: 'For organizations with strict compliance, SOC2, and dedicated SLA requirements.', feature1: '✓ Dedicated Account Engineer', feature2: '✓ Unlimited Subagent Concurrency', ctaText: 'Contact Enterprise Sales', ctaUrl: '/contact' },
+      render: ({ title, subtitle, feature1, feature2, ctaText, ctaUrl }) => (
+        <section className="py-20 px-6 bg-[#08090e] font-sans text-white text-center">
+          <div className="max-w-4xl mx-auto p-10 rounded-3xl bg-[#0f111a] border border-purple-500/40">
+            <h2 className="text-3xl font-extrabold mb-2">{title}</h2>
+            <p className="text-xs text-slate-400 mb-6">{subtitle}</p>
+            <div className="flex justify-center gap-6 text-xs text-purple-300 font-bold mb-8"><span>{feature1}</span><span>{feature2}</span></div>
+            <a href={ctaUrl || '/contact'} className="px-8 py-3.5 rounded-2xl bg-purple-600 text-white font-extrabold text-xs inline-block">{ctaText}</a>
+          </div>
+        </section>
+      )
+    },
+    CtaInteractiveNewsletter: {
+      fields: { title: { type: 'text' }, description: { type: 'textarea' }, buttonText: { type: 'text' } },
+      defaultProps: { title: 'Join 50,000+ Visual Web Builders', description: 'Get weekly updates on new Awwwards presets, Next.js tutorials, and studio features.', buttonText: 'Subscribe Now' },
+      render: ({ title, description, buttonText }) => (
+        <section className="py-20 px-6 bg-[#06070a] font-sans text-white text-center">
+          <div className="max-w-2xl mx-auto p-8 rounded-3xl bg-[#0f111a] border border-white/10">
+            <h2 className="text-2xl font-bold mb-2">{title}</h2>
+            <p className="text-xs text-slate-400 mb-6">{description}</p>
+            <div className="flex gap-2 max-w-md mx-auto">
+              <input type="email" readOnly placeholder="your@email.com" className="flex-1 px-4 py-2.5 rounded-xl bg-[#090a0f] border border-white/15 text-xs text-slate-300" />
+              <button className="px-5 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs">{buttonText}</button>
+            </div>
+          </div>
+        </section>
+      )
+    },
+    CtaFullWidthGradient: {
+      fields: { title: { type: 'text' }, subhead: { type: 'text' }, buttonText: { type: 'text' }, buttonUrl: { type: 'text' } },
+      defaultProps: { title: 'Ready To Build Production Web Pages?', subhead: 'No code debt, no rigid templates. Pure TypeScript components.', buttonText: 'Launch Puck Studio', buttonUrl: '/admin' },
+      render: ({ title, subhead, buttonText, buttonUrl }) => (
+        <section className="py-24 px-8 bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-700 font-sans text-white text-center">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-4xl font-black mb-3">{title}</h2>
+            <p className="text-slate-100 text-sm mb-8">{subhead}</p>
+            <a href={buttonUrl || '/admin'} className="px-8 py-3.5 rounded-2xl bg-slate-950 text-cyan-300 border border-cyan-400 font-extrabold text-xs inline-block">{buttonText}</a>
+          </div>
+        </section>
+      )
+    },
+    CtaFloatingBar: {
+      fields: { message: { type: 'text' }, buttonText: { type: 'text' }, buttonUrl: { type: 'text' } },
+      defaultProps: { message: '🚀 Nextflow 4.0 Multi-Page Release Available!', buttonText: 'Explore Features', buttonUrl: '/services' },
+      render: ({ message, buttonText, buttonUrl }) => (
+        <div className="py-3 px-6 bg-cyan-950/80 border-y border-cyan-500/40 font-sans text-white text-xs flex justify-between items-center">
+          <span className="font-bold text-cyan-300">{message}</span>
+          <a href={buttonUrl || '/services'} className="px-4 py-1.5 rounded-lg bg-cyan-500 text-slate-950 font-extrabold text-[11px]">{buttonText}</a>
+        </div>
       )
     },
 
@@ -1154,6 +1728,116 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       defaultProps: { brandName: 'NEXTFLOW ENGINE', tagline: 'The visual web builder for Next.js', copyrightText: '© 2026 Nextflow' },
       render: ({ brandName, tagline, copyrightText }) => (
         <footer className="py-12 px-6 bg-[#090a0f] border-t border-white/10 text-white font-sans text-center"><div className="text-lg font-extrabold mb-1">{brandName}</div><p className="text-xs text-slate-400 mb-6">{tagline}</p><div className="text-[10px] text-slate-500">{copyrightText}</div></footer>
+      )
+    },
+    FooterMinimalInline: {
+      fields: {
+        brandName: { type: 'text' }, copyrightText: { type: 'text' },
+        link1: { type: 'text' }, link1Url: { type: 'text' },
+        link2: { type: 'text' }, link2Url: { type: 'text' }
+      },
+      defaultProps: { brandName: 'AETHER STUDIO', copyrightText: '© 2026 Aether Inc.', link1: 'Documentation', link1Url: '/services', link2: 'Support', link2Url: '/contact' },
+      render: ({ brandName, copyrightText, link1, link1Url, link2, link2Url }) => (
+        <footer className="py-6 px-8 bg-[#050608] border-t border-white/10 font-sans text-white text-xs flex justify-between items-center">
+          <div><strong className="text-cyan-400 font-extrabold">{brandName}</strong> <span className="text-slate-500 text-[10px] ml-2">{copyrightText}</span></div>
+          <div className="flex gap-4 text-slate-400">
+            <a href={link1Url || '/services'} className="hover:text-white">{link1}</a>
+            <a href={link2Url || '/contact'} className="hover:text-white">{link2}</a>
+          </div>
+        </footer>
+      )
+    },
+    FooterMultiColumnMap: {
+      fields: { brandName: { type: 'text' }, col1Title: { type: 'text' }, col2Title: { type: 'text' }, copyrightText: { type: 'text' } },
+      defaultProps: { brandName: 'ENTERPRISE FLOW', col1Title: 'Solutions', col2Title: 'Resources', copyrightText: '© 2026 Enterprise Flow' },
+      render: ({ brandName, col1Title, col2Title, copyrightText }) => (
+        <footer className="py-12 px-8 bg-[#0a0c14] border-t border-white/10 font-sans text-white text-xs">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div><div className="font-extrabold text-sm text-cyan-400 mb-2">{brandName}</div><p className="text-[10px] text-slate-400">Next-generation visual web building architecture.</p></div>
+            <div><strong className="text-white block mb-2">{col1Title}</strong><div className="space-y-1 text-slate-400 text-[11px]"><a href="/services" className="block">Web Engine</a><a href="/pricing" className="block">Pricing</a></div></div>
+            <div><strong className="text-white block mb-2">{col2Title}</strong><div className="space-y-1 text-slate-400 text-[11px]"><a href="/about" className="block">About Us</a><a href="/contact" className="block">Contact</a></div></div>
+          </div>
+          <div className="border-t border-white/5 mt-8 pt-4 text-center text-[10px] text-slate-500">{copyrightText}</div>
+        </footer>
+      )
+    },
+    FooterCyberpunkTerminal: {
+      fields: { brandName: { type: 'text' }, systemLog: { type: 'text' }, copyrightText: { type: 'text' } },
+      defaultProps: { brandName: '// TERMINAL_FOOTER', systemLog: 'STATUS: 200_OK | MEM: 12MB', copyrightText: '[ END OF LINE ]' },
+      render: ({ brandName, systemLog, copyrightText }) => (
+        <footer className="py-6 px-6 bg-[#040508] border-t border-cyan-500/40 font-mono text-white text-xs flex justify-between items-center">
+          <div className="flex items-center gap-3"><span className="text-cyan-400 font-bold">{brandName}</span><span className="text-slate-500 text-[10px]">{systemLog}</span></div>
+          <div className="text-slate-500 text-[10px]">{copyrightText}</div>
+        </footer>
+      )
+    },
+    FooterNewsletterInline: {
+      fields: { brandName: { type: 'text' }, placeholder: { type: 'text' }, copyrightText: { type: 'text' } },
+      defaultProps: { brandName: 'NEXUS NEWSLETTER', placeholder: 'Enter email address...', copyrightText: '© 2026 Nexus Hub' },
+      render: ({ brandName, placeholder, copyrightText }) => (
+        <footer className="py-10 px-8 bg-[#090a0f] border-t border-white/10 font-sans text-white text-xs">
+          <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="font-extrabold text-sm">{brandName}</div>
+            <div className="flex gap-2"><input type="email" readOnly placeholder={placeholder} className="px-3 py-1.5 bg-[#0f111a] border border-white/15 rounded-lg text-xs text-slate-300"/><button className="px-4 py-1.5 bg-cyan-500 text-slate-950 font-bold rounded-lg">Join</button></div>
+            <div className="text-[10px] text-slate-500">{copyrightText}</div>
+          </div>
+        </footer>
+      )
+    },
+    FooterBadgeRow: {
+      fields: { brandName: { type: 'text' }, badge1: { type: 'text' }, badge2: { type: 'text' }, copyrightText: { type: 'text' } },
+      defaultProps: { brandName: 'LUMINA OS', badge1: 'SOC2 CERTIFIED', badge2: 'GDPR READY', copyrightText: '© 2026 Lumina' },
+      render: ({ brandName, badge1, badge2, copyrightText }) => (
+        <footer className="py-8 px-6 bg-[#08090e] border-t border-white/10 font-sans text-white text-xs flex justify-between items-center">
+          <div><strong className="text-white text-sm">{brandName}</strong></div>
+          <div className="flex gap-3 text-[10px] font-mono text-cyan-400"><span className="px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30">{badge1}</span><span className="px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/30">{badge2}</span></div>
+          <div className="text-[10px] text-slate-500">{copyrightText}</div>
+        </footer>
+      )
+    },
+    FooterMinimalCentered: {
+      fields: { brandName: { type: 'text' }, tagline: { type: 'text' }, copyrightText: { type: 'text' } },
+      defaultProps: { brandName: 'MONOGRAPH STUDIO', tagline: 'Editorial web design systems', copyrightText: 'MMXXVI All Rights Reserved' },
+      render: ({ brandName, tagline, copyrightText }) => (
+        <footer className="py-12 px-6 bg-[#050505] border-t border-neutral-900 font-serif text-white text-center">
+          <div className="text-base tracking-widest uppercase mb-1">{brandName}</div>
+          <div className="text-[10px] font-sans text-neutral-400 uppercase tracking-widest mb-4">{tagline}</div>
+          <div className="text-[10px] font-sans text-neutral-600">{copyrightText}</div>
+        </footer>
+      )
+    },
+    FooterDarkGrid: {
+      fields: { brandName: { type: 'text' }, description: { type: 'text' }, copyrightText: { type: 'text' } },
+      defaultProps: { brandName: 'CARBON GRID', description: 'High frequency cloud database sync.', copyrightText: '© 2026 Carbon Inc.' },
+      render: ({ brandName, description, copyrightText }) => (
+        <footer className="py-10 px-8 bg-[#090a0f] border-t border-white/10 font-sans text-white text-xs">
+          <div className="max-w-6xl mx-auto flex justify-between items-center">
+            <div><div className="font-extrabold text-sm text-cyan-400">{brandName}</div><p className="text-[10px] text-slate-400">{description}</p></div>
+            <div className="text-[10px] text-slate-500">{copyrightText}</div>
+          </div>
+        </footer>
+      )
+    },
+    FooterFloatingPill: {
+      fields: { brandName: { type: 'text' }, copyrightText: { type: 'text' }, link1: { type: 'text' }, link1Url: { type: 'text' } },
+      defaultProps: { brandName: 'AETHER', copyrightText: '© 2026 Aether Labs', link1: 'Back to Top', link1Url: '/' },
+      render: ({ brandName, copyrightText, link1, link1Url }) => (
+        <div className="py-6 px-6 bg-[#06070a] font-sans text-white">
+          <footer className="max-w-4xl mx-auto px-6 py-3 bg-[#0f111a] border border-cyan-500/30 rounded-2xl flex justify-between items-center text-xs">
+            <div><strong className="text-cyan-300">{brandName}</strong> <span className="text-slate-500 text-[10px] ml-2">{copyrightText}</span></div>
+            <a href={link1Url || '/'} className="text-xs text-cyan-400 font-bold hover:underline">{link1} ↑</a>
+          </footer>
+        </div>
+      )
+    },
+    FooterCompactBar: {
+      fields: { brandName: { type: 'text' }, copyrightText: { type: 'text' } },
+      defaultProps: { brandName: 'NEXTFLOW OS', copyrightText: '© 2026 Nextflow Inc. All rights reserved.' },
+      render: ({ brandName, copyrightText }) => (
+        <footer className="py-4 px-6 bg-[#040508] border-t border-white/10 font-sans text-white text-xs flex justify-between items-center">
+          <span className="font-bold text-slate-300">{brandName}</span>
+          <span className="text-slate-500 text-[10px]">{copyrightText}</span>
+        </footer>
       )
     },
 
@@ -1489,6 +2173,65 @@ const puckConfig: Config<ComponentProps, RootProps> = {
           />
         )
       }
+    },
+    DividerGradient: {
+      fields: { height: { type: 'text' }, gradient: { type: 'text' } },
+      defaultProps: { height: '2px', gradient: 'linear-gradient(90deg, transparent, #06b6d4, transparent)' },
+      render: ({ height, gradient }) => (
+        <div className="w-full my-8" style={{ height: height || '2px', background: gradient || 'linear-gradient(90deg, transparent, #06b6d4, transparent)' }} />
+      )
+    },
+    StatBadgePill: {
+      fields: { label: { type: 'text' }, value: { type: 'text' }, variant: { type: 'select', options: [{ label: 'Cyan', value: 'cyan' }, { label: 'Purple', value: 'purple' }, { label: 'Emerald', value: 'emerald' }] } },
+      defaultProps: { label: 'LATENCY', value: '0.4ms', variant: 'cyan' },
+      render: ({ label, value, variant }) => (
+        <div className="py-2 inline-block">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold bg-cyan-500/10 text-cyan-300 border border-cyan-500/30">
+            <span className="text-[10px] text-slate-400">{label}:</span> {value}
+          </span>
+        </div>
+      )
+    },
+    ImageLightboxFrame: {
+      fields: { src: { type: 'text' }, caption: { type: 'text' } },
+      defaultProps: { src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1000&auto=format&fit=crop&q=80', caption: 'High-density telemetry dashboard overview' },
+      render: ({ src, caption }) => (
+        <div className="py-6 font-sans">
+          <div className="rounded-3xl overflow-hidden border border-cyan-500/30 shadow-2xl bg-[#090a0f] p-2">
+            <img src={src} alt="Lightbox" className="w-full aspect-video object-cover rounded-2xl" />
+            <p className="text-[11px] text-slate-400 text-center py-2 font-mono">{caption}</p>
+          </div>
+        </div>
+      )
+    },
+    VideoPlayerEmbed: {
+      fields: { videoUrl: { type: 'text' }, posterSrc: { type: 'text' } },
+      defaultProps: { videoUrl: '#', posterSrc: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1000&auto=format&fit=crop&q=80' },
+      render: ({ posterSrc }) => (
+        <div className="py-6">
+          <div className="relative rounded-3xl overflow-hidden border border-white/10 aspect-video bg-[#050608]">
+            <img src={posterSrc} alt="Video Poster" className="w-full h-full object-cover opacity-80" />
+            <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+              <button className="w-14 h-14 rounded-full bg-cyan-500 text-slate-950 flex items-center justify-center font-bold shadow-xl">▶</button>
+            </div>
+          </div>
+        </div>
+      )
+    },
+    CodeBlockTerminal: {
+      fields: { title: { type: 'text' }, code: { type: 'textarea' }, language: { type: 'text' } },
+      defaultProps: { title: 'schema.sql', code: 'CREATE TABLE public.website_templates (\n  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n  name TEXT NOT NULL,\n  puck_data JSONB NOT NULL\n);', language: 'sql' },
+      render: ({ title, code, language }) => (
+        <div className="py-4 font-mono text-xs text-left">
+          <div className="rounded-2xl bg-[#040508] border border-white/15 overflow-hidden shadow-2xl">
+            <div className="px-4 py-2 bg-[#090a0f] border-b border-white/10 flex justify-between items-center text-[10px] text-slate-400">
+              <span>{title}</span>
+              <span className="uppercase text-cyan-400">{language}</span>
+            </div>
+            <pre className="p-4 overflow-x-auto text-slate-300"><code>{code}</code></pre>
+          </div>
+        </div>
+      )
     },
   },
 }
