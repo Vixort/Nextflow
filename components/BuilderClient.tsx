@@ -23,7 +23,7 @@ export default function BuilderClient() {
 
         if (fetched.length > 0) {
           setSelectedTemplate(fetched[0])
-          const multiPage = normalizeMultiPageData(fetched[0].grapesjs_data)
+          const multiPage = normalizeMultiPageData(fetched[0].puck_data)
           setActivePageId(multiPage.activePageId || multiPage.pages[0]?.id || '')
         }
       } catch (err) {
@@ -36,10 +36,28 @@ export default function BuilderClient() {
   }, [])
 
   const multiPage: MultiPageProjectData | null = selectedTemplate
-    ? normalizeMultiPageData(selectedTemplate.grapesjs_data)
+    ? normalizeMultiPageData(selectedTemplate.puck_data)
     : null
 
   const activePage = multiPage?.pages.find(p => p.id === activePageId) || multiPage?.pages[0]
+
+  // Intercept anchor clicks inside preview to enable smooth inter-page routing
+  const handleCanvasContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target instanceof HTMLElement ? e.target.closest('a') : null
+    if (!target) return
+
+    const href = target.getAttribute('href')
+    if (!href || href.startsWith('http') || href.startsWith('#')) return
+
+    // Find matching page by slug
+    if (multiPage) {
+      const targetPage = multiPage.pages.find(p => p.slug === href || p.slug === `/${href.replace(/^\//, '')}`)
+      if (targetPage) {
+        e.preventDefault()
+        setActivePageId(targetPage.id)
+      }
+    }
+  }
 
   const handleExportZip = () => {
     if (!selectedTemplate || !multiPage) return
@@ -76,7 +94,7 @@ export default function BuilderClient() {
                   const t = templates.find(item => item.id === e.target.value)
                   if (t) {
                     setSelectedTemplate(t)
-                    const mp = normalizeMultiPageData(t.grapesjs_data)
+                    const mp = normalizeMultiPageData(t.puck_data)
                     setActivePageId(mp.activePageId || mp.pages[0]?.id || '')
                   }
                 }}
@@ -145,7 +163,7 @@ export default function BuilderClient() {
       </header>
 
       {/* CANVAS MAIN AREA */}
-      <div className="flex-1 overflow-y-auto bg-[#06070a] p-4 md:p-8">
+      <div className="flex-1 overflow-y-auto bg-[#06070a] p-4 md:p-8" onClick={handleCanvasContainerClick}>
         {loading ? (
           <div className="h-full flex items-center justify-center text-cyan-400 font-bold gap-2">
             <RefreshCw className="w-5 h-5 animate-spin" /> Loading website templates...

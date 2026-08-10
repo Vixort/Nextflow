@@ -36,10 +36,10 @@ interface PuckTemplateStudioProps {
 // 105 AWWWARDS-GRADE PRESET COMPONENT PROPS TYPES
 type ComponentProps = {
   // 1. HEADER & NAVBARS (15 PRESETS)
-  Navbar: { brandName: string; ctaText: string; fixedTop: boolean; customClass: string; customCss: string }
-  NavbarMinimal: { brandName: string; linkText: string; ctaText: string; fixedTop: boolean }
-  NavbarCentred: { brandName: string; link1: string; link2: string; link3: string; link4: string; ctaText: string }
-  NavbarFloatingPill: { brandName: string; link1: string; link2: string; link3: string; ctaText: string; pillGlow: boolean }
+  Navbar: { brandName: string; ctaText: string; ctaUrl: string; link1Text: string; link1Url: string; link2Text: string; link2Url: string; link3Text: string; link3Url: string; link4Text: string; link4Url: string; link5Text: string; link5Url: string; fixedTop: boolean; customClass: string; customCss: string }
+  NavbarMinimal: { brandName: string; linkText: string; linkUrl: string; ctaText: string; ctaUrl: string; fixedTop: boolean }
+  NavbarCentred: { brandName: string; link1: string; link1Url: string; link2: string; link2Url: string; link3: string; link3Url: string; link4: string; link4Url: string; ctaText: string; ctaUrl: string }
+  NavbarFloatingPill: { brandName: string; link1: string; link1Url: string; link2: string; link2Url: string; link3: string; link3Url: string; ctaText: string; ctaUrl: string; pillGlow: boolean }
   NavbarMegaMenu: { brandName: string; solutionText: string; productText: string; resourceText: string; ctaSecondary: string; ctaPrimary: string }
   NavbarCyberpunk: { brandName: string; statusDot: string; monoStat: string; ctaText: string }
   NavbarLuxuryDark: { brandName: string; subtitle: string; ctaText: string }
@@ -55,9 +55,9 @@ type ComponentProps = {
   // 2. HERO SECTIONS (15 PRESETS)
   Hero: { badge: string; title: string; gradientTitle: string; description: string; primaryCta: string; primaryUrl: string; secondaryCta: string; secondaryUrl: string; align: 'center' | 'left'; themeStyle: 'dark' | 'glass' | 'neon' | 'carbon'; padding: 'compact' | 'standard' | 'spacious'; customClass: string; customCss: string }
   HeroVideoModal: { badge: string; title: string; description: string; videoPosterUrl: string; ctaLabel: string; ctaUrl: string }
-  HeroSplitImage: { badge: string; title: string; description: string; imageSrc: string; primaryCta: string; secondaryCta: string }
-  HeroCyberpunkGlow: { badge: string; title: string; subtitle: string; ctaText: string; terminalLog: string }
-  HeroMinimalSerif: { badge: string; headline: string; subheadline: string; ctaText: string }
+  HeroSplitImage: { badge: string; title: string; description: string; imageSrc: string; primaryCta: string; primaryUrl: string; secondaryCta: string; secondaryUrl: string }
+  HeroCyberpunkGlow: { badge: string; title: string; subtitle: string; ctaText: string; ctaUrl: string; terminalLog: string }
+  HeroMinimalSerif: { badge: string; headline: string; subheadline: string; ctaText: string; ctaUrl: string }
   HeroAppMockup: { badge: string; headline: string; subhead: string; appFrameImg: string; primaryCta: string }
   HeroFormCapture: { badge: string; title: string; description: string; formButtonText: string; formPlaceholder: string }
   HeroGradientSphere: { badge: string; title: string; description: string; ctaText: string }
@@ -132,8 +132,8 @@ type ComponentProps = {
   CtaDarkCyberpunk: { title: string; subhead: string; executeCta: string }
 
   // 7. FOOTERS (11 PRESETS)
-  Footer: { brandName: string; description: string; copyrightText: string; link1: string; link2: string; link3: string; link4: string }
-  FooterMinimalRail: { brandName: string; copyrightText: string; link1: string; link2: string }
+  Footer: { brandName: string; description: string; copyrightText: string; link1: string; link1Url: string; link2: string; link2Url: string; link3: string; link3Url: string; link4: string; link4Url: string }
+  FooterMinimalRail: { brandName: string; copyrightText: string; link1: string; link1Url: string; link2: string; link2Url: string }
   FooterNewsletterBig: { brandName: string; newsletterSubhead: string; copyrightText: string }
   FooterCyberpunkMono: { brandName: string; statusText: string; copyrightText: string }
   FooterAppStoreLinks: { brandName: string; appStoreText: string; copyrightText: string }
@@ -336,48 +336,86 @@ const puckConfig: Config<ComponentProps, RootProps> = {
   components: {
     // 1. NAVBARS (15 PRESETS)
     Navbar: {
-      fields: { brandName: { type: 'text' }, ctaText: { type: 'text' }, fixedTop: { type: 'radio', options: [{ label: 'Yes', value: true }, { label: 'No', value: false }] }, customClass: { type: 'text' }, customCss: { type: 'textarea' } },
-      defaultProps: { brandName: 'NEXTFLOW.', ctaText: 'Sign In', fixedTop: false, customClass: '', customCss: '' },
-      render: ({ brandName, ctaText, fixedTop, customClass, customCss }) => (
+      fields: {
+        brandName: { type: 'text' },
+        link1Text: { type: 'text' }, link1Url: { type: 'text' },
+        link2Text: { type: 'text' }, link2Url: { type: 'text' },
+        link3Text: { type: 'text' }, link3Url: { type: 'text' },
+        link4Text: { type: 'text' }, link4Url: { type: 'text' },
+        link5Text: { type: 'text' }, link5Url: { type: 'text' },
+        ctaText: { type: 'text' }, ctaUrl: { type: 'text' },
+        fixedTop: { type: 'radio', options: [{ label: 'Yes', value: true }, { label: 'No', value: false }] },
+        customClass: { type: 'text' }, customCss: { type: 'textarea' }
+      },
+      defaultProps: {
+        brandName: 'NEXTFLOW.',
+        link1Text: 'Home', link1Url: '/',
+        link2Text: 'About', link2Url: '/about',
+        link3Text: 'Services', link3Url: '/services',
+        link4Text: 'Pricing', link4Url: '/pricing',
+        link5Text: 'Contact', link5Url: '/contact',
+        ctaText: 'Sign In', ctaUrl: '/pricing',
+        fixedTop: false, customClass: '', customCss: ''
+      },
+      render: ({ brandName, link1Text, link1Url, link2Text, link2Url, link3Text, link3Url, link4Text, link4Url, link5Text, link5Url, ctaText, ctaUrl, fixedTop, customClass, customCss }) => (
         <header className={`px-4 sm:px-8 py-4 bg-[#090a0f]/90 backdrop-blur-xl border-b border-white/10 flex items-center justify-between font-sans text-white ${fixedTop ? 'sticky top-0 z-40' : ''} ${customClass}`} style={parseCustomCss(customCss)}>
           <div className="text-base font-black tracking-tight text-white flex items-center gap-1">{brandName}<span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /></div>
-          <nav className="hidden md:flex gap-8 text-xs text-slate-300 font-semibold"><Link href="/" className="hover:text-cyan-400">Home</Link><a href="/about" className="hover:text-cyan-400">About</a><a href="/services" className="hover:text-cyan-400">Services</a><a href="/pricing" className="hover:text-cyan-400">Pricing</a><a href="/contact" className="hover:text-cyan-400">Contact</a></nav>
-          <a href="/pricing" className="px-4 py-2 rounded-xl bg-cyan-500 text-slate-950 font-extrabold text-xs shadow-md">{ctaText}</a>
+          <nav className="hidden md:flex gap-8 text-xs text-slate-300 font-semibold">
+            {link1Text && <a href={link1Url || '/'} className="hover:text-cyan-400">{link1Text}</a>}
+            {link2Text && <a href={link2Url || '/about'} className="hover:text-cyan-400">{link2Text}</a>}
+            {link3Text && <a href={link3Url || '/services'} className="hover:text-cyan-400">{link3Text}</a>}
+            {link4Text && <a href={link4Url || '/pricing'} className="hover:text-cyan-400">{link4Text}</a>}
+            {link5Text && <a href={link5Url || '/contact'} className="hover:text-cyan-400">{link5Text}</a>}
+          </nav>
+          <a href={ctaUrl || '/pricing'} className="px-4 py-2 rounded-xl bg-cyan-500 text-slate-950 font-extrabold text-xs shadow-md">{ctaText}</a>
         </header>
       )
     },
     NavbarMinimal: {
-      fields: { brandName: { type: 'text' }, linkText: { type: 'text' }, ctaText: { type: 'text' }, fixedTop: { type: 'radio', options: [{ label: 'Yes', value: true }, { label: 'No', value: false }] } },
-      defaultProps: { brandName: 'AETHER', linkText: 'Overview', ctaText: 'Get Access', fixedTop: false },
-      render: ({ brandName, linkText, ctaText, fixedTop }) => (
+      fields: { brandName: { type: 'text' }, linkText: { type: 'text' }, linkUrl: { type: 'text' }, ctaText: { type: 'text' }, ctaUrl: { type: 'text' }, fixedTop: { type: 'radio', options: [{ label: 'Yes', value: true }, { label: 'No', value: false }] } },
+      defaultProps: { brandName: 'AETHER', linkText: 'Overview', linkUrl: '/about', ctaText: 'Get Access', ctaUrl: '/pricing', fixedTop: false },
+      render: ({ brandName, linkText, linkUrl, ctaText, ctaUrl, fixedTop }) => (
         <header className={`px-4 sm:px-6 py-3.5 bg-[#050608] border-b border-white/10 flex items-center justify-between font-sans text-white ${fixedTop ? 'sticky top-0 z-40' : ''}`}>
           <div className="font-extrabold tracking-widest text-xs uppercase text-slate-300">{brandName}</div>
-          <div className="flex items-center gap-6"><a href="/about" className="text-xs text-slate-400">{linkText}</a><a href="/pricing" className="text-xs font-bold text-cyan-400">{ctaText}</a></div>
+          <div className="flex items-center gap-6">
+            <a href={linkUrl || '/about'} className="text-xs text-slate-400">{linkText}</a>
+            <a href={ctaUrl || '/pricing'} className="text-xs font-bold text-cyan-400">{ctaText}</a>
+          </div>
         </header>
       )
     },
     NavbarCentred: {
-      fields: { brandName: { type: 'text' }, link1: { type: 'text' }, link2: { type: 'text' }, link3: { type: 'text' }, link4: { type: 'text' }, ctaText: { type: 'text' } },
-      defaultProps: { brandName: 'N E X U S', link1: 'Products', link2: 'Solutions', link3: 'Docs', link4: 'Company', ctaText: 'Launch App' },
-      render: ({ brandName, link1, link2, link3, link4, ctaText }) => (
+      fields: { brandName: { type: 'text' }, link1: { type: 'text' }, link1Url: { type: 'text' }, link2: { type: 'text' }, link2Url: { type: 'text' }, link3: { type: 'text' }, link3Url: { type: 'text' }, link4: { type: 'text' }, link4Url: { type: 'text' }, ctaText: { type: 'text' }, ctaUrl: { type: 'text' } },
+      defaultProps: { brandName: 'N E X U S', link1: 'Products', link1Url: '/', link2: 'Solutions', link2Url: '/services', link3: 'Docs', link3Url: '/about', link4: 'Company', link4Url: '/contact', ctaText: 'Launch App', ctaUrl: '/pricing' },
+      render: ({ brandName, link1, link1Url, link2, link2Url, link3, link3Url, link4, link4Url, ctaText, ctaUrl }) => (
         <header className="px-4 sm:px-8 py-4 bg-[#0f111a]/80 backdrop-blur-2xl border-b border-white/10 font-sans text-white">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
-            <nav className="hidden sm:flex gap-6 text-xs text-slate-300"><Link href="/">{link1}</Link><a href="/services">{link2}</a></nav>
+            <nav className="hidden sm:flex gap-6 text-xs text-slate-300">
+              <a href={link1Url || '/'}>{link1}</a>
+              <a href={link2Url || '/services'}>{link2}</a>
+            </nav>
             <div className="text-sm font-black tracking-[0.25em] text-white uppercase">{brandName}</div>
-            <div className="flex items-center gap-6 text-xs"><a href="/about" className="hidden sm:inline text-slate-300">{link3}</a><a href="/pricing" className="px-4 py-2 rounded-xl bg-white/10 border border-white/15 text-white font-bold">{ctaText}</a></div>
+            <div className="flex items-center gap-6 text-xs">
+              <a href={link3Url || '/about'} className="hidden sm:inline text-slate-300">{link3}</a>
+              <a href={ctaUrl || '/pricing'} className="px-4 py-2 rounded-xl bg-white/10 border border-white/15 text-white font-bold">{ctaText}</a>
+            </div>
           </div>
         </header>
       )
     },
     NavbarFloatingPill: {
-      fields: { brandName: { type: 'text' }, link1: { type: 'text' }, link2: { type: 'text' }, link3: { type: 'text' }, ctaText: { type: 'text' }, pillGlow: { type: 'radio', options: [{ label: 'Yes', value: true }, { label: 'No', value: false }] } },
-      defaultProps: { brandName: 'PULSE.', link1: 'Features', link2: 'Services', link3: 'Pricing', ctaText: 'Try Free', pillGlow: true },
-      render: ({ brandName, link1, link2, link3, ctaText, pillGlow }) => (
+      fields: { brandName: { type: 'text' }, link1: { type: 'text' }, link1Url: { type: 'text' }, link2: { type: 'text' }, link2Url: { type: 'text' }, link3: { type: 'text' }, link3Url: { type: 'text' }, ctaText: { type: 'text' }, ctaUrl: { type: 'text' }, pillGlow: { type: 'radio', options: [{ label: 'Yes', value: true }, { label: 'No', value: false }] } },
+      defaultProps: { brandName: 'PULSE.', link1: 'Features', link1Url: '/', link2: 'Services', link2Url: '/services', link3: 'Pricing', link3Url: '/pricing', ctaText: 'Try Free', ctaUrl: '/contact', pillGlow: true },
+      render: ({ brandName, link1, link1Url, link2, link2Url, link3, link3Url, ctaText, ctaUrl, pillGlow }) => (
         <div className="py-4 px-4 bg-transparent">
           <header className={`max-w-4xl mx-auto px-6 py-3 rounded-full bg-[#0f111a]/90 backdrop-blur-2xl flex items-center justify-between font-sans text-white ${pillGlow ? 'border border-cyan-500/40 shadow-[0_0_30px_rgba(6,182,212,0.15)]' : 'border border-white/15'}`}>
             <div className="text-sm font-black text-white">{brandName}</div>
-            <nav className="hidden sm:flex gap-6 text-xs text-slate-300"><Link href="/">{link1}</Link><a href="/services">{link2}</a><a href="/pricing">{link3}</a></nav>
-            <a href="/contact" className="px-5 py-2 rounded-full bg-cyan-500 text-slate-950 font-extrabold text-xs">{ctaText}</a>
+            <nav className="hidden sm:flex gap-6 text-xs text-slate-300">
+              <a href={link1Url || '/'}>{link1}</a>
+              <a href={link2Url || '/services'}>{link2}</a>
+              <a href={link3Url || '/pricing'}>{link3}</a>
+            </nav>
+            <a href={ctaUrl || '/contact'} className="px-5 py-2 rounded-full bg-cyan-500 text-slate-950 font-extrabold text-xs">{ctaText}</a>
           </header>
         </div>
       )
@@ -522,24 +560,24 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       )
     },
     HeroSplitImage: {
-      fields: { badge: { type: 'text' }, title: { type: 'text' }, description: { type: 'textarea' }, imageSrc: { type: 'text' }, primaryCta: { type: 'text' }, secondaryCta: { type: 'text' } },
-      defaultProps: { badge: 'HIGH VELOCITY', title: 'Accelerate Development Without Code Debt', description: 'Build enterprise visual pages with clean TypeScript props.', imageSrc: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80', primaryCta: 'Start Free Trial', secondaryCta: 'Documentation' },
-      render: ({ badge, title, description, imageSrc, primaryCta, secondaryCta }) => (
-        <section className="py-20 px-6 bg-[#090a0f] text-white font-sans"><div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"><div><span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 mb-6 uppercase"><Zap size={12}/>{badge}</span><h1 className="text-4xl font-extrabold mb-4">{title}</h1><p className="text-slate-400 text-sm mb-8 leading-relaxed">{description}</p><div className="flex gap-4"><a href="/pricing" className="px-6 py-3 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs">{primaryCta}</a><a href="/about" className="px-6 py-3 rounded-xl bg-white/10 text-white font-bold text-xs border border-white/15">{secondaryCta}</a></div></div><div className="rounded-3xl overflow-hidden border border-cyan-500/30"><img src={imageSrc} alt="Hero Split" className="w-full aspect-4/3 object-cover"/></div></div></section>
+      fields: { badge: { type: 'text' }, title: { type: 'text' }, description: { type: 'textarea' }, imageSrc: { type: 'text' }, primaryCta: { type: 'text' }, primaryUrl: { type: 'text' }, secondaryCta: { type: 'text' }, secondaryUrl: { type: 'text' } },
+      defaultProps: { badge: 'HIGH VELOCITY', title: 'Accelerate Development Without Code Debt', description: 'Build enterprise visual pages with clean TypeScript props.', imageSrc: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80', primaryCta: 'Start Free Trial', primaryUrl: '/pricing', secondaryCta: 'Documentation', secondaryUrl: '/about' },
+      render: ({ badge, title, description, imageSrc, primaryCta, primaryUrl, secondaryCta, secondaryUrl }) => (
+        <section className="py-20 px-6 bg-[#090a0f] text-white font-sans"><div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"><div><span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 mb-6 uppercase"><Zap size={12}/>{badge}</span><h1 className="text-4xl font-extrabold mb-4">{title}</h1><p className="text-slate-400 text-sm mb-8 leading-relaxed">{description}</p><div className="flex gap-4"><a href={primaryUrl || '/pricing'} className="px-6 py-3 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs">{primaryCta}</a><a href={secondaryUrl || '/about'} className="px-6 py-3 rounded-xl bg-white/10 text-white font-bold text-xs border border-white/15">{secondaryCta}</a></div></div><div className="rounded-3xl overflow-hidden border border-cyan-500/30"><img src={imageSrc} alt="Hero Split" className="w-full aspect-4/3 object-cover"/></div></div></section>
       )
     },
     HeroCyberpunkGlow: {
-      fields: { badge: { type: 'text' }, title: { type: 'text' }, subtitle: { type: 'text' }, ctaText: { type: 'text' }, terminalLog: { type: 'text' } },
-      defaultProps: { badge: '// SYSTEM READY', title: 'AUTONOMOUS WORKFLOW ENGINE', subtitle: 'Execute sub-millisecond database pipelines with Zero-Trust security.', ctaText: '> DEPLOY_SYSTEM', terminalLog: '$ status: 200 OK | ping: 0.2ms' },
-      render: ({ badge, title, subtitle, ctaText, terminalLog }) => (
-        <section className="py-24 px-6 bg-[#050608] border-b border-cyan-500/30 font-mono text-white text-center"><div className="max-w-4xl mx-auto"><span className="px-3 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs mb-6 inline-block">{badge}</span><h1 className="text-4xl font-extrabold text-cyan-400 mb-4">{title}</h1><p className="text-slate-400 text-xs max-w-xl mx-auto mb-8">{subtitle}</p><div className="mb-8 inline-block px-4 py-2 rounded bg-black border border-white/10 text-slate-500 text-xs">{terminalLog}</div><div><a href="/pricing" className="px-8 py-3.5 rounded bg-cyan-500 text-slate-950 font-bold text-xs shadow-[0_0_30px_rgba(6,182,212,0.4)]">{ctaText}</a></div></div></section>
+      fields: { badge: { type: 'text' }, title: { type: 'text' }, subtitle: { type: 'text' }, ctaText: { type: 'text' }, ctaUrl: { type: 'text' }, terminalLog: { type: 'text' } },
+      defaultProps: { badge: '// SYSTEM READY', title: 'AUTONOMOUS WORKFLOW ENGINE', subtitle: 'Execute sub-millisecond database pipelines with Zero-Trust security.', ctaText: '> DEPLOY_SYSTEM', ctaUrl: '/pricing', terminalLog: '$ status: 200 OK | ping: 0.2ms' },
+      render: ({ badge, title, subtitle, ctaText, ctaUrl, terminalLog }) => (
+        <section className="py-24 px-6 bg-[#050608] border-b border-cyan-500/30 font-mono text-white text-center"><div className="max-w-4xl mx-auto"><span className="px-3 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs mb-6 inline-block">{badge}</span><h1 className="text-4xl font-extrabold text-cyan-400 mb-4">{title}</h1><p className="text-slate-400 text-xs max-w-xl mx-auto mb-8">{subtitle}</p><div className="mb-8 inline-block px-4 py-2 rounded bg-black border border-white/10 text-slate-500 text-xs">{terminalLog}</div><div><a href={ctaUrl || '/pricing'} className="px-8 py-3.5 rounded bg-cyan-500 text-slate-950 font-bold text-xs shadow-[0_0_30px_rgba(6,182,212,0.4)]">{ctaText}</a></div></div></section>
       )
     },
     HeroMinimalSerif: {
-      fields: { badge: { type: 'text' }, headline: { type: 'text' }, subheadline: { type: 'text' }, ctaText: { type: 'text' } },
-      defaultProps: { badge: 'COLLECTION 2026', headline: 'Purity in Architectural Expression', subheadline: 'Minimalist design systems engineered for discerning editorial creators.', ctaText: 'Discover Monograph' },
-      render: ({ badge, headline, subheadline, ctaText }) => (
-        <section className="py-28 px-8 bg-[#090a0f] font-serif text-white text-center"><div className="max-w-3xl mx-auto"><span className="text-[10px] font-sans tracking-[0.25em] text-slate-400 uppercase mb-6 block">{badge}</span><h1 className="text-5xl font-normal leading-tight mb-6">{headline}</h1><p className="font-sans text-xs text-slate-400 max-w-md mx-auto mb-10 leading-relaxed">{subheadline}</p><a href="/about" className="font-sans text-xs uppercase tracking-widest text-slate-200 border-b border-white/40 pb-1">{ctaText}</a></div></section>
+      fields: { badge: { type: 'text' }, headline: { type: 'text' }, subheadline: { type: 'text' }, ctaText: { type: 'text' }, ctaUrl: { type: 'text' } },
+      defaultProps: { badge: 'COLLECTION 2026', headline: 'Purity in Architectural Expression', subheadline: 'Minimalist design systems engineered for discerning editorial creators.', ctaText: 'Discover Monograph', ctaUrl: '/about' },
+      render: ({ badge, headline, subheadline, ctaText, ctaUrl }) => (
+        <section className="py-28 px-8 bg-[#090a0f] font-serif text-white text-center"><div className="max-w-3xl mx-auto"><span className="text-[10px] font-sans tracking-[0.25em] text-slate-400 uppercase mb-6 block">{badge}</span><h1 className="text-5xl font-normal leading-tight mb-6">{headline}</h1><p className="font-sans text-xs text-slate-400 max-w-md mx-auto mb-10 leading-relaxed">{subheadline}</p><a href={ctaUrl || '/about'} className="font-sans text-xs uppercase tracking-widest text-slate-200 border-b border-white/40 pb-1">{ctaText}</a></div></section>
       )
     },
     HeroAppMockup: {
@@ -1001,17 +1039,58 @@ const puckConfig: Config<ComponentProps, RootProps> = {
 
     // 7. FOOTER-SECTION (11 PRESETS)
     Footer: {
-      fields: { brandName: { type: 'text' }, description: { type: 'text' }, copyrightText: { type: 'text' }, link1: { type: 'text' }, link2: { type: 'text' }, link3: { type: 'text' }, link4: { type: 'text' } },
-      defaultProps: { brandName: 'NEXTFLOW.', description: 'Next-generation digital workspace and template engine.', copyrightText: '© 2026 Nextflow Inc. All rights reserved.', link1: 'Privacy Policy', link2: 'Terms of Service', link3: 'Documentation', link4: 'Status' },
-      render: ({ brandName, description, copyrightText, link1, link2, link3, link4 }) => (
-        <footer className="py-12 px-8 bg-[#050608] border-t border-white/10 text-white font-sans"><div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between gap-6"><div><div className="text-lg font-black text-white mb-1">{brandName}</div><p className="text-xs text-slate-400">{description}</p></div><div className="flex gap-6 text-xs text-slate-400"><a href="/about">{link1}</a><a href="/about">{link2}</a><a href="/services">{link3}</a><a href="/contact">{link4}</a></div></div><div className="border-t border-white/5 mt-8 pt-6 text-center text-[10px] text-slate-500">{copyrightText}</div></footer>
+      fields: {
+        brandName: { type: 'text' },
+        description: { type: 'text' },
+        copyrightText: { type: 'text' },
+        link1: { type: 'text' }, link1Url: { type: 'text' },
+        link2: { type: 'text' }, link2Url: { type: 'text' },
+        link3: { type: 'text' }, link3Url: { type: 'text' },
+        link4: { type: 'text' }, link4Url: { type: 'text' }
+      },
+      defaultProps: {
+        brandName: 'NEXTFLOW.',
+        description: 'Next-generation digital workspace and template engine.',
+        copyrightText: '© 2026 Nextflow Inc. All rights reserved.',
+        link1: 'Privacy Policy', link1Url: '/about',
+        link2: 'Terms of Service', link2Url: '/about',
+        link3: 'Documentation', link3Url: '/services',
+        link4: 'Status', link4Url: '/contact'
+      },
+      render: ({ brandName, description, copyrightText, link1, link1Url, link2, link2Url, link3, link3Url, link4, link4Url }) => (
+        <footer className="py-12 px-8 bg-[#050608] border-t border-white/10 text-white font-sans">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between gap-6">
+            <div>
+              <div className="text-lg font-black text-white mb-1">{brandName}</div>
+              <p className="text-xs text-slate-400">{description}</p>
+            </div>
+            <div className="flex gap-6 text-xs text-slate-400">
+              <a href={link1Url || '/about'}>{link1}</a>
+              <a href={link2Url || '/about'}>{link2}</a>
+              <a href={link3Url || '/services'}>{link3}</a>
+              <a href={link4Url || '/contact'}>{link4}</a>
+            </div>
+          </div>
+          <div className="border-t border-white/5 mt-8 pt-6 text-center text-[10px] text-slate-500">{copyrightText}</div>
+        </footer>
       )
     },
     FooterMinimalRail: {
-      fields: { brandName: { type: 'text' }, copyrightText: { type: 'text' }, link1: { type: 'text' }, link2: { type: 'text' } },
-      defaultProps: { brandName: 'AETHER', copyrightText: '© 2026 Aether Labs.', link1: 'Privacy', link2: 'Terms' },
-      render: ({ brandName, copyrightText, link1, link2 }) => (
-        <footer className="py-6 px-8 bg-[#050608] border-t border-white/10 font-sans text-white flex justify-between items-center text-xs"><div><strong className="text-cyan-400">{brandName}</strong> <span className="text-slate-500 text-[10px] ml-2">{copyrightText}</span></div><div className="flex gap-4 text-slate-400"><a href="/about">{link1}</a><a href="/about">{link2}</a></div></footer>
+      fields: {
+        brandName: { type: 'text' },
+        copyrightText: { type: 'text' },
+        link1: { type: 'text' }, link1Url: { type: 'text' },
+        link2: { type: 'text' }, link2Url: { type: 'text' }
+      },
+      defaultProps: { brandName: 'AETHER', copyrightText: '© 2026 Aether Labs.', link1: 'Privacy', link1Url: '/about', link2: 'Terms', link2Url: '/contact' },
+      render: ({ brandName, copyrightText, link1, link1Url, link2, link2Url }) => (
+        <footer className="py-6 px-8 bg-[#050608] border-t border-white/10 font-sans text-white flex justify-between items-center text-xs">
+          <div><strong className="text-cyan-400">{brandName}</strong> <span className="text-slate-500 text-[10px] ml-2">{copyrightText}</span></div>
+          <div className="flex gap-4 text-slate-400">
+            <a href={link1Url || '/about'}>{link1}</a>
+            <a href={link2Url || '/contact'}>{link2}</a>
+          </div>
+        </footer>
       )
     },
     FooterNewsletterBig: {

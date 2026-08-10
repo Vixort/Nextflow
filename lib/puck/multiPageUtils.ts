@@ -241,32 +241,36 @@ export const PAGE_PRESETS: { name: string; slug: string; description: string; ge
 ]
 
 // NORMALIZE UNKNOWN RAW DATA TO MultiPageProjectData (100% BACKWARD COMPATIBILITY & ID ENFORCEMENT)
-export function normalizeMultiPageData(rawData: any, defaultName: string = 'Home'): MultiPageProjectData {
+export function normalizeMultiPageData(rawData: unknown, defaultName: string = 'Home'): MultiPageProjectData {
+  const raw = rawData && typeof rawData === 'object' ? rawData as Record<string, unknown> : null
   // Scenario 1: Already MultiPageProjectData
-  if (rawData && Array.isArray(rawData.pages) && rawData.pages.length > 0) {
-    const validPages: SitePage[] = rawData.pages.map((p: any, idx: number) => ({
-      id: p.id || `page-${idx}-${Date.now()}`,
-      name: p.name || (idx === 0 ? 'Home' : `Page ${idx + 1}`),
-      slug: p.slug || (idx === 0 ? '/' : `/page-${idx + 1}`),
-      isHome: p.isHome !== undefined ? p.isHome : (p.slug === '/' || idx === 0),
-      data: ensureContentIds(p.data && typeof p.data === 'object' && Array.isArray(p.data.content) ? p.data : DEFAULT_HOME_PAGE_DATA),
-    }))
+  if (raw && Array.isArray(raw.pages) && raw.pages.length > 0) {
+    const validPages: SitePage[] = raw.pages.map((page, idx: number) => {
+      const p = page && typeof page === 'object' ? page as Record<string, unknown> : {}
+      return ({
+      id: typeof p.id === 'string' && p.id ? p.id : `page-${idx}-${Date.now()}`,
+      name: typeof p.name === 'string' && p.name ? p.name : (idx === 0 ? 'Home' : `Page ${idx + 1}`),
+      slug: typeof p.slug === 'string' && p.slug ? p.slug : (idx === 0 ? '/' : `/page-${idx + 1}`),
+      isHome: typeof p.isHome === 'boolean' ? p.isHome : (p.slug === '/' || idx === 0),
+      data: ensureContentIds(p.data && typeof p.data === 'object' && Array.isArray((p.data as Record<string, unknown>).content) ? p.data as Data : DEFAULT_HOME_PAGE_DATA),
+    })})
 
-    const activePageId = rawData.activePageId && validPages.some(p => p.id === rawData.activePageId)
-      ? rawData.activePageId
+    const storedActivePageId = typeof raw.active_page_id === 'string' ? raw.active_page_id : raw.activePageId
+    const activePageId = typeof storedActivePageId === 'string' && validPages.some(p => p.id === storedActivePageId)
+      ? storedActivePageId
       : validPages[0].id
 
     return { pages: validPages, activePageId }
   }
 
   // Scenario 2: Legacy Puck Data object { content: [...], root: {...} }
-  if (rawData && typeof rawData === 'object' && Array.isArray(rawData.content)) {
+  if (raw && Array.isArray(raw.content)) {
     const homePage: SitePage = {
       id: 'page-home',
       name: defaultName || 'Home',
       slug: '/',
       isHome: true,
-      data: ensureContentIds(rawData as Data),
+      data: ensureContentIds(raw as Data),
     }
     return {
       pages: [homePage],
@@ -304,15 +308,27 @@ export function exportMultiPageZip(projectData: MultiPageProjectData, templateNa
   zip.file('project-data.json', JSON.stringify(projectData, null, 2))
   zip.file('README.txt', `Multi-Page Website Template: ${templateName}\nPages Count: ${projectData.pages.length}\nCreated with Nextflow Studio.`)
 
+  // Build slug-to-filename map
+  const slugToFilenameMap: Record<string, string> = {}
+  projectData.pages.forEach(p => {
+    const fName = p.isHome || p.slug === '/'
+      ? 'index.html'
+      : `${p.slug.replace(/^\//, '').replace(/[^a-z0-9-]+/gi, '-') || 'page'}.html`
+    slugToFilenameMap[p.slug] = fName
+  })
+
   // Package each page as individual HTML file
   projectData.pages.forEach(page => {
-    const fileName = page.isHome || page.slug === '/'
-      ? 'index.html'
-      : `${page.slug.replace(/^\//, '').replace(/\//g, '-') || 'page'}.html`
-
+    const fileName = slugToFilenameMap[page.slug] || (page.isHome ? 'index.html' : 'page.html')
     const pageTitle = `${page.name} | ${templateName}`
 
-    // Simple export wrapper html
+    // Convert internal hrefs in page content
+    let serializedContent = JSON.stringify(page.data.content || [], null, 2)
+    Object.entries(slugToFilenameMap).forEach(([slug, fName]) => {
+      serializedContent = serializedContent.replace(new RegExp(`"href"\\s*:\\s*"${slug}"`, 'g'), `"href": "${fName}"`)
+      serializedContent = serializedContent.replace(new RegExp(`href="${slug}"`, 'g'), `href="${fName}"`)
+    })
+
     const htmlContent = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -321,13 +337,16 @@ export function exportMultiPageZip(projectData: MultiPageProjectData, templateNa
   <title>${pageTitle}</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { background-color: #090a0f; color: #e2e8f0; font-family: ui-sans-serif, system-ui, sans-serif; }
+    body { background-color: #090a0f; color: #e2e8f0; font-family: ui-sans-serif, system-ui, sans-serif; margin: 0; }
   </style>
 </head>
-<body>
+<body className="bg-[#090a0f] text-slate-200">
   <!-- Page: ${page.name} (${page.slug}) -->
   <div id="app">
-    ${JSON.stringify(page.data.content, null, 2)}
+    <!-- Component Data Payload -->
+    <script type="application/json" id="puck-page-data">
+      ${serializedContent}
+    </script>
   </div>
 </body>
 </html>`
