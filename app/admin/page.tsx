@@ -215,11 +215,16 @@ export default function NextflowAdminDashboard() {
         onSave={async (updatedData) => {
           if (activeStudioTemplate.id) {
             // Update existing
-            await fetch(`/api/admin/templates/${activeStudioTemplate.id}`, {
+            const res = await fetch(`/api/admin/templates/${activeStudioTemplate.id}`, {
               method: 'PATCH',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(updatedData),
             })
+            if (!res.ok) {
+              const body = await res.json().catch(() => null)
+              const msg = body?.details ? `${body.error}: ${typeof body.details === 'string' ? body.details : JSON.stringify(body.details)}` : (body?.error || 'Failed to save template')
+              throw new Error(msg)
+            }
           } else {
             // Create new
             const res = await fetch('/api/admin/templates', {
@@ -228,6 +233,10 @@ export default function NextflowAdminDashboard() {
               body: JSON.stringify(updatedData),
             })
             const data = await res.json()
+            if (!res.ok) {
+              const msg = data?.details ? `${data.error}: ${typeof data.details === 'string' ? data.details : JSON.stringify(data.details)}` : (data?.error || 'Failed to create template')
+              throw new Error(msg)
+            }
             if (data?.data?.template) {
               setActiveStudioTemplate(data.data.template)
             }
@@ -610,10 +619,11 @@ function TemplatesTab({ onOpenStudio }: { onOpenStudio: (tpl: Partial<WebsiteTem
         // Open in Studio Mode
         onOpenStudio(data.data.template)
       } else {
-        alert(data.error || 'Failed to create template')
+        const errMsg = data?.details ? `${data.error}: ${typeof data.details === 'string' ? data.details : JSON.stringify(data.details)}` : (data?.error || 'Failed to create template')
+        alert(errMsg)
       }
     } catch (err) {
-      alert('Network error')
+      alert(err instanceof Error ? err.message : 'Network error')
     } finally {
       setCreating(false)
     }
@@ -641,9 +651,7 @@ function TemplatesTab({ onOpenStudio }: { onOpenStudio: (tpl: Partial<WebsiteTem
           category: tpl.category,
           description: tpl.description,
           thumbnail_url: tpl.thumbnail_url,
-          grapesjs_data: tpl.grapesjs_data,
-          html_code: tpl.html_code,
-          css_code: tpl.css_code,
+          puck_data: tpl.puck_data,
           global_css: tpl.global_css,
         }),
       })
