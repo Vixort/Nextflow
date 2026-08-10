@@ -100,16 +100,14 @@ ALTER TABLE public.home_sections ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow public select on home_sections" ON public.home_sections FOR SELECT USING (true);
 CREATE POLICY "Allow public insert/update on home_sections" ON public.home_sections FOR ALL USING (true);
 
--- 7. Create Custom Website Templates Table (GrapesJS Studio & Global CSS)
+-- 7. Create Custom Website Templates Table (Puck Studio project JSON)
 CREATE TABLE IF NOT EXISTS public.website_templates (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
   description TEXT,
   category TEXT DEFAULT 'Landing Page',
   thumbnail_url TEXT,
-  grapesjs_data JSONB DEFAULT '{}'::jsonb,
-  html_code TEXT DEFAULT '',
-  css_code TEXT DEFAULT '',
+  puck_data JSONB NOT NULL DEFAULT '{}'::jsonb,
   global_css TEXT DEFAULT '',
   is_active BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
@@ -119,8 +117,8 @@ CREATE TABLE IF NOT EXISTS public.website_templates (
 );
 
 ALTER TABLE public.website_templates ENABLE ROW LEVEL SECURITY;
-CREATE POLICY "Allow public select on website_templates" ON public.website_templates FOR SELECT USING (true);
-CREATE POLICY "Allow public all on website_templates" ON public.website_templates FOR ALL USING (true);
+REVOKE ALL ON TABLE public.website_templates FROM anon, authenticated;
+CREATE INDEX IF NOT EXISTS website_templates_updated_at_idx ON public.website_templates (updated_at DESC);
 
 -- 8. Automatic Timestamp Trigger Function
 CREATE OR REPLACE FUNCTION public.update_updated_at_column()
@@ -133,6 +131,10 @@ $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE TRIGGER update_users_updated_at
   BEFORE UPDATE ON public.users
+  FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
+
+CREATE OR REPLACE TRIGGER update_website_templates_updated_at
+  BEFORE UPDATE ON public.website_templates
   FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 
 -- 8. Seed Admin / Owner User

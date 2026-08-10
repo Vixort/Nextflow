@@ -69,7 +69,7 @@
 
 | ส่วนการทำงาน | Library ที่แนะนำ | เหตุผลและความสามารถ |
 | :--- | :--- | :--- |
-| **No-Code / Drag-and-Drop Engine** | **[GrapesJS](https://grapesjs.com/)** หรือ **[Craft.js](https://craft.js.org/)** | GrapesJS เป็น No-Code Page Builder Engine ระดับโลก มีระบบแยก HTML/CSS ในตัว และรองรับการดึงโค้ด Export/Import ได้สมบูรณ์แบบ |
+| **No-Code / Drag-and-Drop Engine** | **[Puck](https://puckeditor.com/)** | Puck เป็น React visual editor ที่เก็บโครงสร้างหน้าและ props เป็น JSON ได้โดยตรง จึงนำกลับมาแก้ไขและบันทึกใน Supabase JSONB ได้อย่างเสถียร |
 | **Code Editor (สำหรับเขียน Custom CSS)** | **[Monaco Editor](https://microsoft.github.io/monaco-editor/)** หรือ **[CodeMirror 6](https://codemirror.net/)** | Monaco Editor คือเอนจินตัวเดียวกับ VS Code มี Syntax Highlighting, Auto-complete และ Error Checking สำหรับเขียน CSS ขั้นสูง |
 | **Zip & File Exporter** | **[JSZip](https://stuk.github.io/jszip/)** + **[FileSaver.js](https://github.com/eligrey/FileSaver.js/)** | สำหรับรวบรวมไฟล์ HTML, CSS, JS บีบอัดเป็น `.zip` ให้ผู้ใช้ดาวน์โหลดได้ทันทีผ่าน Browser |
 | **HTML Parser & Sanitizer** | **[DOMPurify](https://github.com/cure53/DOMPurify)** + **[HTML-React-Parser](https://github.com/remarkablemark/html-react-parser)** | ป้องกัน XSS และช่วยแปลงโครงสร้าง HTML/CSS ตอน Import เข้ามาในระบบได้อย่างปลอดภัย |

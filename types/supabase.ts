@@ -70,9 +70,7 @@ export type WebsiteTemplate = {
   description: string | null
   category: string | null
   thumbnail_url: string | null
-  grapesjs_data: Json
-  html_code: string | null
-  css_code: string | null
+  puck_data: Json
   global_css: string | null
   is_active: boolean
   created_at: string

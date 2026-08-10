@@ -158,6 +158,111 @@ export const DEFAULT_HOME_PAGE_DATA: Data = ensureContentIds({
   },
 })
 
+// LUMINA LUXURY WHITE MULTI-PAGE STUDIO TEMPLATE
+export const LUMINA_WHITE_STUDIO_PROJECT: MultiPageProjectData = {
+  activePageId: 'lumina-home-page',
+  pages: [
+    {
+      id: 'lumina-home-page',
+      name: 'Home',
+      slug: '/',
+      isHome: true,
+      data: ensureContentIds({
+        content: [
+          { id: 'nav-lumina', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Portfolio', link1Url: '/#portfolio', link2: 'Services', link2Url: '/services', ctaText: 'Inquire', ctaUrl: '/contact' } },
+          { id: 'hero-lumina', type: 'HeroMinimalSerif', props: { badge: 'MONOGRAPH 2026', headline: 'PURITY IN ARCHITECTURAL FORM', subheadline: 'Bespoke architectural design systems engineered with mathematical precision and natural light.', ctaText: 'EXPLORE ATELIER WORK', ctaUrl: '/services' } },
+          { id: 'portfolio-lumina', type: 'PortfolioMasonryGrid', props: { title: 'Selected Atelier Works', p1Title: 'Villa Aura Glass Residence', p1Img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1000&auto=format&fit=crop&q=80', p2Title: 'Obsidian Minimalist Pavilion', p2Img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1000&auto=format&fit=crop&q=80', p3Title: 'Kyoto Zen Sanctuary', p3Img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1000&auto=format&fit=crop&q=80' } },
+          { id: 'bento-lumina', type: 'BentoAsymmetric4', props: { title: 'Architectural Philosophy & Principles', card1Title: 'Pure Light Palette', card1Desc: 'Pure white #ffffff background with high-contrast slate #0f172a typography.', card2Title: 'Sustainable Materials', card2Desc: 'Zero carbon footprint design and natural ventilation.', card3Title: 'Spatial Harmony', card3Desc: 'Proportional balance following golden ratio geometry.', card4Title: 'Sub-Millisecond Speed', card4Desc: 'Powered by Nextflow multi-page visual engine.' } },
+          { id: 'testimonial-lumina', type: 'TestimonialSingleHero', props: { quote: '"Lumina Atelier redefines modern minimalist architecture with absolute visual clarity and structural perfection."', authorName: 'Architectural Digest', authorRole: 'Issue 2026 Selection', companyLogo: 'AD' } },
+          { id: 'footer-lumina', type: 'FooterMinimalInline', props: { brandName: 'LUMINA ATELIER', copyrightText: '© 2026 Lumina Architecture Studio. All rights reserved.', link1: 'Documentation', link1Url: '/services', link2: 'Contact Atelier', link2Url: '/contact' } }
+        ] as any,
+        zones: {},
+        root: {
+          props: {
+            title: 'Lumina Architecture Studio - Home',
+            bodyBackground: '#ffffff',
+            bodyTextColor: '#0f172a',
+            fontFamily: 'font-serif'
+          } as any
+        }
+      })
+    },
+    {
+      id: 'lumina-about-page',
+      name: 'About Us',
+      slug: '/about',
+      isHome: false,
+      data: ensureContentIds({
+        content: [
+          { id: 'nav-lumina-about', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Portfolio', link1Url: '/#portfolio', link2: 'Services', link2Url: '/services', ctaText: 'Inquire', ctaUrl: '/contact' } },
+          { id: 'hero-lumina-about', type: 'HeroMinimalistTypography', props: { badge: 'STUDIO CULTURE', mainHeading: 'PHILOSOPHY & CRAFTSMANSHIP', subhead: 'Founded in 2018, Lumina is a global design collective operating at the intersection of architecture, digital form, and structural engineering.', ctaText: 'VIEW STUDIO SPECS', ctaUrl: '/services' } },
+          { id: 'manifesto-lumina-about', type: 'FeatureListSplit', props: { badge: 'OUR MANIFESTO', title: 'Form Follows Purity', description: 'We eliminate all unnecessary ornamentation to reveal the intrinsic beauty of structural materials and natural light.', feature1Title: '01. Mathematical Ratio', feature1Desc: 'Strict adherence to golden ratio spatial proportion scales.', feature2Title: '02. Material Integrity', feature2Desc: 'Authentic stone, glass, and carbon structures.', feature3Title: '03. Digital Precision', feature3Desc: 'Integrated visual WebGL and Nextflow architecture.', cardImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1000&auto=format&fit=crop&q=80' } },
+          { id: 'stats-lumina-about', type: 'StatsCounterGrid', props: { stat1Value: '15+', stat1Label: 'Years Studio Heritage', stat2Value: '240+', stat2Label: 'Global Projects Built', stat3Value: '12', stat3Label: 'International Awards', stat4Value: '100%', stat4Label: 'Client Satisfaction' } },
+          { id: 'awards-lumina-about', type: 'PortfolioAwardBadges', props: { title: 'Accolades & Global Recognition', award1: 'Red Dot Best of Best 2026', award2: 'Awwwards Site of the Year', award3: 'Mies van der Rohe Nominee' } },
+          { id: 'footer-lumina-about', type: 'FooterMinimalInline', props: { brandName: 'LUMINA ATELIER', copyrightText: '© 2026 Lumina Architecture Studio.', link1: 'Services', link1Url: '/services', link2: 'Inquire', link2Url: '/contact' } }
+        ] as any,
+        zones: {},
+        root: {
+          props: {
+            title: 'About Us | Lumina Architecture Studio',
+            bodyBackground: '#f8fafc',
+            bodyTextColor: '#0f172a',
+            fontFamily: 'font-serif'
+          } as any
+        }
+      })
+    },
+    {
+      id: 'lumina-services-page',
+      name: 'Services',
+      slug: '/services',
+      isHome: false,
+      data: ensureContentIds({
+        content: [
+          { id: 'nav-lumina-services', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Home', link1Url: '/', link2: 'About Us', link2Url: '/about', ctaText: 'Inquire', ctaUrl: '/contact' } },
+          { id: 'hero-lumina-services', type: 'Hero', props: { badge: 'ATELIER SERVICES', title: 'Bespoke Architectural Engineering', gradientTitle: '& Interior Systems', description: 'End-to-end architectural design, 3D spatial modelling, and modern web presence integration.', primaryCta: 'Book Atelier Consultation', primaryUrl: '/contact', secondaryCta: 'View Pricing Matrix', secondaryUrl: '/services#pricing', align: 'center', themeStyle: 'glass', padding: 'standard' } },
+          { id: 'comparison-lumina-services', type: 'FeatureComparisonGrid', props: { title: 'Service Tiers & Deliverables', col1Name: 'Full Atelier Retainer', col2Name: 'Standard Concept', row1: '3D Spatial Modeling', row2: 'On-site Construction Supervision', row3: 'Custom Web & VR Presentation' } },
+          { id: 'pricing-lumina-services', type: 'PricingTable', props: { title: 'Atelier Engagement Tiers', subhead: 'Transparent retainer plans for residential and commercial developments.', proPrice: '$12,500', proFeatures: 'Concept Design, 3D Renderings, Material Specs, Web Portfolio', enterprisePrice: '$35,000', enterpriseFeatures: 'Full Architectural Blueprint, Construction Oversight, Dedicated Team, VR Walkthrough', highlightPro: true, padding: 'standard' } },
+          { id: 'calendar-lumina-services', type: 'CtaBookDemoCalendar', props: { title: 'Schedule a 1-on-1 Atelier Consultation', subhead: 'Discuss your architectural project vision with our principal partners.', calendarCta: 'Book 30-Min Consultation' } },
+          { id: 'footer-lumina-services', type: 'FooterMinimalInline', props: { brandName: 'LUMINA ATELIER', copyrightText: '© 2026 Lumina Architecture Studio.', link1: 'Home', link1Url: '/', link2: 'Contact', link2Url: '/contact' } }
+        ] as any,
+        zones: {},
+        root: {
+          props: {
+            title: 'Services | Lumina Architecture Studio',
+            bodyBackground: '#ffffff',
+            bodyTextColor: '#0f172a',
+            fontFamily: 'font-serif'
+          } as any
+        }
+      })
+    },
+    {
+      id: 'lumina-contact-page',
+      name: 'Contact',
+      slug: '/contact',
+      isHome: false,
+      data: ensureContentIds({
+        content: [
+          { id: 'nav-lumina-contact', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Home', link1Url: '/', link2: 'Services', link2Url: '/services', ctaText: 'Back to Home', ctaUrl: '/' } },
+          { id: 'hero-lumina-contact', type: 'HeroFormCapture', props: { badge: 'START A PROJECT', title: 'Inquire for Atelier Commissions', description: 'Our principal architects review incoming briefs weekly. Leave your email or project summary below.', formButtonText: 'Submit Project Inquiry', formPlaceholder: 'your.name@company.com' } },
+          { id: 'faq-lumina-contact', type: 'FaqAccordion', props: { title: 'Frequently Asked Questions', subhead: 'Common questions regarding Atelier commissions and project timelines.', q1Title: 'What is the typical project timeline?', q1Answer: 'Concept design takes 4-6 weeks, followed by blueprint specification.', q2Title: 'Do you accept international projects?', q2Answer: 'Yes, Lumina operates globally across Asia, Europe, and the Americas.', q3Title: 'Can we license Nextflow web templates?', q3Answer: 'All Lumina digital presences are built using Nextflow Studio templates.' } },
+          { id: 'footer-lumina-contact', type: 'FooterMinimalInline', props: { brandName: 'LUMINA ATELIER', copyrightText: '© 2026 Lumina Architecture Studio.', link1: 'Home', link1Url: '/', link2: 'Services', link2Url: '/services' } }
+        ] as any,
+        zones: {},
+        root: {
+          props: {
+            title: 'Contact Atelier | Lumina Architecture Studio',
+            bodyBackground: '#f8fafc',
+            bodyTextColor: '#0f172a',
+            fontFamily: 'font-serif'
+          } as any
+        }
+      })
+    }
+  ]
+}
+
 // PAGE PRESETS FOR QUICK CREATION
 export const PAGE_PRESETS: { name: string; slug: string; description: string; getStarterData: (name: string) => Data }[] = [
   {
