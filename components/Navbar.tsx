@@ -2,15 +2,61 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { gsap } from 'gsap'
+import { Settings, LogOut, ChevronDown, Shield, Mail } from 'lucide-react'
+
+type UserProfile = {
+  id: string
+  email: string
+  username: string
+  full_name?: string | null
+  avatar_url?: string | null
+  role?: string | null
+}
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [user, setUser] = useState<UserProfile | null>(null)
+  const [loadingUser, setLoadingUser] = useState(true)
+
+  const router = useRouter()
   const navRef = useRef<HTMLElement>(null)
   const logoRef = useRef<HTMLDivElement>(null)
   const linksRef = useRef<HTMLDivElement>(null)
   const ctaRef = useRef<HTMLDivElement>(null)
   const mobileMenuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        const res = await fetch('/api/auth/me')
+        if (res.ok) {
+          const json = await res.json()
+          setUser(json.data?.user || null)
+        } else {
+          setUser(null)
+        }
+      } catch {
+        setUser(null)
+      } finally {
+        setLoadingUser(false)
+      }
+    }
+    checkAuth()
+  }, [])
+
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' })
+    } catch {
+      // Ignore network errors on logout
+    }
+    setUser(null)
+    setIsMobileMenuOpen(false)
+    router.push('/login')
+    router.refresh()
+  }
 
   useEffect(() => {
     // Entrance Animation via GSAP
@@ -63,6 +109,9 @@ export default function Navbar() {
     }
   }, [isMobileMenuOpen])
 
+  const username = user?.username || user?.full_name || 'Account'
+  const displayInitial = username.charAt(0).toUpperCase()
+
   return (
     <header
       ref={navRef}
@@ -114,27 +163,108 @@ export default function Navbar() {
             <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 group-hover:w-full transition-all duration-300" />
           </Link>
           <Link
-            href="#services"
+            href="/services"
             className="nav-item text-xs font-semibold tracking-[0.2em] uppercase text-slate-400 hover:text-white transition-colors py-2 relative group"
           >
             Services
             <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 group-hover:w-full transition-all duration-300" />
           </Link>
           <Link
-            href="#builder"
+            href="/templates"
             className="nav-item text-xs font-semibold tracking-[0.2em] uppercase text-slate-400 hover:text-white transition-colors py-2 relative group"
           >
-            Builder
+            Templates
+            <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 group-hover:w-full transition-all duration-300" />
+          </Link>
+          <Link
+            href="/contact"
+            className="nav-item text-xs font-semibold tracking-[0.2em] uppercase text-slate-400 hover:text-cyan-300 transition-colors py-2 relative group"
+          >
+            Contact
             <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-cyan-400 group-hover:w-full transition-all duration-300" />
           </Link>
         </nav>
 
-        {/* UI CTA Button & Mobile Toggle */}
+        {/* UI CTA Button & User Profile Dropdown */}
         <div className="flex items-center gap-6">
           <div ref={ctaRef} className="hidden sm:block">
-            <Link href="/login" className="px-6 py-2.5 rounded-sm text-xs font-bold tracking-[0.15em] uppercase bg-white text-slate-950 hover:bg-slate-200 transition-all active:scale-95 inline-block">
-              Sign In
-            </Link>
+            {loadingUser ? (
+              <div className="w-24 h-8 rounded-full bg-white/5 animate-pulse" />
+            ) : user ? (
+              /* LOGGED IN USER PROFILE: FRAMELESS LAYOUT WITH USERNAME ON LEFT, ARROW IN MIDDLE, CIRCULAR AVATAR ON RIGHT */
+              <div className="relative group">
+                <button
+                  className="flex items-center gap-2.5 py-1 px-2 text-slate-300 hover:text-white transition-all cursor-pointer"
+                >
+                  {/* Left: Username */}
+                  <span className="text-sm font-semibold text-slate-200 group-hover:text-white max-w-[130px] truncate">
+                    {username}
+                  </span>
+
+                  {/* Middle: Arrow indicator */}
+                  <ChevronDown
+                    size={14}
+                    className="text-slate-400 group-hover:text-cyan-400 transition-transform duration-300 group-hover:rotate-180"
+                  />
+
+                  {/* Right: Circular Profile Picture */}
+                  {user.avatar_url ? (
+                    <img
+                      src={user.avatar_url}
+                      alt={username}
+                      className="w-8 h-8 rounded-full object-cover border border-white/15 group-hover:border-cyan-400/60 transition-colors shadow-sm"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-extrabold text-xs border border-cyan-500/40 shadow-sm">
+                      {displayInitial}
+                    </div>
+                  )}
+                </button>
+
+                {/* HOVER DROPDOWN MENU */}
+                <div className="absolute right-0 top-full mt-2 w-56 rounded-2xl bg-[#0d0e19]/95 backdrop-blur-2xl border border-white/10 shadow-2xl p-2 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 z-50">
+                  <div className="px-3 py-2.5 border-b border-white/10 mb-1">
+                    <div className="flex items-center justify-between gap-1 mb-0.5">
+                      <p className="text-xs font-extrabold text-white truncate">
+                        {user.full_name || user.username}
+                      </p>
+                      {user.role === 'admin' && (
+                        <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-0.5">
+                          <Shield size={10} /> Admin
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[10px] font-mono text-slate-400 truncate">
+                      {user.email}
+                    </p>
+                  </div>
+
+                  <Link
+                    href="/settings"
+                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-cyan-500/10 hover:border hover:border-cyan-500/30 transition-all group/item mb-1"
+                  >
+                    <Settings size={14} className="text-cyan-400 group-hover/item:rotate-45 transition-transform" />
+                    <span>Settings</span>
+                  </Link>
+
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 hover:border hover:border-rose-500/30 transition-all text-left cursor-pointer group/item"
+                  >
+                    <LogOut size={14} className="group-hover/item:translate-x-0.5 transition-transform" />
+                    <span>Logout</span>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              /* LOGGED OUT STATE */
+              <Link
+                href="/login"
+                className="px-6 py-2.5 rounded-sm text-xs font-bold tracking-[0.15em] uppercase bg-white text-slate-950 hover:bg-slate-200 transition-all active:scale-95 inline-block"
+              >
+                Sign In
+              </Link>
+            )}
           </div>
 
           {/* Mobile Hamburger Button */}
@@ -183,27 +313,75 @@ export default function Navbar() {
             Home
           </Link>
           <Link
-            href="#services"
+            href="/services"
             onClick={() => setIsMobileMenuOpen(false)}
             className="mobile-nav-link text-xs font-semibold tracking-[0.2em] uppercase text-slate-300 hover:text-cyan-400 transition-colors"
           >
             Services
           </Link>
           <Link
-            href="#builder"
+            href="/templates"
             onClick={() => setIsMobileMenuOpen(false)}
             className="mobile-nav-link text-xs font-semibold tracking-[0.2em] uppercase text-slate-300 hover:text-cyan-400 transition-colors"
           >
-            Custom Builder
+            Templates
           </Link>
+          <Link
+            href="/contact"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="mobile-nav-link inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase text-cyan-300 hover:text-cyan-200 transition-colors"
+          >
+            <Mail size={13} />
+            Contact Us
+          </Link>
+
           <div className="pt-4 border-t border-white/10">
-            <Link
-              href="/login"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="px-6 py-3 rounded-sm text-xs font-bold tracking-[0.15em] uppercase bg-white text-slate-950 text-center block hover:bg-slate-200 transition-colors"
-            >
-              Sign In / Register
-            </Link>
+            {user ? (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between px-3 py-2.5 rounded-2xl bg-white/5 border border-white/10">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs font-extrabold text-white truncate">{username}</p>
+                    <p className="text-[10px] font-mono text-slate-400 truncate">{user.email}</p>
+                  </div>
+                  {user.avatar_url ? (
+                    <img
+                      src={user.avatar_url}
+                      alt={username}
+                      className="w-8 h-8 rounded-full object-cover border border-cyan-500/40 shrink-0 ml-2"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-cyan-500/20 text-cyan-300 flex items-center justify-center font-bold text-xs border border-cyan-500/40 shrink-0 ml-2">
+                      {displayInitial}
+                    </div>
+                  )}
+                </div>
+
+                <Link
+                  href="/settings"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-cyan-500/10 border border-white/10 text-xs font-bold text-slate-200 transition-colors"
+                >
+                  <Settings size={14} className="text-cyan-400" />
+                  Settings
+                </Link>
+
+                <button
+                  onClick={handleLogout}
+                  className="w-full flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-xs font-bold text-rose-300 hover:bg-rose-500/20 transition-colors cursor-pointer"
+                >
+                  <LogOut size={14} />
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="px-6 py-3 rounded-sm text-xs font-bold tracking-[0.15em] uppercase bg-white text-slate-950 text-center block hover:bg-slate-200 transition-colors"
+              >
+                Sign In / Register
+              </Link>
+            )}
           </div>
         </div>
       )}

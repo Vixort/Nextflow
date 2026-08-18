@@ -1,118 +1,55 @@
 'use client'
 
-import { useRef } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useGSAP } from '@gsap/react'
+import Reveal from './animations/Reveal'
+import { CylinderCarousel } from './ui/cylinder-carousel'
 
-gsap.registerPlugin(ScrollTrigger)
-
-const projects = [
-  {
-    id: 1,
-    title: 'Event Flow',
-    category: 'Interactive Event Platform',
-    description: 'Real-time attendee analytics and engagement tracking for enterprise conferences serving 10K+ participants.',
-    image: '/portfolio_event.jpg',
-  },
-  {
-    id: 2,
-    title: 'Alpex Trading',
-    category: 'Fintech Web Application',
-    description: 'High-frequency trading dashboard with portfolio management, market data feeds, and SOC 2 compliant infrastructure.',
-    image: '/portfolio_fintech.jpg',
-  },
-  {
-    id: 3,
-    title: 'Vitality',
-    category: 'Mobile Application',
-    description: 'Cross-platform health tracking app with workout analytics, nutrition logging, and wearable device integration.',
-    image: '/portfolio_mobile.jpg',
-  }
+const carouselImages = [
+  { src: '/images/events/tech-summit.jpg', alt: 'Global AI & Autonomous Tech Summit' },
+  { src: '/portfolio_fintech.jpg', alt: 'Alpex Trading fintech dashboard' },
+  { src: '/images/events/neon-concert.jpg', alt: 'Neon Odyssey Cyber Sound Festival' },
+  { src: '/portfolio_mobile.jpg', alt: 'Vitality mobile app' },
+  { src: '/images/events/esports-arena.jpg', alt: 'World Esports Championship' },
+  { src: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=600&q=80', alt: 'Software development team collaborating' },
+  { src: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80', alt: 'Engineering team at work' },
+  { src: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=80', alt: 'Tech conference keynote' },
+  { src: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=80', alt: 'Developers building software' },
+  { src: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80', alt: 'Team strategy meeting' },
+  { src: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80', alt: 'Engineer reviewing code' },
+  { src: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?w=600&q=80', alt: 'Software architecture planning' },
+  { src: 'https://images.unsplash.com/photo-1605379399642-870262d3d051?w=600&q=80', alt: 'Modern web application development' },
+  { src: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&q=80', alt: 'Laptop with code on dark desk' },
+  { src: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&q=80', alt: 'Programming and coding' },
+  { src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80', alt: 'Team working on technology' },
+  { src: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&q=80', alt: 'Esports gaming setup' },
 ]
 
 export default function PortfolioSection() {
-  const sectionRef = useRef<HTMLElement>(null)
-
-  useGSAP(() => {
-    gsap.fromTo('.portfolio-header',
-      { y: 20, opacity: 0 },
-      {
-        y: 0, opacity: 1, duration: 0.8,
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' }
-      }
-    )
-
-    gsap.fromTo('.portfolio-card',
-      { y: 30, opacity: 0 },
-      {
-        y: 0, opacity: 1, duration: 0.7, stagger: 0.15,
-        scrollTrigger: { trigger: '.portfolio-grid', start: 'top 85%' }
-      }
-    )
-  }, { scope: sectionRef })
-
   return (
-    <section ref={sectionRef} id="portfolio" className="relative bg-[#09090b] py-24 border-t border-[rgba(255,255,255,0.06)]">
+    <section id="portfolio" className="relative bg-[#09090b] py-24 border-t border-[rgba(255,255,255,0.06)] overflow-hidden">
       <div className="max-w-[1400px] mx-auto px-6 sm:px-12">
-
         {/* Header */}
-        <div className="portfolio-header flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+        <Reveal direction="up" className="text-center mb-4 flex flex-col items-center">
           <div>
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-[-0.04em] text-white leading-[0.92]">
-              Selected work
+              Our work in <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-violet-400">motion</span>
             </h2>
-            <p className="text-[#a1a1aa] text-base max-w-md mt-3 leading-relaxed">
-              Recent projects where our architecture decisions directly impacted business outcomes.
+            <p className="text-[#a1a1aa] text-base max-w-xl mx-auto mt-3 leading-relaxed">
+              From immersive event experiences to mission-critical software — a glimpse of what we build and where it runs.
             </p>
           </div>
-          <a
-            href="#portfolio"
-            className="text-sm font-medium text-[#a1a1aa] hover:text-white transition-colors"
-          >
-            View all projects →
-          </a>
-        </div>
+        </Reveal>
 
-        {/* Project Grid — vertical stacked cards */}
-        <div className="portfolio-grid space-y-px">
-          {projects.map((project) => (
-            <div
-              key={project.id}
-              className="portfolio-card group cursor-pointer"
-            >
-              <div className="relative w-full overflow-hidden rounded-xl border border-[rgba(255,255,255,0.08)] bg-[#0f0f11]">
-                {/* Image */}
-                <div className="relative w-full aspect-[16/9] overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                    loading="lazy"
-                  />
-                  {/* Subtle bottom gradient for text readability */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f11] via-transparent to-transparent opacity-60" />
-                </div>
+        {/* Ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] bg-cyan-500/[0.05] rounded-full blur-[140px] pointer-events-none" />
 
-                {/* Info bar */}
-                <div className="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                  <div>
-                    <h3 className="text-lg font-semibold text-white tracking-tight">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-[#71717a] mt-1 max-w-lg">
-                      {project.description}
-                    </p>
-                  </div>
-                  <span className="text-xs text-[#52525b] font-medium tracking-wide uppercase shrink-0">
-                    {project.category}
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
+        {/* 3D Cylinder Carousel */}
+        <Reveal direction="up" className="relative">
+          <CylinderCarousel
+            images={carouselImages}
+            animationDuration={34}
+            cardWidth={280}
+          />
+        </Reveal>
       </div>
     </section>
   )

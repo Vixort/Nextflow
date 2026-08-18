@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+import { Stagger, StaggerItem } from './animations/Stagger'
 
 const navigation = {
   services: [
@@ -10,7 +13,7 @@ const navigation = {
   company: [
     { label: 'About', href: '#' },
     { label: 'Portfolio', href: '#portfolio' },
-    { label: 'Contact', href: '#' },
+    { label: 'Contact', href: '/contact' },
     { label: 'Client Login', href: '/login' },
   ],
   resources: [
@@ -26,10 +29,10 @@ export default function Footer() {
       <div className="max-w-[1400px] mx-auto px-6 sm:px-12">
 
         {/* Main footer grid */}
-        <div className="py-16 grid grid-cols-2 sm:grid-cols-4 gap-10 lg:gap-16">
+        <Stagger className="py-16 grid grid-cols-2 sm:grid-cols-4 gap-10 lg:gap-16" direction="up" amount={0.1}>
 
           {/* Brand column */}
-          <div className="col-span-2 sm:col-span-1">
+          <StaggerItem className="col-span-2 sm:col-span-1">
             <Link href="/" className="inline-block mb-4">
               <span className="text-base font-semibold tracking-tight text-white">
                 Nextflow
@@ -38,10 +41,10 @@ export default function Footer() {
             <p className="text-sm text-[#71717a] leading-relaxed max-w-[28ch]">
               Engineering digital products that scale with your ambition.
             </p>
-          </div>
+          </StaggerItem>
 
           {/* Services */}
-          <div>
+          <StaggerItem>
             <h4 className="text-xs font-medium text-[#a1a1aa] tracking-wide mb-4">Services</h4>
             <ul className="space-y-3">
               {navigation.services.map((item) => (
@@ -52,10 +55,10 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </StaggerItem>
 
           {/* Company */}
-          <div>
+          <StaggerItem>
             <h4 className="text-xs font-medium text-[#a1a1aa] tracking-wide mb-4">Company</h4>
             <ul className="space-y-3">
               {navigation.company.map((item) => (
@@ -66,10 +69,10 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </StaggerItem>
 
           {/* Resources */}
-          <div>
+          <StaggerItem>
             <h4 className="text-xs font-medium text-[#a1a1aa] tracking-wide mb-4">Resources</h4>
             <ul className="space-y-3">
               {navigation.resources.map((item) => (
@@ -80,9 +83,9 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </StaggerItem>
 
-        </div>
+        </Stagger>
 
         {/* Bottom bar */}
         <div className="py-6 border-t border-[rgba(255,255,255,0.06)] flex flex-col sm:flex-row items-center justify-between gap-3">

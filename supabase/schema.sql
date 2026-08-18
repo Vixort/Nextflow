@@ -106,9 +106,16 @@ CREATE TABLE IF NOT EXISTS public.website_templates (
   name TEXT NOT NULL,
   description TEXT,
   category TEXT DEFAULT 'Landing Page',
+  tags TEXT[] DEFAULT '{}'::text[],
   thumbnail_url TEXT,
   puck_data JSONB NOT NULL DEFAULT '{}'::jsonb,
+  puck_layout JSONB,
+  puck_texts JSONB,
   global_css TEXT DEFAULT '',
+  render_mode TEXT NOT NULL DEFAULT 'puck' CHECK (render_mode IN ('puck', 'static')),
+  storage_path TEXT,
+  file_name TEXT,
+  storage_size_bytes BIGINT,
   is_active BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
   updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
@@ -119,6 +126,30 @@ CREATE TABLE IF NOT EXISTS public.website_templates (
 ALTER TABLE public.website_templates ENABLE ROW LEVEL SECURITY;
 REVOKE ALL ON TABLE public.website_templates FROM anon, authenticated;
 CREATE INDEX IF NOT EXISTS website_templates_updated_at_idx ON public.website_templates (updated_at DESC);
+CREATE INDEX IF NOT EXISTS website_templates_tags_idx ON public.website_templates USING GIN (tags);
+
+-- 8. Create Contact/Inquiry Submissions Table
+CREATE TABLE IF NOT EXISTS public.inquiries (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  phone TEXT,
+  service_type TEXT NOT NULL,
+  business_type TEXT,
+  budget TEXT,
+  channel TEXT,
+  message TEXT,
+  source TEXT DEFAULT 'contact-page',
+  status TEXT NOT NULL DEFAULT 'new',
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+
+ALTER TABLE public.inquiries ENABLE ROW LEVEL SECURITY;
+-- Anyone can submit an inquiry (public contact form); rows are only
+-- selectable through the service role / admin paths.
+CREATE POLICY "Allow public insert on inquiries" ON public.inquiries FOR INSERT WITH CHECK (true);
+CREATE INDEX IF NOT EXISTS inquiries_created_at_idx ON public.inquiries (created_at DESC);
+CREATE INDEX IF NOT EXISTS inquiries_status_idx ON public.inquiries (status);
 
 -- 8. Automatic Timestamp Trigger Function
 CREATE OR REPLACE FUNCTION public.update_updated_at_column()
@@ -167,3 +198,123 @@ INSERT INTO public.home_sections (id, name, type, section_order, visible, is_bui
   ('portfolio', 'Portfolio & Case Studies', 'builtin', 6, true, true),
   ('final_cta', 'Final Conversion CTA Banner', 'builtin', 7, true, true)
 ON CONFLICT (id) DO NOTHING;
+
+-- 11. AI Provider API Keys (priority = position ASC; auto-swap tries in order)
+CREATE TABLE IF NOT EXISTS public.ai_api_keys (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  provider TEXT NOT NULL CHECK (provider IN ('gemini', 'openrouter', 'openai', 'groq', 'custom')),
+  label TEXT NOT NULL DEFAULT '',
+  key_value TEXT NOT NULL,
+  position INT NOT NULL DEFAULT 0,
+  enabled BOOLEAN NOT NULL DEFAULT true,
+  model TEXT,
+  base_url TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS ai_api_keys_provider_pos_idx ON public.ai_api_keys (provider, position);
+
+-- No SELECT/INSERT policies: only the service role may read/write API keys.
+ALTER TABLE public.ai_api_keys ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON TABLE public.ai_api_keys FROM anon, authenticated;
+
+-- 12. AI Chat Logs (every AI call: who, what, provider, tokens, timing)
+CREATE TABLE IF NOT EXISTS public.ai_chat_logs (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  user_id UUID REFERENCES public.users(id) ON DELETE SET NULL,
+  username TEXT,
+  path TEXT,
+  provider TEXT NOT NULL,
+  model TEXT NOT NULL,
+  mode TEXT,
+  prompt TEXT,
+  response TEXT,
+  prompt_tokens INT,
+  completion_tokens INT,
+  ip_address TEXT,
+  user_agent TEXT,
+  duration_ms INT,
+  error TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS ai_chat_logs_created_at_idx ON public.ai_chat_logs (created_at DESC);
+CREATE INDEX IF NOT EXISTS ai_chat_logs_user_id_idx ON public.ai_chat_logs (user_id);
+CREATE INDEX IF NOT EXISTS ai_chat_logs_provider_idx ON public.ai_chat_logs (provider);
+
+ALTER TABLE public.ai_chat_logs ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON TABLE public.ai_chat_logs FROM anon, authenticated;
+
+-- 13. AI feature settings (toggles + prompts + models + contact key ref).
+--     Stored in the existing system_settings KV row 'ai'. No secrets here —
+--     keys live in ai_api_keys; contact_key_id references a key row UUID.
+INSERT INTO public.system_settings (key, value) VALUES (
+  'ai',
+  '{
+    "enabled": true,
+    "contact_enabled": true,
+    "require_login": true,
+    "contact_key_id": null,
+    "prompts": {
+      "template_filter": null,
+      "template_pick": null,
+      "template_build": null,
+      "static_copy": null,
+      "contact_expand": null
+    }
+  }'::jsonb
+) ON CONFLICT (key) DO NOTHING;
+
+-- 14. Contact session logs (per-form-session interaction trail).
+--     Service role only; linked to inquiries on submit.
+CREATE TABLE IF NOT EXISTS public.contact_sessions (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  session_key TEXT NOT NULL,
+  inquiry_id UUID REFERENCES public.inquiries(id) ON DELETE CASCADE,
+  events JSONB NOT NULL DEFAULT '[]'::jsonb,
+  name TEXT,
+  email TEXT,
+  phone TEXT,
+  service_type TEXT,
+  business_type TEXT,
+  budget TEXT,
+  channel TEXT,
+  message TEXT,
+  started_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  submitted_at TIMESTAMPTZ
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS contact_sessions_session_key_idx ON public.contact_sessions (session_key);
+CREATE INDEX IF NOT EXISTS contact_sessions_started_at_idx ON public.contact_sessions (started_at DESC);
+CREATE INDEX IF NOT EXISTS contact_sessions_inquiry_id_idx ON public.contact_sessions (inquiry_id);
+
+ALTER TABLE public.contact_sessions ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON TABLE public.contact_sessions FROM anon, authenticated;
+
+-- 15. Contact feature settings (toggles + content + retention).
+--     Stored in the existing system_settings KV row 'contact'.
+INSERT INTO public.system_settings (key, value) VALUES (
+  'contact',
+  '{
+    "enabled": true,
+    "retention_days": 15,
+    "content": {
+      "heading": "Tell us what you need.",
+      "heading_accent": "We''ll do the rest.",
+      "intro": "A few quick choices — no long forms, no hassle. Every inquiry goes straight to our engineering inbox.",
+      "success_title": "Message received!",
+      "success_text": "Thanks {name} — we''ve got your {service} inquiry and will get back to you within 1–2 business days.",
+      "closed_title": "We''re not accepting new inquiries right now",
+      "closed_text": "We''ll be back soon — please check again later. You can still email us directly at support@nextflow.dev.",
+      "submit_label": "Send inquiry",
+      "show_phone": true,
+      "show_message": true,
+      "services": ["Web Platform", "SaaS Architecture", "Mobile Application", "Event Technology", "AI & Workflow", "Something else"],
+      "business_types": ["Company", "Startup", "Agency", "Freelancer", "Student", "Personal"],
+      "budgets": ["Under ฿50K", "฿50K – ฿200K", "฿200K – ฿1M", "฿1M+", "Not sure yet"],
+      "channels": ["Email", "Phone", "WhatsApp"]
+    }
+  }'::jsonb
+) ON CONFLICT (key) DO NOTHING;

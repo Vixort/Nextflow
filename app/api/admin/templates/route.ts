@@ -3,14 +3,19 @@ import { z } from 'zod'
 import { getAuthSession } from '@/lib/auth/jwt'
 import { logActivity } from '@/lib/activity'
 import { assertTemplateProject, createEmptyTemplateProject } from '@/lib/puck/project'
+import { mergeStoredTemplate } from '@/lib/puck/textMerge'
 import { createAdminClient } from '@/lib/supabase/admin'
+import type { Json } from '@/types/supabase'
 
 const templateInputSchema = z.object({
   name: z.string().trim().min(1).max(120),
   description: z.string().trim().max(1_000).optional().default(''),
   category: z.string().trim().min(1).max(80).optional().default('Landing Page'),
+  tags: z.array(z.string().trim().min(1).max(40)).max(20).optional().default([]),
   thumbnail_url: z.string().url().max(2_000).optional().nullable(),
   puck_data: z.unknown().optional(),
+  puck_layout: z.unknown().optional(),
+  puck_texts: z.unknown().optional(),
   global_css: z.string().max(50_000).optional().default(''),
 })
 
@@ -29,7 +34,11 @@ export async function GET(request: NextRequest) {
     .order('updated_at', { ascending: false })
 
   if (error) return NextResponse.json({ status: 500, error: 'Failed to fetch templates' }, { status: 500 })
-  return NextResponse.json({ status: 200, data: { templates: data } })
+  const templates = (data ?? []).map((row) => {
+    const { merged } = mergeStoredTemplate(row)
+    return { ...row, puck_data: merged }
+  })
+  return NextResponse.json({ status: 200, data: { templates } })
 }
 
 export async function POST(request: NextRequest) {
@@ -62,9 +71,13 @@ export async function POST(request: NextRequest) {
       name: input.name,
       description: input.description || null,
       category: input.category,
+      tags: input.tags,
       thumbnail_url: input.thumbnail_url ?? null,
       puck_data: project,
+      puck_layout: (input.puck_layout as Json | null | undefined) ?? null,
+      puck_texts: (input.puck_texts as Json | null | undefined) ?? null,
       global_css: input.global_css,
+      render_mode: 'puck',
       is_active: true,
       created_by: validUserId,
       updated_by: validUserId,

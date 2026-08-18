@@ -2,6 +2,7 @@ import type { Data } from '@puckeditor/core'
 import { z } from 'zod'
 
 export const TEMPLATE_PROJECT_VERSION = 1
+export const TEMPLATE_PROJECT_VERSION_V2 = 2
 export const MAX_TEMPLATE_PAGES = 25
 
 const jsonValueSchema: z.ZodType<unknown> = z.lazy(() => z.union([
@@ -59,6 +60,14 @@ export type TemplateProjectPage = {
   slug: string
   isHome: boolean
   data: Data
+}
+
+// v2 split-storage types: layout holds structure + non-text props only,
+// texts hold copy per page → componentId → field.
+export type TemplateProjectV2 = {
+  schema_version: typeof TEMPLATE_PROJECT_VERSION_V2
+  pages: TemplateProjectPage[] // data = layout (no copy fields)
+  active_page_id: string
 }
 
 export function createId(prefix: string): string {

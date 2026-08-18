@@ -1,12 +1,9 @@
 'use client'
 
-import { useRef } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { useGSAP } from '@gsap/react'
+import { useRef, useState } from 'react'
 import { MonitorSmartphone, Cpu, Blocks, Rocket } from 'lucide-react'
-
-gsap.registerPlugin(ScrollTrigger)
+import { Stagger, StaggerItem } from './animations/Stagger'
+import Reveal from './animations/Reveal'
 
 const services = [
   {
@@ -48,47 +45,36 @@ const services = [
 ]
 
 export default function ServicesSection() {
+  const [spot, setSpot] = useState<{ x: number; y: number; active: boolean }>({ x: 50, y: 0, active: false })
   const sectionRef = useRef<HTMLElement>(null)
-  const cardsRef = useRef<HTMLDivElement>(null)
 
-  useGSAP(() => {
-    const cards = gsap.utils.toArray('.service-card')
-    
-    gsap.fromTo(cards, 
-      { y: 60, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        stagger: 0.1,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 75%',
-        }
-      }
-    )
-
-    gsap.fromTo('.service-header',
-      { y: 30, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 85%',
-        }
-      }
-    )
-  }, { scope: sectionRef })
+  const onMove = (e: React.MouseEvent) => {
+    const rect = sectionRef.current?.getBoundingClientRect()
+    if (!rect) return
+    setSpot({ x: e.clientX - rect.left, y: e.clientY - rect.top, active: true })
+  }
 
   return (
-    <section ref={sectionRef} id="services" className="relative py-24 px-6 max-w-7xl mx-auto min-h-screen flex flex-col justify-center">
+    <section
+      id="services"
+      ref={sectionRef}
+      onMouseMove={onMove}
+      onMouseLeave={() => setSpot((s) => ({ ...s, active: false }))}
+      className="relative py-24 px-6 max-w-7xl mx-auto min-h-screen flex flex-col justify-center"
+    >
       <div className="absolute top-0 left-[-10%] w-[500px] h-[500px] bg-cyan-600/5 rounded-full blur-[120px] pointer-events-none" />
+
+      {/* Mouse spotlight that follows the cursor across the whole grid */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-500"
+        style={{
+          opacity: spot.active ? 1 : 0,
+          background: `radial-gradient(500px circle at ${spot.x}px ${spot.y}px, rgba(56,189,248,0.05), transparent 65%)`,
+        }}
+      />
       
-      <div className="service-header mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
+      <Reveal direction="up" className="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
         <div>
           <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-white mb-6 leading-tight">
             Our Expertise. <br />
@@ -98,13 +84,13 @@ export default function ServicesSection() {
         <p className="text-slate-400 max-w-sm text-lg font-light leading-relaxed">
           We bridge the gap between creative design and complex engineering, delivering solutions that captivate users and drive results.
         </p>
-      </div>
+      </Reveal>
 
-      <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 lg:gap-6 relative z-10">
+      <Stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 lg:gap-6 relative z-10">
         {services.map((service) => {
           const Icon = service.icon
           return (
-            <div 
+            <StaggerItem
               key={service.id}
               className={`service-card group relative p-8 md:p-10 rounded-3xl bg-[#0d0e15] border border-white/5 overflow-hidden hover:bg-[#12141d] hover:border-white/10 transition-all duration-300 active:scale-[0.98] cursor-crosshair flex flex-col justify-between min-h-[320px] ${service.colSpan} md:col-span-1`}
             >
@@ -141,10 +127,10 @@ export default function ServicesSection() {
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                 </div>
               </div>
-            </div>
+            </StaggerItem>
           )
         })}
-      </div>
+      </Stagger>
     </section>
   )
 }

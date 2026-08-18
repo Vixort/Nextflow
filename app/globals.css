@@ -10,6 +10,27 @@ body {
   overflow-x: hidden;
 }
 
+/* Custom Minimal Dark Scrollbar & Selection */
+::selection {
+  background: rgba(6, 182, 212, 0.25);
+  color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #06070a;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.4);
+}
+
 /* UI Verse Inspired Glowing Button (https://uiverse.io) */
 .uiverse-btn {
   position: relative;
@@ -189,4 +210,22 @@ body {
   html {
     @apply font-sans;
   }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[marquee_32s_linear_infinite\] {
+    animation: none !important;
+  }
+}
+
+@keyframes miniPulse {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.55); }
+}
+@keyframes trafficBounce {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.6); }
 }

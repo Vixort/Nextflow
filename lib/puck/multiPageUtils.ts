@@ -1,4 +1,4 @@
-import { Data } from '@puckeditor/core'
+import type { Data } from '@puckeditor/core'
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
 
@@ -169,7 +169,7 @@ export const LUMINA_WHITE_STUDIO_PROJECT: MultiPageProjectData = {
       isHome: true,
       data: ensureContentIds({
         content: [
-          { id: 'nav-lumina', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Estates', link1Url: '/#estates', link2: 'Services', link2Url: '/services', ctaText: 'Inquire Brief', ctaUrl: '/contact' } },
+          { id: 'nav-lumina', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Home', link1Url: '/', link2: 'About', link2Url: '/about', link3: 'Services', link3Url: '/services', ctaText: 'Contact', ctaUrl: '/contact' } },
           { id: 'hero-parallax-lumina', type: 'EstateFullBleedParallaxHero', props: { badge: 'LUMINA ARCHITECTURAL ATELIER • MONOGRAPH 2026', title: 'THE ART OF STRUCTURAL PERMANENCE', subtitle: 'Bespoke residential sanctuaries integrating natural Roman travertine, zero-carbon solar roofs, and panoramic alpine glass.', location: 'LAKE COMO • ASPEN • KYOTO • BEL AIR', price: 'PRIVATE COMMISSIONS FROM $12.5M', bgImg: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&auto=format&fit=crop&q=80', ctaText: 'INQUIRE PRIVATE BRIEF', ctaUrl: '/contact', secText: 'EXPLORE MONOGRAPH', secUrl: '/services' } },
           { id: 'hero-editorial-lumina', type: 'EstateHeroEditorial', props: { location: 'LAKE COMO, ITALY', title: 'Villa Aura Glass Sanctuary', subtitle: 'A masterpiece of contemporary architectural design, seamlessly integrating raw travertine stone, floor-to-ceiling panoramic glass, and private alpine waterfront vistas.', price: '€14,500,000', specs: '6 BEDS • 7 BATHS • 12,400 SQ FT • PRIVATE DOCK', heroImg: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1400&auto=format&fit=crop&q=80', ctaText: 'Inquire Private Brief', ctaUrl: '/contact', secText: 'View Architectural Specs', secUrl: '/services' } },
           { id: 'portfolio-lumina', type: 'EstateImageRailEditorial', props: { title: 'Selected Atelier Masterworks', subtitle: 'Horizontal architectural photo monograph. Scroll to explore active estate commissions.', item1Title: 'Villa Aura Glass Sanctuary', item1Loc: '01 // LAKE COMO, ITALY', item1Price: '€14,500,000', item1Img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&auto=format&fit=crop&q=80', item2Title: 'Obsidian Alpine Pavilion', item2Loc: '02 // ASPEN, COLORADO', item2Price: '$18,500,000', item2Img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&auto=format&fit=crop&q=80', item3Title: 'Kyoto Zen Sanctuary', item3Loc: '03 // KYOTO, JAPAN', item3Price: '$12,000,000', item3Img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&auto=format&fit=crop&q=80', item4Title: 'Bel Air Horizon Residence', item4Loc: '04 // LOS ANGELES, CA', item4Price: '$24,000,000', item4Img: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=1200&auto=format&fit=crop&q=80' } },
@@ -202,7 +202,7 @@ export const LUMINA_WHITE_STUDIO_PROJECT: MultiPageProjectData = {
       isHome: false,
       data: ensureContentIds({
         content: [
-          { id: 'nav-lumina-estates', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Estates', link1Url: '/#estates', link2: 'Services', link2Url: '/services', ctaText: 'Inquire Brief', ctaUrl: '/contact' } },
+          { id: 'nav-lumina-estates', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Home', link1Url: '/', link2: 'About', link2Url: '/about', link3: 'Services', link3Url: '/services', ctaText: 'Contact', ctaUrl: '/contact' } },
           { id: 'hero-lumina-estates', type: 'HeroMinimalistTypography', props: { badge: 'PRIVATE DIRECTORY', mainHeading: 'THE ESTATES COLLECTION', subhead: 'A private portfolio of ultra-luxury residential developments, alpine retreats, and coastal sanctuaries built across 4 continents.', ctaText: 'INQUIRE ACQUISITION', ctaUrl: '/contact' } },
           { id: 'spotlight-lumina-estates', type: 'EstateFullBleedParallaxHero', props: { badge: 'FEATURED VILLA MONOGRAPH', title: 'Villa Aura Glass Sanctuary', subtitle: '6 Beds • 7 Baths • 12,400 Sq Ft • Lake Como Waterfront Dock. Available for private acquisition.', location: 'LAKE COMO, ITALY', price: '€14,500,000', bgImg: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1600&auto=format&fit=crop&q=80', ctaText: 'INQUIRE ACQUISITION', ctaUrl: '/contact', secText: 'VIEW SPECIFICATIONS', secUrl: '/services' } },
           { id: 'rail-lumina-estates', type: 'EstateImageRailEditorial', props: { title: 'Atelier Monograph Rail', subtitle: 'Explore active private villa commissions.', item1Title: 'Villa Aura Glass Sanctuary', item1Loc: '01 // LAKE COMO, ITALY', item1Price: '€14,500,000', item1Img: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&auto=format&fit=crop&q=80', item2Title: 'Obsidian Alpine Pavilion', item2Loc: '02 // ASPEN, COLORADO', item2Price: '$18,500,000', item2Img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&auto=format&fit=crop&q=80', item3Title: 'Kyoto Zen Sanctuary', item3Loc: '03 // KYOTO, JAPAN', item3Price: '$12,000,000', item3Img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&auto=format&fit=crop&q=80', item4Title: 'Bel Air Horizon Residence', item4Loc: '04 // LOS ANGELES, CA', item4Price: '$24,000,000', item4Img: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=1200&auto=format&fit=crop&q=80' } },
@@ -230,7 +230,7 @@ export const LUMINA_WHITE_STUDIO_PROJECT: MultiPageProjectData = {
       isHome: false,
       data: ensureContentIds({
         content: [
-          { id: 'nav-lumina-services', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Home', link1Url: '/', link2: 'Estates', link2Url: '/about', ctaText: 'Inquire Brief', ctaUrl: '/contact' } },
+          { id: 'nav-lumina-services', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Home', link1Url: '/', link2: 'About', link2Url: '/about', link3: 'Services', link3Url: '/services', ctaText: 'Contact', ctaUrl: '/contact' } },
           { id: 'hero-lumina-services', type: 'HeroMinimalSerif', props: { badge: 'BESPOKE COMMISSIONS', headline: 'ARCHITECTURAL SERVICES & ATELIER FEES', subheadline: 'End-to-end master planning, structural engineering, interior architecture, and custom estate construction oversight.', ctaText: 'BOOK CONSULTATION', ctaUrl: '/contact' } },
           { id: 'timeline-lumina-services', type: 'EstateArchitecturalTimeline', props: { title: 'Chronological Execution Monograph', subtitle: 'Our 4-phase architectural process from raw land intake to structural commission handover.', step1Title: '01. Land & Topography Mapping', step1Desc: 'Sub-centimeter drone LIDAR topography scanning and sun-path light analysis.', step2Title: '02. Spatial Proportion & VR', step2Desc: 'Golden-ratio spatial blueprint modeling with 1:1 scale virtual reality walkthroughs.', step3Title: '03. Authentic Material Quarrying', step3Desc: 'Direct quarrying of Italian travertine stone and triple-glazed panoramic acoustic glass.', step4Title: '04. Off-Grid Solar Envelope', step4Desc: 'Integration of zero-carbon solar roofs, smart automation, and final atelier sign-off.' } },
           { id: 'specs-lumina-services', type: 'EstateSpecsDetail', props: { title: 'Architectural Engineering Precision', subtitle: 'Our structural benchmarks ensure zero carbon footprint and 100-year longevity.', spec1Title: 'Natural Italian Travertine', spec1Desc: 'Direct quarrying of Roman stone slabs.', spec2Title: 'Triple-Glazed Acoustic Glass', spec2Desc: 'UV-protected panoramic glass panels.', spec3Title: 'Zero-Carbon Solar Roofs', spec3Desc: 'Clean off-grid power generation.', spec4Title: 'Sub-Millisecond Automation', spec4Desc: 'Smart climate & security control.' } },
@@ -258,7 +258,7 @@ export const LUMINA_WHITE_STUDIO_PROJECT: MultiPageProjectData = {
       isHome: false,
       data: ensureContentIds({
         content: [
-          { id: 'nav-lumina-contact', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Home', link1Url: '/', link2: 'Estates', link2Url: '/about', ctaText: 'Back to Home', ctaUrl: '/' } },
+          { id: 'nav-lumina-contact', type: 'NavbarMinimalMonochrome', props: { brandName: 'LUMINA ATELIER', link1: 'Home', link1Url: '/', link2: 'About', link2Url: '/about', link3: 'Services', link3Url: '/services', ctaText: 'Contact', ctaUrl: '/contact' } },
           { id: 'hero-lumina-contact', type: 'HeroMinimalistTypography', props: { badge: 'CONFIDENTIAL INTAKE', mainHeading: 'PRIVATE COMMISSION INQUIRY', subhead: 'Our principal architects review incoming private commission briefs weekly. Confidentiality assured.', ctaText: 'SUBMIT BRIEF', ctaUrl: '#inquiry-form' } },
           { id: 'inquiry-lumina-contact', type: 'EstateInquiryForm', props: { title: 'Inquire for Private Estate Commissions', subhead: 'Submit your estate location, acreage, and timeline for review.', buttonText: 'Submit Commission Inquiry', placeholder: 'your.name@company.com' } },
           { id: 'specs-lumina-contact', type: 'EstateSpecsDetail', props: { title: 'Private Intake Protocol', subtitle: 'Strict non-disclosure agreements precede all project masterplanning.', spec1Title: '01. Confidentiality', spec1Desc: 'All inquiries protected under bilateral NDA.', spec2Title: '02. Site Evaluation', spec2Desc: 'Global site visits within 14 business days.', spec3Title: '03. Permits & Zoning', spec3Desc: 'Municipal permit coordination across EU, US, and Asia.', spec4Title: '04. Direct Access', spec4Desc: 'Direct phone & VR access to principal architects.' } },
@@ -273,6 +273,178 @@ export const LUMINA_WHITE_STUDIO_PROJECT: MultiPageProjectData = {
             bodyBackground: '#111111',
             bodyTextColor: '#FBFBFA',
             fontFamily: 'font-serif'
+          } as any
+        }
+      })
+    }
+  ]
+}
+
+// NOVA MARKET E-COMMERCE MULTI-PAGE STUDIO TEMPLATE (ANTI-AI-SLOP & REAL PHOTOGRAPHY)
+export const NOVA_MARKET_STUDIO_PROJECT: MultiPageProjectData = {
+  activePageId: 'nova-home-page',
+  pages: [
+    {
+      id: 'nova-home-page',
+      name: 'Home',
+      slug: '/',
+      isHome: true,
+      data: ensureContentIds({
+        content: [
+          { id: 'nav-nova-home', type: 'NavbarECommerce', props: { brandName: 'NOVA MARKET', searchPlaceholder: 'Search curated goods...', cartCount: '3', ctaText: 'Cart', link1Text: 'Shop', link1Url: '/shop', link2Text: 'Collections', link2Url: '/collections', link3Text: 'About', link3Url: '/about' } },
+          { id: 'hero-nova-home', type: 'HeroImmersiveVideo', props: { badgeText: 'FLAGSHIP CINEMATIC EXPERIENCE', title: 'Bespoke Studio Hardware & Modern Goods', subhead: 'Precision-engineered acoustic audio, artisan furniture, and minimalist daily essentials crafted for lifetime durability.', videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-headphones-on-a-table-41617-large.mp4', posterUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1600&auto=format&fit=crop&q=80', ctaText: 'Explore Flagship Store', secondaryCta: 'Watch Studio Film' } },
+          { id: 'promo-nova-home', type: 'EcommercePromoBanner', props: { promoBadge: 'AUTUMN COLLECTION 2026', headline: 'Exclusive 20% Off Launch Promotion', discountCode: 'STUDIO20', subtext: 'Applied automatically at checkout for all new studio patrons.', ctaText: 'Claim Discount' } },
+          { id: 'grid-nova-home', type: 'EcommerceProductGrid', props: { title: 'Flagship Goods & Studio Catalog', p1Name: 'Aura Studio Wireless Headphones Pro', p1Price: '$349.00', p1Img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900&auto=format&fit=crop&q=80', p2Name: 'Nordic Ash Lounge Chair', p2Price: '$490.00', p2Img: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=900&auto=format&fit=crop&q=80', p3Name: 'Minimalist Chronograph Watch', p3Price: '$189.00', p3Img: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&auto=format&fit=crop&q=80' } },
+          { id: 'rail-nova-home', type: 'EcommerceProductsRail', props: { title: 'High-Fidelity Audio Series Rail', subtitle: 'Swipe or scroll horizontally to explore precision acoustic hardware.', p1Name: 'Precision Desktop Audio Node', p1Price: '$279.00', p1Img: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=900&auto=format&fit=crop&q=80', p2Name: 'Beryllium Driver Studio Monitors', p2Price: '$590.00', p2Img: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=900&auto=format&fit=crop&q=80', p3Name: 'Minimalist Vinyl Turntable', p3Price: '$680.00', p3Img: 'https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?w=900&auto=format&fit=crop&q=80', p4Name: 'Vacuum Tube Preamplifier', p4Price: '$420.00', p4Img: 'https://images.unsplash.com/photo-1545454675-3531b543be5d?w=900&auto=format&fit=crop&q=80' } },
+          { id: 'video-parallax-home', type: 'VideoScrollParallax', props: { title: 'Beryllium Driver Acoustic Architecture', caption: 'Engineered with sub-micron precision for zero harmonic distortion.', videoUrl: 'https://assets.mixkit.co/videos/preview/mixkit-headphones-on-a-table-41617-large.mp4', posterUrl: 'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=1200&auto=format&fit=crop&q=80' } },
+          { id: 'gallery-nova-home', type: 'PortfolioMasonryGrid', props: { title: 'Visual Product Material Monograph', item1Title: 'Anodized Aluminum Chassis', item1Category: 'ACOUSTIC HARDWARE', item1Img: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1200&auto=format&fit=crop&q=80', item2Title: 'Nordic Solid Ash Grain', item2Category: 'ARTISAN FURNITURE', item2Img: 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=1200&auto=format&fit=crop&q=80', item3Title: 'Italian Lambskin Cushion', item3Category: 'TACTILE CRAFTSMANSHIP', item3Img: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=1200&auto=format&fit=crop&q=80' } },
+          { id: 'highlight-nova-home', type: 'EcommerceFeatureHighlight', props: { productName: 'Aura Studio Wireless Headphones Pro', tagline: 'ACOUSTIC ENGINEERING', price: '$349.00', description: 'Hand-assembled active noise-cancelling headphones crafted with brushed aluminum and authentic Italian lambskin leather.', feature1: '45dB Hybrid Active Noise Suppression', feature2: '40-Hour Continuous Battery Life', mainImg: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200&auto=format&fit=crop&q=80' } },
+          { id: 'compare-nova-home', type: 'InteractiveComparisonSlider', props: { title: 'Precision Hardware Architecture', beforeImg: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200&auto=format&fit=crop&q=80', beforeLabel: 'Exterior Matte Finish', afterImg: 'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=1200&auto=format&fit=crop&q=80', afterLabel: 'Internal Beryllium Driver Spec' } },
+          { id: 'features-nova-home', type: 'FeatureListSplit', props: { badge: 'ATELIER COMMITMENT', title: 'Crafted for Perfection & Longevity', description: 'Every product in our catalog undergoes rigorous quality testing and comes backed by our lifetime craftsmanship guarantee.', feature1Title: '01. Express Global Logistics', feature1Desc: 'Carbon-neutral international delivery dispatched within 24 hours.', feature2Title: '02. 30-Day In-Home Trial', feature2Desc: 'Experience our goods in your space with hassle-free returns.', feature3Title: '03. 2-Year Full Replacement', feature3Desc: 'Comprehensive manufacturer warranty on all studio electronics.', cardImage: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&auto=format&fit=crop&q=80' } },
+          { id: 'reviews-nova-home', type: 'Testimonials', props: { title: 'Verified Customer Reviews', subhead: 'Feedback from over 15,000 design-conscious patrons worldwide.' } },
+          { id: 'footer-nova-home', type: 'FooterAppStoreLinks', props: { brandName: 'NOVA MARKET', appStoreText: 'DOWNLOAD NOVA APP', copyrightText: '© 2026 Nova Market Studio Inc. All rights reserved.' } }
+        ] as any,
+        zones: {},
+        root: {
+          props: {
+            title: 'Nova Market - Bespoke Goods & Studio Hardware',
+            bodyBackground: '#090a0f',
+            bodyTextColor: '#e2e8f0',
+            fontFamily: 'font-sans'
+          } as any
+        }
+      })
+    },
+    {
+      id: 'nova-shop-page',
+      name: 'Shop Catalog',
+      slug: '/shop',
+      isHome: false,
+      data: ensureContentIds({
+        content: [
+          { id: 'nav-nova-shop', type: 'NavbarECommerce', props: { brandName: 'NOVA MARKET', searchPlaceholder: 'Search catalog...', cartCount: '3', ctaText: 'Cart', link1Text: 'Shop', link1Url: '/shop', link2Text: 'Collections', link2Url: '/collections', link3Text: 'About', link3Url: '/about' } },
+          { id: 'banner-nova-shop', type: 'EcommerceStorefrontBannerSlider', props: { badgeText: 'FLASH STOREFRONT SALE', title: 'Bespoke Acoustic & Modern Hardware Showcase', subtitle: 'Up to 30% off selected flagship studio audio and artisan Scandinavian furniture.', ctaText: 'EXPLORE FLASH SALE', bannerImg1: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=1200&auto=format&fit=crop&q=80', bannerImg2: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&auto=format&fit=crop&q=80', feature1Tag: 'AUDIO HARDWARE -20%', feature2Tag: 'ARTISAN FURNITURE -30%' } },
+          { id: 'hero-nova-shop', type: 'EcommerceCatalogHero', props: { title: 'Flagship Storefront & Studio Catalog', subtitle: 'Explore our complete monograph of bespoke acoustic audio, artisan furniture, and minimalist daily essentials.', category1: 'ALL OBJECTS', category2: 'ACOUSTIC AUDIO', category3: 'ARTISAN LIVING', category4: 'CHRONOGRAPHS', activeCategory: 'ALL OBJECTS', itemCount: '24 STORE ITEMS' } },
+          { id: 'grid8-nova-shop', type: 'EcommerceProductGrid8', props: { title: 'Full Storefront Product Catalog', subtitle: 'Browse all 24 curated goods with real-time stock availability and express dispatch.', p1Name: 'Aura Studio Wireless Headphones Pro', p1Price: '$349.00', p1OriginalPrice: '$420.00', p1Badge: 'BESTSELLER', p1Img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900&auto=format&fit=crop&q=80', p2Name: 'Nordic Ash Lounge Chair', p2Price: '$490.00', p2OriginalPrice: '$580.00', p2Badge: 'HANDCRAFTED', p2Img: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=900&auto=format&fit=crop&q=80', p3Name: 'Minimalist Chronograph Watch', p3Price: '$189.00', p3OriginalPrice: '$230.00', p3Badge: 'HOT DEAL', p3Img: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&auto=format&fit=crop&q=80', p4Name: 'Precision Desktop Audio Node', p4Price: '$279.00', p4OriginalPrice: '$340.00', p4Badge: 'NEW', p4Img: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=900&auto=format&fit=crop&q=80', p5Name: 'Beryllium Driver Studio Monitors', p5Price: '$590.00', p5OriginalPrice: '$690.00', p5Badge: 'STUDIO SPEC', p5Img: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=900&auto=format&fit=crop&q=80', p6Name: 'Italian Lambskin Carry Case', p6Price: '$129.00', p6OriginalPrice: '$160.00', p6Badge: 'BESPOKE', p6Img: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=900&auto=format&fit=crop&q=80', p7Name: 'Minimalist Matte Ceramic Vase', p7Price: '$89.00', p7OriginalPrice: '$110.00', p7Badge: 'POPULAR', p7Img: 'https://images.unsplash.com/photo-1612196808214-b7e239e5f6b7?w=900&auto=format&fit=crop&q=80', p8Name: 'Anodized Titanium Fountain Pen', p8Price: '$95.00', p8OriginalPrice: '$125.00', p8Badge: 'LIMITED', p8Img: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=900&auto=format&fit=crop&q=80' } },
+          { id: 'rail-nova-shop', type: 'EcommerceProductsRail', props: { title: '02. Artisan Living & Furniture Monograph', subtitle: 'Swipe horizontally to explore handcrafted Scandinavian interior objects.', p1Name: 'Solid Oak Desk Lamp', p1Price: '$149.00', p1Img: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=900&auto=format&fit=crop&q=80', p2Name: 'Modernist Architectural Side Table', p2Price: '$320.00', p2Img: 'https://images.unsplash.com/photo-1532372670720-1e7280700686?w=900&auto=format&fit=crop&q=80', p3Name: 'Nordic Concrete Planter', p3Price: '$75.00', p3Img: 'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=900&auto=format&fit=crop&q=80', p4Name: 'Woven Wool Studio Throw', p4Price: '$110.00', p4Img: 'https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=900&auto=format&fit=crop&q=80' } },
+          { id: 'promo-nova-shop', type: 'EcommercePromoBanner', props: { promoBadge: 'AUTUMN COLLECTION 2026', headline: 'Exclusive 20% Off Launch Promotion', discountCode: 'STUDIO20', subtext: 'Applied automatically at checkout for all new studio patrons.', ctaText: 'Claim Discount' } },
+          { id: 'trust-nova-shop', type: 'TrustCertificatesBadge', props: { title: 'VERIFIED STUDIO STANDARDS', cert1: 'AUTHENTICITY GUARANTEE', cert2: 'EXPRESS AIR DISPATCH', cert3: '2-YEAR WARRANTY' } },
+          { id: 'footer-nova-shop', type: 'FooterAppStoreLinks', props: { brandName: 'NOVA MARKET', appStoreText: 'DOWNLOAD NOVA APP', copyrightText: '© 2026 Nova Market Studio Inc. All rights reserved.' } }
+        ] as any,
+        zones: {},
+        root: {
+          props: {
+            title: 'Shop Catalog | Nova Market Studio',
+            bodyBackground: '#090a0f',
+            bodyTextColor: '#e2e8f0',
+            fontFamily: 'font-sans'
+          } as any
+        }
+      })
+    },
+    {
+      id: 'nova-collections-page',
+      name: 'Collections Showroom',
+      slug: '/collections',
+      isHome: false,
+      data: ensureContentIds({
+        content: [
+          { id: 'nav-nova-collections', type: 'NavbarECommerce', props: { brandName: 'NOVA MARKET', searchPlaceholder: 'Search collections...', cartCount: '3', ctaText: 'Cart', link1Text: 'Shop', link1Url: '/shop', link2Text: 'Collections', link2Url: '/collections', link3Text: 'About', link3Url: '/about' } },
+          { id: 'hero-nova-collections', type: 'EcommerceCatalogHero', props: { title: 'Seasonal Collections & Curated Series', subtitle: 'Explore themed monographs: Acoustic Studio Hardware, Nordic Living, and Chronograph Accessories.', category1: 'ALL SERIES', category2: 'ACOUSTIC AUDIO', category3: 'ARTISAN LIVING', category4: 'CHRONOGRAPHS', activeCategory: 'ALL SERIES', itemCount: '3 SERIES MONOGRAPHS' } },
+          { id: 'banner-nova-collections', type: 'EcommerceStorefrontBannerSlider', props: { badgeText: 'AUTUMN CURATED SPOTLIGHT', title: 'Flagship Hardware & Living Series', subtitle: 'Curated Scandinavian design objects and precision-engineered acoustic studio hardware.', ctaText: 'EXPLORE ALL SERIES', bannerImg1: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?w=1200&auto=format&fit=crop&q=80', bannerImg2: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&auto=format&fit=crop&q=80', feature1Tag: 'AUDIO HARDWARE -20%', feature2Tag: 'ARTISAN FURNITURE -30%' } },
+          { id: 'rail-collections-series1', type: 'EcommerceProductsRail', props: { title: '01. Acoustic Engineering Collection', subtitle: 'Precision active noise-cancelling headphones, desktop nodes, beryllium studio monitors, and vinyl turntables.', p1Name: 'Aura Studio Wireless Headphones Pro', p1Price: '$349.00', p1Img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900&auto=format&fit=crop&q=80', p2Name: 'Precision Desktop Audio Node', p2Price: '$279.00', p2Img: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=900&auto=format&fit=crop&q=80', p3Name: 'Beryllium Driver Studio Monitors', p3Price: '$590.00', p3Img: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=900&auto=format&fit=crop&q=80', p4Name: 'Minimalist Vinyl Turntable', p4Price: '$680.00', p4Img: 'https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?w=900&auto=format&fit=crop&q=80' } },
+          { id: 'rail-collections-series2', type: 'EcommerceProductsRail', props: { title: '02. Nordic Artisan Living Collection', subtitle: 'Handcrafted solid ash lounge chairs, desk lamps, modernist side tables, and ceramic vessels.', p1Name: 'Nordic Ash Lounge Chair', p1Price: '$490.00', p1Img: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=900&auto=format&fit=crop&q=80', p2Name: 'Solid Oak Desk Lamp', p2Price: '$149.00', p2Img: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=900&auto=format&fit=crop&q=80', p3Name: 'Modernist Architectural Side Table', p3Price: '$320.00', p3Img: 'https://images.unsplash.com/photo-1532372670720-1e7280700686?w=900&auto=format&fit=crop&q=80', p4Name: 'Minimalist Matte Ceramic Vase', p4Price: '$89.00', p4Img: 'https://images.unsplash.com/photo-1612196808214-b7e239e5f6b7?w=900&auto=format&fit=crop&q=80' } },
+          { id: 'rail-collections-series3', type: 'EcommerceProductsRail', props: { title: '03. Chronographs & Personal Essentials', subtitle: 'Bespoke chronograph timepieces, lambskin carry cases, titanium fountain pens, and polarized eyewear.', p1Name: 'Minimalist Chronograph Watch', p1Price: '$189.00', p1Img: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&auto=format&fit=crop&q=80', p2Name: 'Italian Lambskin Carry Case', p2Price: '$129.00', p2Img: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=900&auto=format&fit=crop&q=80', p3Name: 'Anodized Titanium Fountain Pen', p3Price: '$95.00', p3Img: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=900&auto=format&fit=crop&q=80', p4Name: 'Polarized Matte Eyewear', p4Price: '$165.00', p4Img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=900&auto=format&fit=crop&q=80' } },
+          { id: 'gallery-nova-collections', type: 'PortfolioMasonryGrid', props: { title: 'Visual Material & Hardware Monograph', item1Title: 'Anodized Aluminum Chassis', item1Category: 'ACOUSTIC HARDWARE', item1Img: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1200&auto=format&fit=crop&q=80', item2Title: 'Nordic Solid Ash Grain', item2Category: 'ARTISAN FURNITURE', item2Img: 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=1200&auto=format&fit=crop&q=80', item3Title: 'Italian Lambskin Cushion', item3Category: 'TACTILE CRAFTSMANSHIP', item3Img: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=1200&auto=format&fit=crop&q=80' } },
+          { id: 'promo-nova-collections', type: 'EcommercePromoBanner', props: { promoBadge: 'AUTUMN COLLECTION 2026', headline: 'Exclusive 20% Off Launch Promotion', discountCode: 'STUDIO20', subtext: 'Applied automatically at checkout for all new studio patrons.', ctaText: 'Claim Discount' } },
+          { id: 'trust-nova-collections', type: 'TrustCertificatesBadge', props: { title: 'VERIFIED STUDIO STANDARDS', cert1: 'AUTHENTICITY GUARANTEE', cert2: 'EXPRESS AIR DISPATCH', cert3: '2-YEAR WARRANTY' } },
+          { id: 'footer-nova-collections', type: 'FooterAppStoreLinks', props: { brandName: 'NOVA MARKET', appStoreText: 'DOWNLOAD NOVA APP', copyrightText: '© 2026 Nova Market Studio Inc. All rights reserved.' } }
+        ] as any,
+        zones: {},
+        root: {
+          props: {
+            title: 'Curated Collections | Nova Market Studio',
+            bodyBackground: '#090a0f',
+            bodyTextColor: '#e2e8f0',
+            fontFamily: 'font-sans'
+          } as any
+        }
+      })
+    },
+    {
+      id: 'nova-product-detail-page',
+      name: 'Product Detail',
+      slug: '/product-detail',
+      isHome: false,
+      data: ensureContentIds({
+        content: [
+          { id: 'nav-nova-detail', type: 'NavbarECommerce', props: { brandName: 'NOVA MARKET', searchPlaceholder: 'Search catalog...', cartCount: '3', ctaText: 'Cart', link1Text: 'Shop', link1Url: '/shop', link2Text: 'Collections', link2Url: '/collections', link3Text: 'About', link3Url: '/about' } },
+          { id: 'spotlight-nova-detail', type: 'EcommerceFeatureHighlight', props: { productName: 'Aura Studio Wireless Headphones Pro', tagline: 'FLAGSHIP ACOUSTIC HARDWARE', price: '$349.00', description: 'Hand-assembled active noise-cancelling headphones crafted with brushed aluminum and authentic Italian lambskin leather.', feature1: '45dB Hybrid Active Noise Suppression', feature2: '40-Hour Continuous Battery Life', mainImg: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200&auto=format&fit=crop&q=80' } },
+          { id: 'compare-nova-detail', type: 'InteractiveComparisonSlider', props: { title: 'Acoustic Driver Precision View', beforeImg: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1200&auto=format&fit=crop&q=80', beforeLabel: 'Exterior Matte Finish', afterImg: 'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=1200&auto=format&fit=crop&q=80', afterLabel: 'Internal Acoustic Architecture' } },
+          { id: 'features-nova-detail', type: 'FeatureListSplit', props: { badge: 'ATELIER COMMITMENT', title: 'Crafted for Perfection & Longevity', description: 'Every product in our catalog undergoes rigorous quality testing and comes backed by our lifetime craftsmanship guarantee.', feature1Title: '01. Express Global Logistics', feature1Desc: 'Carbon-neutral international delivery dispatched within 24 hours.', feature2Title: '02. 30-Day In-Home Trial', feature2Desc: 'Experience our goods in your space with hassle-free returns.', feature3Title: '03. 2-Year Full Replacement', feature3Desc: 'Comprehensive manufacturer warranty on all studio electronics.', cardImage: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&auto=format&fit=crop&q=80' } },
+          { id: 'rail-nova-detail', type: 'EcommerceProductsRail', props: { title: 'Complementary Studio Objects', subtitle: 'Swipe horizontally to explore matching vinyl turntables and personal hardware.', p1Name: 'Minimalist Vinyl Turntable', p1Price: '$680.00', p1Img: 'https://images.unsplash.com/photo-1539375665275-f9de415ef9ac?w=900&auto=format&fit=crop&q=80', p2Name: 'Polarized Matte Eyewear', p2Price: '$165.00', p2Img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=900&auto=format&fit=crop&q=80', p3Name: 'Hardware Key Ring Node', p3Price: '$45.00', p3Img: 'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=900&auto=format&fit=crop&q=80', p4Name: 'Vacuum Tube Preamplifier', p4Price: '$420.00', p4Img: 'https://images.unsplash.com/photo-1545454675-3531b543be5d?w=900&auto=format&fit=crop&q=80' } },
+          { id: 'reviews-nova-detail', type: 'Testimonials', props: { title: 'Verified Customer Reviews', subhead: 'Feedback from over 15,000 design-conscious patrons worldwide.' } },
+          { id: 'faq-nova-detail', type: 'InteractiveFaqAccordionCard', props: { title: 'Product & Shipping Care FAQ', category: 'CUSTOMER SUPPORT', q1: 'What is the international delivery timeframe?', a1: 'Express air shipments deliver within 2-4 business days worldwide with real-time tracking.', q2: 'What warranty is included with Aura Headphones?', a2: 'All audio products include a 2-year full replacement warranty covering defects and battery health.', q3: 'How do I return an item?', a3: 'Initiate a free return within 30 days of delivery via your account order dashboard.' } },
+          { id: 'footer-nova-detail', type: 'FooterAppStoreLinks', props: { brandName: 'NOVA MARKET', appStoreText: 'DOWNLOAD NOVA APP', copyrightText: '© 2026 Nova Market Studio Inc. All rights reserved.' } }
+        ] as any,
+        zones: {},
+        root: {
+          props: {
+            title: 'Aura Studio Headphones | Nova Market',
+            bodyBackground: '#090a0f',
+            bodyTextColor: '#e2e8f0',
+            fontFamily: 'font-sans'
+          } as any
+        }
+      })
+    },
+    {
+      id: 'nova-cart-page',
+      name: 'Cart & Checkout',
+      slug: '/cart',
+      isHome: false,
+      data: ensureContentIds({
+        content: [
+          { id: 'nav-nova-cart', type: 'NavbarECommerce', props: { brandName: 'NOVA MARKET', searchPlaceholder: 'Search catalog...', cartCount: '2', ctaText: 'Cart', link1Text: 'Shop', link1Url: '/shop', link2Text: 'Collections', link2Url: '/collections', link3Text: 'About', link3Url: '/about' } },
+          { id: 'cart-nova-summary', type: 'EcommerceCartSummary', props: { title: 'Shopping Cart & Order Summary', promoCode: 'STUDIO20', subtotal: '$839.00', shipping: 'FREE EXPRESS DISPATCH', discount: '-$167.80', total: '$671.20', checkoutUrl: '/cart' } },
+          { id: 'security-nova-cart', type: 'FintechComplianceBadgeRow', props: { title: '256-BIT ENCRYPTED CHECKOUT', badge1: 'SSL SECURE', badge2: 'STRIPE PAY', badge3: 'VISA / MASTERCARD', badge4: 'APPLE PAY' } },
+          { id: 'rail-nova-cart', type: 'EcommerceProductsRail', props: { title: 'Recommended Add-Ons for Your Order', subtitle: 'Enhance your setup with curated accessories dispatched together.', p1Name: 'Italian Lambskin Carry Case', p1Price: '$129.00', p1Img: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=900&auto=format&fit=crop&q=80', p2Name: 'Anodized Titanium Fountain Pen', p2Price: '$95.00', p2Img: 'https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=900&auto=format&fit=crop&q=80', p3Name: 'Polarized Matte Eyewear', p3Price: '$165.00', p3Img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=900&auto=format&fit=crop&q=80', p4Name: 'Hardware Key Ring Node', p4Price: '$45.00', p4Img: 'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=900&auto=format&fit=crop&q=80' } },
+          { id: 'trust-nova-cart', type: 'TrustCertificatesBadge', props: { title: 'PROTECTED PURCHASES', cert1: '30-DAY TRIAL', cert2: 'INSURED SHIPPING', cert3: 'ENCRYPTED DATA' } },
+          { id: 'footer-nova-cart', type: 'FooterAppStoreLinks', props: { brandName: 'NOVA MARKET', appStoreText: 'DOWNLOAD NOVA APP', copyrightText: '© 2026 Nova Market Studio Inc. All rights reserved.' } }
+        ] as any,
+        zones: {},
+        root: {
+          props: {
+            title: 'Cart & Checkout | Nova Market',
+            bodyBackground: '#090a0f',
+            bodyTextColor: '#e2e8f0',
+            fontFamily: 'font-sans'
+          } as any
+        }
+      })
+    },
+    {
+      id: 'nova-about-page',
+      name: 'About Story',
+      slug: '/about',
+      isHome: false,
+      data: ensureContentIds({
+        content: [
+          { id: 'nav-nova-about', type: 'NavbarECommerce', props: { brandName: 'NOVA MARKET', searchPlaceholder: 'Search catalog...', cartCount: '3', ctaText: 'Cart', link1Text: 'Shop', link1Url: '/shop', link2Text: 'Collections', link2Url: '/collections', link3Text: 'About', link3Url: '/about' } },
+          { id: 'hero-nova-about', type: 'HeroMinimalEditorial', props: { issueNo: 'ATELIER PHILOSOPHY', title: 'Form, Purity, and Structural Integrity', description: 'Nova Market is a modern goods atelier dedicated to crafting timeless objects that seamlessly fuse aesthetic clarity with high-performance function.', quote: '"Purity is not the absence of detail, but the absolute harmony of essential structure."', ctaText: 'Explore Catalog' } },
+          { id: 'stat-nova-about', type: 'EditorialStatCallout', props: { statValue: '15,000+', statLabel: 'GLOBAL PATRONS', headline: 'Uncompromising Quality & Craftsmanship', description: 'Designed for longevity, instant responsiveness, and an effortless shopping experience.' } },
+          { id: 'gallery-nova-about', type: 'PortfolioMasonryGrid', props: { title: 'Visual Material & Hardware Monograph', item1Title: 'Anodized Aluminum Chassis', item1Category: 'ACOUSTIC HARDWARE', item1Img: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1200&auto=format&fit=crop&q=80', item2Title: 'Nordic Solid Ash Grain', item2Category: 'ARTISAN FURNITURE', item2Img: 'https://images.unsplash.com/photo-1544816155-12df9643f363?w=1200&auto=format&fit=crop&q=80', item3Title: 'Italian Lambskin Cushion', item3Category: 'TACTILE CRAFTSMANSHIP', item3Img: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=1200&auto=format&fit=crop&q=80' } },
+          { id: 'features-nova-about', type: 'FeatureListSplit', props: { badge: 'ATELIER COMMITMENT', title: 'Crafted for Perfection & Longevity', description: 'Every product in our catalog undergoes rigorous quality testing and comes backed by our lifetime craftsmanship guarantee.', feature1Title: '01. Express Global Logistics', feature1Desc: 'Carbon-neutral international delivery dispatched within 24 hours.', feature2Title: '02. 30-Day In-Home Trial', feature2Desc: 'Experience our goods in your space with hassle-free returns.', feature3Title: '03. 2-Year Full Replacement', feature3Desc: 'Comprehensive manufacturer warranty on all studio electronics.', cardImage: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&auto=format&fit=crop&q=80' } },
+          { id: 'quote-nova-about', type: 'EditorialQuoteBlock', props: { quote: 'We believe software and objects should share the same design language: quiet elegance, uncompromising utility, and enduring quality.', author: 'Kjetil Lindqvist', company: 'Lead Designer, Nova Market Studio' } },
+          { id: 'footer-nova-about', type: 'FooterAppStoreLinks', props: { brandName: 'NOVA MARKET', appStoreText: 'DOWNLOAD NOVA APP', copyrightText: '© 2026 Nova Market Studio Inc. All rights reserved.' } }
+        ] as any,
+        zones: {},
+        root: {
+          props: {
+            title: 'Our Story | Nova Market',
+            bodyBackground: '#090a0f',
+            bodyTextColor: '#e2e8f0',
+            fontFamily: 'font-sans'
           } as any
         }
       })

@@ -13,9 +13,16 @@ CREATE TABLE IF NOT EXISTS public.website_templates (
   name TEXT NOT NULL,
   description TEXT,
   category TEXT DEFAULT 'Landing Page',
+  tags TEXT[] DEFAULT '{}'::text[],
   thumbnail_url TEXT,
   puck_data JSONB NOT NULL DEFAULT '{}'::jsonb,
+  puck_layout JSONB,
+  puck_texts JSONB,
   global_css TEXT DEFAULT '',
+  render_mode TEXT NOT NULL DEFAULT 'puck' CHECK (render_mode IN ('puck', 'static')),
+  storage_path TEXT,
+  file_name TEXT,
+  storage_size_bytes BIGINT,
   is_active BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
   updated_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
@@ -36,6 +43,10 @@ REVOKE ALL ON TABLE public.website_templates FROM anon, authenticated;
 -- 5. Create Index on updated_at
 CREATE INDEX IF NOT EXISTS website_templates_updated_at_idx 
   ON public.website_templates (updated_at DESC);
+
+-- 5b. Create GIN index on tags for fast tag filtering
+CREATE INDEX IF NOT EXISTS website_templates_tags_idx
+  ON public.website_templates USING GIN (tags);
 
 -- 6. Updated At Trigger Function & Trigger
 CREATE OR REPLACE FUNCTION public.update_updated_at_column()

@@ -5,12 +5,17 @@ import { logActivity } from '@/lib/activity'
 
 export const DEFAULT_HOME_SECTIONS = [
   { id: 'hero', name: 'Cinematic Hero Banner', type: 'builtin', section_order: 1, visible: true, is_builtin: true, custom_data: {} },
-  { id: 'social_proof', name: 'Social Proof & Trusted Logos', type: 'builtin', section_order: 2, visible: true, is_builtin: true, custom_data: {} },
-  { id: 'value_prop', name: 'Value Proposition Bento Grid', type: 'builtin', section_order: 3, visible: true, is_builtin: true, custom_data: {} },
-  { id: 'why_us', name: 'Why Us (Problem vs Solution)', type: 'builtin', section_order: 4, visible: true, is_builtin: true, custom_data: {} },
-  { id: 'services', name: 'Services & Capabilities', type: 'builtin', section_order: 5, visible: true, is_builtin: true, custom_data: {} },
-  { id: 'portfolio', name: 'Portfolio & Case Studies', type: 'builtin', section_order: 6, visible: true, is_builtin: true, custom_data: {} },
-  { id: 'final_cta', name: 'Final Conversion CTA Banner', type: 'builtin', section_order: 7, visible: true, is_builtin: true, custom_data: {} },
+  { id: 'manifesto', name: 'Manifesto Statement', type: 'builtin', section_order: 2, visible: true, is_builtin: true, custom_data: {} },
+  { id: 'social_proof', name: 'Social Proof & Trusted Logos', type: 'builtin', section_order: 3, visible: true, is_builtin: true, custom_data: {} },
+  { id: 'value_prop', name: 'Value Proposition Bento Grid', type: 'builtin', section_order: 4, visible: true, is_builtin: true, custom_data: {} },
+  { id: 'stats', name: 'Animated Stats Band', type: 'builtin', section_order: 5, visible: true, is_builtin: true, custom_data: {} },
+  { id: 'why_us', name: 'Why Us (Problem vs Solution)', type: 'builtin', section_order: 6, visible: true, is_builtin: true, custom_data: {} },
+  { id: 'process', name: 'Process (How We Work)', type: 'builtin', section_order: 7, visible: true, is_builtin: true, custom_data: {} },
+  { id: 'services', name: 'Services & Capabilities', type: 'builtin', section_order: 8, visible: true, is_builtin: true, custom_data: {} },
+  { id: 'portfolio', name: 'Portfolio & Case Studies', type: 'builtin', section_order: 9, visible: true, is_builtin: true, custom_data: {} },
+  { id: 'testimonials', name: 'Client Testimonials', type: 'builtin', section_order: 10, visible: true, is_builtin: true, custom_data: {} },
+  { id: 'events', name: 'Immersive Events Showcase', type: 'builtin', section_order: 11, visible: true, is_builtin: true, custom_data: {} },
+  { id: 'final_cta', name: 'Final Conversion CTA Banner', type: 'builtin', section_order: 12, visible: true, is_builtin: true, custom_data: {} },
 ]
 
 export async function GET(request: NextRequest) {
@@ -24,11 +29,21 @@ export async function GET(request: NextRequest) {
       .order('section_order', { ascending: true })
 
     if (!dbErr && dbSections && dbSections.length > 0) {
-      // Map section_order to order for client compatibility
-      const sections = dbSections.map(s => ({
+      let sections = dbSections.map(s => ({
         ...s,
         order: s.section_order,
       }))
+
+      // Auto-inject any missing built-in default sections (events, manifesto, etc.)
+      const missingDefaults = DEFAULT_HOME_SECTIONS.filter(
+        d => !sections.some((s: any) => s.id === d.id),
+      )
+      if (missingDefaults.length > 0) {
+        missingDefaults.forEach(d => {
+          sections.push({ ...d, order: d.section_order } as any)
+        })
+        sections.sort((a: any, b: any) => (a.order || 0) - (b.order || 0))
+      }
 
       return NextResponse.json({
         status: 200,

@@ -5,7 +5,11 @@ import { checkPayloadSize } from '@/lib/utils/guard'
 
 export async function middleware(request: NextRequest) {
   // 1. Check Payload Size Limit (Max 1MB for POST/PUT/PATCH API requests)
-  if (['POST', 'PUT', 'PATCH'].includes(request.method) && request.nextUrl.pathname.startsWith('/api')) {
+  // The template ZIP import endpoint is exempt (it delivers files up to its own limit).
+  const isZipImport =
+    request.nextUrl.pathname === '/api/admin/templates/import' &&
+    request.method === 'POST'
+  if (['POST', 'PUT', 'PATCH'].includes(request.method) && request.nextUrl.pathname.startsWith('/api') && !isZipImport) {
     const payloadCheck = checkPayloadSize(request, 1 * 1024 * 1024) // 1MB limit
     if (!payloadCheck.valid && payloadCheck.response) {
       return payloadCheck.response

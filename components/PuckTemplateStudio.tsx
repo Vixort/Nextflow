@@ -20,6 +20,7 @@ import {
   PAGE_PRESETS, generatePageSlug, DEFAULT_HOME_PAGE_DATA, ensureContentIds
 } from '@/lib/puck/multiPageUtils'
 import { createId } from '@/lib/puck/project'
+import { splitProject } from '@/lib/puck/textSplit'
 
 interface PuckTemplateStudioProps {
   template: Partial<WebsiteTemplate>
@@ -29,6 +30,8 @@ interface PuckTemplateStudioProps {
     category: string
     description: string
     puck_data: MultiPageProjectData
+    puck_layout: unknown
+    puck_texts: unknown
     global_css: string
   }) => Promise<void>
 }
@@ -2857,11 +2860,14 @@ export default function PuckTemplateStudio({
     }
 
     try {
+      const { layout, texts } = splitProject(finalProjectData)
       await onSave({
         name: templateName,
         category,
         description,
         puck_data: finalProjectData,
+        puck_layout: layout,
+        puck_texts: texts,
         global_css: globalCssCode,
       })
 

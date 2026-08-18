@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { ArrowLeft, Monitor, Smartphone, Layout, Download, Sparkles, RefreshCw, Eye, Globe } from 'lucide-react'
+import { ArrowLeft, Check, Download, Eye, Globe, Layout, Monitor, RefreshCw, Smartphone, Sparkles } from 'lucide-react'
 import { WebsiteTemplate } from '@/types/supabase'
 import { exportMultiPageZip, MultiPageProjectData, normalizeMultiPageData } from '@/lib/puck/multiPageUtils'
 
@@ -152,27 +152,30 @@ export default function BuilderClient() {
         </div>
 
         {/* RIGHT: EXPORT ZIP */}
-        <button
-          onClick={handleExportZip}
-          disabled={!selectedTemplate}
-          className="flex items-center gap-2 text-xs px-4 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] cursor-pointer disabled:opacity-50"
-        >
-          <Download className="w-4 h-4" />
-          <span>Export ZIP</span>
-        </button>
+        <div className="flex items-center gap-3">
+
+          <button
+            onClick={handleExportZip}
+            disabled={!selectedTemplate}
+            className="flex items-center gap-2 text-xs px-4 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] cursor-pointer disabled:opacity-50"
+          >
+            <Download className="w-4 h-4" />
+            <span>Export ZIP</span>
+          </button>
+        </div>
       </header>
 
       {/* CANVAS MAIN AREA */}
-      <div className="flex-1 overflow-y-auto bg-[#06070a] p-4 md:p-8" onClick={handleCanvasContainerClick}>
+      <div className="flex-1 overflow-y-auto bg-[#06070a] p-4 md:p-8 relative" onClick={handleCanvasContainerClick}>
         {loading ? (
           <div className="h-full flex items-center justify-center text-cyan-400 font-bold gap-2">
             <RefreshCw className="w-5 h-5 animate-spin" /> Loading website templates...
           </div>
         ) : selectedTemplate && activePage ? (
-          <div className={`mx-auto bg-[#090a0f] transition-all duration-300 min-h-[800px] ${
-            viewport === 'tablet' ? 'max-w-[768px] border border-cyan-500/30 rounded-2xl shadow-2xl overflow-hidden' :
-            viewport === 'mobile' ? 'max-w-[375px] border border-cyan-500/30 rounded-2xl shadow-2xl overflow-hidden' :
-            'max-w-7xl border border-white/10 rounded-2xl'
+          <div className={`mx-auto transition-all duration-300 min-h-[800px] ${
+            viewport === 'tablet' ? 'max-w-[768px] border border-cyan-500/30 rounded-none shadow-2xl overflow-hidden' :
+            viewport === 'mobile' ? 'max-w-[375px] border border-cyan-500/30 rounded-none shadow-2xl overflow-hidden' :
+            'max-w-7xl border border-white/10 rounded-none'
           }`}>
             <div className="p-4 border-b border-white/10 bg-[#0d0e15] flex items-center justify-between text-slate-400 text-[11px]">
               <span className="font-mono text-cyan-300">Rendering: {activePage.name} ({activePage.slug})</span>
@@ -185,7 +188,7 @@ export default function BuilderClient() {
             <div className="p-8 text-center space-y-4">
               <h2 className="text-2xl font-black text-white">{selectedTemplate.name}</h2>
               <p className="text-slate-400 max-w-xl mx-auto">{selectedTemplate.description || 'Custom multi-page website template built with Puck Studio.'}</p>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-bold">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-none bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-bold">
                 Status: Active Template ({selectedTemplate.category})
               </div>
             </div>
@@ -193,7 +196,7 @@ export default function BuilderClient() {
         ) : (
           <div className="h-full flex flex-col items-center justify-center text-slate-400 gap-3">
             <p className="font-bold text-sm">No website templates found in database.</p>
-            <Link href="/admin" className="px-4 py-2 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs">
+            <Link href="/admin" className="px-4 py-2 rounded-none bg-cyan-500 text-slate-950 font-bold text-xs">
               Go to Admin Dashboard to Create Template
             </Link>
           </div>

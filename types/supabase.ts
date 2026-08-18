@@ -64,19 +64,99 @@ export type HomeSection = {
   updated_by: string | null
 }
 
+export type TemplateRenderMode = 'puck' | 'static'
+
 export type WebsiteTemplate = {
   id: string
   name: string
   description: string | null
   category: string | null
+  tags: string[] | null
   thumbnail_url: string | null
   puck_data: Json
+  puck_layout: Json | null
+  puck_texts: Json | null
   global_css: string | null
+  render_mode?: TemplateRenderMode
+  storage_path?: string | null
+  file_name?: string | null
+  storage_size_bytes?: number | null
   is_active: boolean
   created_at: string
   updated_at: string
   created_by: string | null
   updated_by: string | null
+}
+
+export type Inquiry = {
+  id: string
+  name: string
+  email: string
+  service_type: string
+  phone: string | null
+  business_type: string | null
+  budget: string | null
+  channel: string | null
+  message: string | null
+  source: string | null
+  status: string
+  created_at: string
+}
+
+export type AiApiKey = {
+  id: string
+  provider: 'gemini' | 'openrouter' | 'openai' | 'groq' | 'custom'
+  label: string
+  key_value: string
+  position: number
+  enabled: boolean
+  model: string | null
+  base_url: string | null
+  created_at: string
+  updated_at: string
+}
+
+export type AiChatLog = {
+  id: string
+  user_id: string | null
+  username: string | null
+  path: string | null
+  provider: string
+  model: string
+  mode: string | null
+  prompt: string | null
+  response: string | null
+  prompt_tokens: number | null
+  completion_tokens: number | null
+  ip_address: string | null
+  user_agent: string | null
+  duration_ms: number | null
+  error: string | null
+  created_at: string
+}
+
+type ContactSessionEvent = {
+  t: number
+  k: string
+  v: string
+}
+
+export type ContactSession = {
+  id: string
+  session_key: string
+  inquiry_id: string | null
+  events: ContactSessionEvent[]
+  name: string | null
+  email: string | null
+  phone: string | null
+  service_type: string | null
+  business_type: string | null
+  budget: string | null
+  channel: string | null
+  message: string | null
+  started_at: string
+  updated_at: string
+  submitted_at: string | null
 }
 
 export type Database = {
@@ -174,6 +254,38 @@ export type Database = {
         Insert: Omit<WebsiteTemplate, 'id' | 'created_at' | 'updated_at'> & { id?: string; created_at?: string; updated_at?: string }
         Update: Partial<WebsiteTemplate>
         Relationships: []
+      }
+      inquiries: {
+        Row: Inquiry
+        Insert: Omit<Inquiry, 'id' | 'created_at' | 'status'> & { id?: string; created_at?: string; status?: string }
+        Update: Partial<Inquiry>
+        Relationships: []
+      }
+      ai_api_keys: {
+        Row: AiApiKey
+        Insert: Omit<AiApiKey, 'id' | 'created_at' | 'updated_at'> & { id?: string; created_at?: string; updated_at?: string }
+        Update: Partial<AiApiKey>
+        Relationships: []
+      }
+      ai_chat_logs: {
+        Row: AiChatLog
+        Insert: Omit<AiChatLog, 'id' | 'created_at'> & { id?: string; created_at?: string }
+        Update: Partial<AiChatLog>
+        Relationships: []
+      }
+      contact_sessions: {
+        Row: ContactSession
+        Insert: Pick<ContactSession, 'session_key'> & Partial<Omit<ContactSession, 'session_key'>>
+        Update: Partial<ContactSession>
+        Relationships: [
+          {
+            foreignKeyName: 'contact_sessions_inquiry_id_fkey'
+            columns: ['inquiry_id']
+            isOneToOne: false
+            referencedRelation: 'inquiries'
+            referencedColumns: ['id']
+          },
+        ]
       }
     }
     Views: {
