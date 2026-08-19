@@ -33,8 +33,16 @@ export async function executeRpc(name: string, args: object = {}): Promise<unkno
 
   if (name === 'rate_limit_tick') {
     const raw = a.p_window_start
-    const windowStart =
-      raw instanceof Date ? formatUtc(raw) : new Date(String(raw ?? new Date().toISOString())).toISOString()
+    // Normalize to UTC-naive datetime for the DATETIME column: the proxy
+    // sends an ISO-8601 string ('...Z'), tests may pass a Date.
+    let windowStart: string
+    if (raw instanceof Date) {
+      windowStart = formatUtc(raw)
+    } else if (typeof raw === 'string' && /Z$/.test(raw)) {
+      windowStart = formatUtc(new Date(raw))
+    } else {
+      windowStart = String(raw ?? new Date().toISOString())
+    }
     return rateLimitTick(
       String(a.p_fingerprint ?? ''),
       String(a.p_endpoint ?? ''),

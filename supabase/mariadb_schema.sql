@@ -6,6 +6,10 @@
 -- Notes vs the Postgres original:
 --   * UUIDs: CHAR(36) with DEFAULT (UUID())
 --   * JSONB -> JSON, TEXT[] -> JSON (db layer parses/stringifies)
+
+-- All datetimes are UTC-naive; run in UTC so DEFAULT
+-- CURRENT_TIMESTAMP writes match the app layer.
+SET time_zone = '+00:00';
 --   * TIMESTAMPTZ -> DATETIME(3)
 --   * RLS/roles removed: the app connects as a single full-privilege
 --     user (server-side access only, same trust model as service role)
@@ -321,7 +325,7 @@ BEGIN
     15
   );
   DELETE FROM contact_sessions
-   WHERE submitted_at IS NOT NULL AND submitted_at < NOW() - INTERVAL @retention_days DAY;
+   WHERE submitted_at IS NOT NULL AND submitted_at < UTC_TIMESTAMP(3) - INTERVAL @retention_days DAY;
 END$$
 DELIMITER ;
 
@@ -331,7 +335,7 @@ CREATE EVENT rate_limit_cleanup
 ON SCHEDULE EVERY 1 HOUR
 DO
 BEGIN
-  DELETE FROM rate_limits WHERE window_start < NOW() - INTERVAL 2 HOUR;
+  DELETE FROM rate_limits WHERE window_start < UTC_TIMESTAMP(3) - INTERVAL 2 HOUR;
 END$$
 DELIMITER ;
 
@@ -342,8 +346,8 @@ ON SCHEDULE EVERY 1 HOUR STARTS '2026-01-01 00:15:00'
 DO
 BEGIN
   DELETE FROM auth_lockouts
-   WHERE (locked_until IS NULL OR locked_until < NOW() - INTERVAL 1 DAY)
-     AND last_fail_at < NOW() - INTERVAL 1 DAY;
+   WHERE (locked_until IS NULL OR locked_until < UTC_TIMESTAMP(3) - INTERVAL 1 DAY)
+     AND last_fail_at < UTC_TIMESTAMP(3) - INTERVAL 1 DAY;
 END$$
 DELIMITER ;
 

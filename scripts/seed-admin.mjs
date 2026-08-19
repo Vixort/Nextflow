@@ -22,6 +22,8 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123'
 async function main() {
   const conn = await mysql.createConnection({ host, user, password, database })
   try {
+    // Match the app layer: all datetimes are UTC-naive.
+    await conn.query("SET time_zone = '+00:00'")
     const passwordHash = bcrypt.hashSync(ADMIN_PASSWORD, 10)
     const [rows] = await conn.execute(
       `INSERT INTO users (email, username, password_hash, role)

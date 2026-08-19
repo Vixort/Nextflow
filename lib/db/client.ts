@@ -449,11 +449,18 @@ upsert(
   // --------------------------------------------------------------
   private prepareRows(info: ColumnInfo[] | null): Record<string, unknown>[] {
     const idCol = info?.find((c) => c.name === 'id' && c.isPrimary)?.name
+    const hasCreated = !!info?.some((c) => c.name === 'created_at')
+    const hasUpdated = !!info?.some((c) => c.name === 'updated_at')
+    const now = formatUtc(new Date())
     return this.writeRows.map((row) => {
       const out = { ...row }
       if (idCol && (out.id === undefined || out.id === null || out.id === '')) {
         out.id = randomUUID()
       }
+      // Fill timestamps explicitly (UTC) so DB DEFAULT CURRENT_TIMESTAMP
+      // (session-TZ dependent) never writes local time by accident.
+      if (hasCreated && out.created_at === undefined) out.created_at = now
+      if (hasUpdated && out.updated_at === undefined) out.updated_at = now
       return out
     })
   }
