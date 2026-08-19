@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import TextAnimation from '@/components/ui/staggerText'
 import { motion } from 'framer-motion'
+import { Alert } from '@/components/ui/alert'
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -141,8 +142,8 @@ export default function RegisterPage() {
           </motion.div>
 
           {errorMsg && (
-            <motion.div variants={itemVariants} className="mb-4 p-3 rounded-md bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
-              {errorMsg}
+            <motion.div variants={itemVariants} className="mb-4">
+              <Alert type="error" message={errorMsg} />
             </motion.div>
           )}
 

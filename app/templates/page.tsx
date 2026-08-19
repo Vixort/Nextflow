@@ -6,6 +6,7 @@ import { ChevronDown, X } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import TemplatePreview from "@/components/TemplatePreview";
 import TemplateChat from "@/components/TemplateChat";
+import { Alert } from "@/components/ui/alert";
 import { normalizeMultiPageData } from "@/lib/puck/multiPageUtils";
 import { PRESET_TAG_GROUPS } from "@/lib/puck/templateTags";
 
@@ -217,9 +218,7 @@ export default function TemplatesPage() {
               ))}
             </div>
           ) : error ? (
-            <div className="p-8 rounded-none border border-red-500/30 bg-red-950/10 text-red-400 font-mono text-sm">
-              ERROR: {error}
-            </div>
+            <Alert type="error" title="ERROR" message={error} className="rounded-none font-mono" />
           ) : filtered.length === 0 ? (
             <div className="p-12 rounded-none border border-white/10 bg-[#08090d] text-center space-y-4">
               <p className="text-slate-400 font-mono text-xs uppercase tracking-widest">

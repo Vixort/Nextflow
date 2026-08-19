@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Puck, Config, Data, DropZone } from '@puckeditor/core'
 import '@puckeditor/core/dist/index.css'
 import {
-  ArrowLeft, Save, Download, Globe, Check, AlertTriangle, X, Sparkles,
+  ArrowLeft, Save, Download, Globe, X, Sparkles,
   Columns, Rows, Grid, Layout, Code, Minus, MoveVertical, Play, Star,
   HelpCircle, ShieldCheck, Zap, Lock, Award, HeartHandshake, Layers,
   Search, Bell, User, Menu, ChevronDown, Phone, Mail, Eye, Calendar,
@@ -15,6 +15,7 @@ import {
   Trash2, Copy, Home, Settings2
 } from 'lucide-react'
 import { WebsiteTemplate } from '@/types/supabase'
+import { Alert } from '@/components/ui/alert'
 import {
   MultiPageProjectData, SitePage, normalizeMultiPageData, exportMultiPageZip,
   PAGE_PRESETS, generatePageSlug, DEFAULT_HOME_PAGE_DATA, ensureContentIds
@@ -505,7 +506,7 @@ const puckConfig: Config<ComponentProps, RootProps> = {
         <header className="px-6 py-4 bg-[#090a0f] border-b border-white/10 font-sans text-white">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-8"><div className="text-xs font-black tracking-wider text-white flex items-center gap-2"><span className="w-3 h-3 bg-cyan-500 rounded-xs" />{brandName}</div><nav className="hidden lg:flex gap-6 text-xs text-slate-300"><button className="flex items-center gap-1">{solutionText} <ChevronDown size={12}/></button><button className="flex items-center gap-1">{productText} <ChevronDown size={12}/></button><a href="/about">{resourceText}</a></nav></div>
-            <div className="flex items-center gap-3 text-xs"><a href="/services" className="px-4 py-2 text-slate-300">{ctaSecondary}</a><a href="/contact" className="px-5 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-black">{ctaPrimary}</a></div>
+            <div className="flex items-center gap-3 text-xs"><Link href="/services" className="px-4 py-2 text-slate-300">{ctaSecondary}</Link><a href="/contact" className="px-5 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-black">{ctaPrimary}</a></div>
           </div>
         </header>
       )
@@ -556,7 +557,7 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       render: ({ brandName, ctaText }) => (
         <header className="px-8 py-4 bg-white/5 backdrop-blur-3xl border-b border-white/10 font-sans text-white flex items-center justify-between">
           <div className="text-base font-extrabold text-white">{brandName}</div>
-          <nav className="hidden sm:flex gap-8 text-xs text-slate-300 font-medium"><Link href="/">Architecture</Link><a href="/services">Ecosystem</a><a href="/pricing">Pricing</a></nav>
+          <nav className="hidden sm:flex gap-8 text-xs text-slate-300 font-medium"><Link href="/">Architecture</Link><Link href="/services">Ecosystem</Link><a href="/pricing">Pricing</a></nav>
           <a href="/contact" className="px-5 py-2.5 rounded-2xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-bold text-xs">{ctaText}</a>
         </header>
       )
@@ -566,7 +567,7 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       defaultProps: { brandName: 'STREAMLINE.', gradientPreset: 'cyan-blue', ctaText: 'Get Started' },
       render: ({ brandName, ctaText }) => (
         <header className="bg-[#090a0f] font-sans text-white relative">
-          <div className="px-8 py-4 flex items-center justify-between"><div className="text-base font-black text-white">{brandName}</div><nav className="hidden sm:flex gap-8 text-xs text-slate-300 font-semibold"><Link href="/">Overview</Link><a href="/services">Specs</a><a href="/about">Docs</a></nav><a href="/pricing" className="px-5 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-extrabold text-xs">{ctaText}</a></div>
+          <div className="px-8 py-4 flex items-center justify-between"><div className="text-base font-black text-white">{brandName}</div><nav className="hidden sm:flex gap-8 text-xs text-slate-300 font-semibold"><Link href="/">Overview</Link><Link href="/services">Specs</Link><a href="/about">Docs</a></nav><a href="/pricing" className="px-5 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-extrabold text-xs">{ctaText}</a></div>
           <div className="h-[2px] w-full bg-gradient-to-r from-cyan-400 via-sky-300 to-blue-500" />
         </header>
       )
@@ -607,7 +608,7 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       render: ({ brandName, tagText, ctaText }) => (
         <header className="px-6 py-4 bg-black border-b-2 border-white font-mono text-white flex justify-between items-center">
           <div className="flex items-center gap-3 font-bold text-sm"><span>{brandName}</span><span className="text-cyan-400 text-xs">{tagText}</span></div>
-          <a href="/services" className="px-4 py-2 bg-white text-black font-black text-xs hover:bg-cyan-400 border border-white">{ctaText}</a>
+          <Link href="/services" className="px-4 py-2 bg-white text-black font-black text-xs hover:bg-cyan-400 border border-white">{ctaText}</Link>
         </header>
       )
     },
@@ -751,7 +752,7 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       fields: { badge: { type: 'text' }, headline: { type: 'text' }, subhead: { type: 'text' }, appFrameImg: { type: 'text' }, primaryCta: { type: 'text' } },
       defaultProps: { badge: 'NEXTFLOW DESKTOP', headline: 'The Visual Workspace Built For Speed', subhead: 'Manage templates, database schema, and automated workflows in one dark UI.', appFrameImg: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&auto=format&fit=crop&q=80', primaryCta: 'Download App' },
       render: ({ badge, headline, subhead, appFrameImg, primaryCta }) => (
-        <section className="py-20 px-6 bg-[#090a0f] text-white text-center font-sans"><div className="max-w-4xl mx-auto mb-10"><span className="px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 uppercase mb-4 inline-block">{badge}</span><h1 className="text-4xl font-extrabold mb-3">{headline}</h1><p className="text-slate-400 text-sm max-w-xl mx-auto mb-6">{subhead}</p><a href="/services" className="px-8 py-3 bg-cyan-500 text-slate-950 font-bold rounded-xl text-xs inline-block shadow-lg">{primaryCta}</a></div><div className="max-w-5xl mx-auto rounded-2xl overflow-hidden border border-white/15 shadow-2xl p-2 bg-[#0f111a]"><img src={appFrameImg} alt="App" className="w-full rounded-xl"/></div></section>
+        <section className="py-20 px-6 bg-[#090a0f] text-white text-center font-sans"><div className="max-w-4xl mx-auto mb-10"><span className="px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 uppercase mb-4 inline-block">{badge}</span><h1 className="text-4xl font-extrabold mb-3">{headline}</h1><p className="text-slate-400 text-sm max-w-xl mx-auto mb-6">{subhead}</p><Link href="/services" className="px-8 py-3 bg-cyan-500 text-slate-950 font-bold rounded-xl text-xs inline-block shadow-lg">{primaryCta}</Link></div><div className="max-w-5xl mx-auto rounded-2xl overflow-hidden border border-white/15 shadow-2xl p-2 bg-[#0f111a]"><img src={appFrameImg} alt="App" className="w-full rounded-xl"/></div></section>
       )
     },
     HeroFormCapture: {
@@ -1922,7 +1923,7 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       fields: { title: { type: 'text' }, subhead: { type: 'text' }, buttonText: { type: 'text' } },
       defaultProps: { title: 'Cinematic High Impact Experience', subhead: 'Turn website visitors into high-value customers.', buttonText: 'Explore Cinematic Mode' },
       render: ({ title, subhead, buttonText }) => (
-        <section className="py-24 px-6 bg-[#090a0f] text-white font-sans text-center relative overflow-hidden"><div className="max-w-4xl mx-auto relative z-10"><h2 className="text-4xl font-black mb-3">{title}</h2><p className="text-sm text-slate-400 mb-8">{subhead}</p><a href="/services" className="px-8 py-3.5 bg-cyan-500 text-slate-950 font-black rounded-xl text-xs inline-block">{buttonText}</a></div></section>
+        <section className="py-24 px-6 bg-[#090a0f] text-white font-sans text-center relative overflow-hidden"><div className="max-w-4xl mx-auto relative z-10"><h2 className="text-4xl font-black mb-3">{title}</h2><p className="text-sm text-slate-400 mb-8">{subhead}</p><Link href="/services" className="px-8 py-3.5 bg-cyan-500 text-slate-950 font-black rounded-xl text-xs inline-block">{buttonText}</Link></div></section>
       )
     },
     CtaBookDemoCalendar: {
@@ -2102,7 +2103,7 @@ const puckConfig: Config<ComponentProps, RootProps> = {
       fields: { brandName: { type: 'text' }, col1Title: { type: 'text' }, col2Title: { type: 'text' }, copyrightText: { type: 'text' } },
       defaultProps: { brandName: 'ENTERPRISE MAP', col1Title: 'Platform Modules', col2Title: 'Developer Hub', copyrightText: '© 2026 Enterprise Flow Inc.' },
       render: ({ brandName, col1Title, col2Title, copyrightText }) => (
-        <footer className="py-12 px-8 bg-[#090a0f] border-t border-white/10 text-white font-sans"><div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-xs"><div><strong className="text-white text-sm block mb-2">{brandName}</strong><span className="text-slate-400 text-[10px]">Multi-tenant Web Studio</span></div><div><strong className="text-cyan-400 block mb-2">{col1Title}</strong><ul className="space-y-1 text-slate-400 text-[11px]"><li key="fm1"><Link href="/">Home</Link></li><li key="fm2"><a href="/about">About Us</a></li><li key="fm3"><a href="/services">Services</a></li></ul></div><div><strong className="text-sky-400 block mb-2">{col2Title}</strong><ul className="space-y-1 text-slate-400 text-[11px]"><li key="fm4"><a href="/pricing">Pricing</a></li><li key="fm5"><a href="/contact">Contact</a></li></ul></div><div><strong className="text-purple-400 block mb-2">Legal</strong><ul className="space-y-1 text-slate-400 text-[11px]"><li key="fm6">Privacy Policy</li><li key="fm7">Terms of Service</li></ul></div></div><div className="border-t border-white/5 mt-8 pt-4 text-center text-[10px] text-slate-500">{copyrightText}</div></footer>
+        <footer className="py-12 px-8 bg-[#090a0f] border-t border-white/10 text-white font-sans"><div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-xs"><div><strong className="text-white text-sm block mb-2">{brandName}</strong><span className="text-slate-400 text-[10px]">Multi-tenant Web Studio</span></div><div><strong className="text-cyan-400 block mb-2">{col1Title}</strong><ul className="space-y-1 text-slate-400 text-[11px]"><li key="fm1"><Link href="/">Home</Link></li><li key="fm2"><a href="/about">About Us</a></li><li key="fm3"><Link href="/services">Services</Link></li></ul></div><div><strong className="text-sky-400 block mb-2">{col2Title}</strong><ul className="space-y-1 text-slate-400 text-[11px]"><li key="fm4"><a href="/pricing">Pricing</a></li><li key="fm5"><a href="/contact">Contact</a></li></ul></div><div><strong className="text-purple-400 block mb-2">Legal</strong><ul className="space-y-1 text-slate-400 text-[11px]"><li key="fm6">Privacy Policy</li><li key="fm7">Terms of Service</li></ul></div></div><div className="border-t border-white/5 mt-8 pt-4 text-center text-[10px] text-slate-500">{copyrightText}</div></footer>
       )
     },
     FooterSocialIconsOnly: {
@@ -2157,7 +2158,7 @@ const puckConfig: Config<ComponentProps, RootProps> = {
         <footer className="py-12 px-8 bg-[#0a0c14] border-t border-white/10 font-sans text-white text-xs">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
             <div><div className="font-extrabold text-sm text-cyan-400 mb-2">{brandName}</div><p className="text-[10px] text-slate-400">Next-generation visual web building architecture.</p></div>
-            <div><strong className="text-white block mb-2">{col1Title}</strong><div className="space-y-1 text-slate-400 text-[11px]"><a href="/services" className="block">Web Engine</a><a href="/pricing" className="block">Pricing</a></div></div>
+            <div><strong className="text-white block mb-2">{col1Title}</strong><div className="space-y-1 text-slate-400 text-[11px]"><Link href="/services" className="block">Web Engine</Link><a href="/pricing" className="block">Pricing</a></div></div>
             <div><strong className="text-white block mb-2">{col2Title}</strong><div className="space-y-1 text-slate-400 text-[11px]"><a href="/about" className="block">About Us</a><a href="/contact" className="block">Contact</a></div></div>
           </div>
           <div className="border-t border-white/5 mt-8 pt-4 text-center text-[10px] text-slate-500">{copyrightText}</div>
@@ -2720,7 +2721,8 @@ export default function PuckTemplateStudio({
 
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
-    setMounted(true)
+    const t = setTimeout(() => setMounted(true), 0)
+    return () => clearTimeout(t)
   }, [])
 
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
@@ -2967,12 +2969,14 @@ export default function PuckTemplateStudio({
 
       {/* FEEDBACK TOAST */}
       {feedback && (
-        <div className={`absolute top-16 right-6 z-50 flex items-center gap-2.5 px-4 py-2.5 rounded-xl border text-xs font-bold shadow-xl animate-in slide-in-from-top-2 ${
-          feedback.type === 'success' ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300' : 'bg-rose-500/20 border-rose-500/40 text-rose-300'
-        }`}>
-          {feedback.type === 'success' ? <Check size={16} /> : <AlertTriangle size={16} />}
-          <span>{feedback.message}</span>
-        </div>
+        <Alert
+          type={feedback.type}
+          message={feedback.message}
+          onDismiss={() => setFeedback(null)}
+          iconSize={16}
+          toast
+          className="absolute top-16 right-6 z-50 shadow-xl"
+        />
       )}
 
       {/* MAIN PUCK EDITOR WORKSPACE */}

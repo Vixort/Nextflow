@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import {
-  User, Camera, Save, ArrowLeft, Loader2, Lock, Sliders, Key,
-  CheckCircle2, AlertTriangle, X, Check, Eye, EyeOff, Shield, Bell, Sparkles
+User, Camera, Save, ArrowLeft, Loader2, Lock, Sliders, Key,
+  Eye, EyeOff, Shield, Bell, Sparkles
 } from 'lucide-react'
+import { Alert } from '@/components/ui/alert'
 
 type TabType = 'profile' | 'security' | 'preferences'
 
@@ -179,15 +180,12 @@ export default function SettingsPage() {
 
         {/* Feedback Alert */}
         {feedback && (
-          <div className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl border text-xs font-semibold backdrop-blur-md ${
-            feedback.type === 'success'
-              ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
-              : 'bg-rose-500/10 border-rose-500/30 text-rose-300'
-          }`}>
-            {feedback.type === 'success' ? <CheckCircle2 size={15} /> : <AlertTriangle size={15} />}
-            <span>{feedback.message}</span>
-            <button onClick={() => setFeedback(null)} className="ml-auto text-slate-400 hover:text-white"><X size={14} /></button>
-          </div>
+          <Alert
+            type={feedback.type}
+            message={feedback.message}
+            onDismiss={() => setFeedback(null)}
+            iconSize={15}
+          />
         )}
 
         {/* Home Navbar Style Sub-Nav Tabs (Underline Glow) */}

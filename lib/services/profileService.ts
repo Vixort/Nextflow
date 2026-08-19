@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { Database } from '@/types/supabase'
 import { logger } from '@/lib/logger'
 import { withRetry } from '@/lib/utils/retry'
@@ -10,7 +10,7 @@ export async function getProfileById(userId: string): Promise<Profile | null> {
   if (!userId) throw new Error('User ID is required')
 
   return withRetry(async () => {
-    const supabase = await createClient()
+    const supabase = createAdminClient()
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
@@ -31,7 +31,7 @@ export async function updateProfile(userId: string, input: UpdateProfileInput): 
   if (!userId) throw new Error('User ID is required')
 
   return withRetry(async () => {
-    const supabase = await createClient()
+    const supabase = createAdminClient()
     const { data, error } = await supabase
       .from('profiles')
       .update({ ...input, updated_at: new Date().toISOString() })

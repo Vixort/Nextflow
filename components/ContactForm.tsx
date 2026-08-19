@@ -24,6 +24,7 @@ import {
   Wand2,
   type LucideIcon,
 } from 'lucide-react'
+import { Alert } from '@/components/ui/alert'
 import {
   BUDGETS,
   BUSINESS_TYPES,
@@ -207,10 +208,13 @@ function postTrack(sessionKey: string, events: { k: string; v: string }[]) {
   }).catch(() => {})
 }
 
-export default function ContactForm({ content }: { content?: ContactContent | null }) {
-  const [step, setStep] = useState(0)
-  const [direction, setDirection] = useState(1)
-  const [draft, setDraft] = useState<Draft>(initialDraft)
+export default function ContactForm({
+  content,
+  initialServiceType,
+}: {
+  content?: ContactContent | null
+  initialServiceType?: string
+}) {
   const [status, setStatus] = useState<Status>('idle')
   const [website, setWebsite] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
@@ -225,6 +229,15 @@ export default function ContactForm({ content }: { content?: ContactContent | nu
   const showPhone = content?.show_phone ?? true
   const showMessage = content?.show_message ?? true
   const submitLabel = content?.submit_label || 'Send inquiry'
+
+  // Only honor an initial service when it is a real selectable option
+  // (guards against hand-crafted ?service= values).
+  const validInitialService =
+    initialServiceType && services.includes(initialServiceType) ? initialServiceType : undefined
+
+  const [step, setStep] = useState(validInitialService ? 1 : 0)
+  const [direction, setDirection] = useState(1)
+  const [draft, setDraft] = useState<Draft>({ ...initialDraft, serviceType: validInitialService ?? '' })
 
   // Session trail: one random id per form mount; every pick / typing burst
   // is pushed fire-and-forget to /api/contact/track (capped by the server).
@@ -741,7 +754,7 @@ export default function ContactForm({ content }: { content?: ContactContent | nu
                 </div>
 
                 {status === 'error' && (
-                  <p className="mt-3 text-xs font-semibold text-rose-400">{errorMsg}</p>
+                  <Alert type="error" message={errorMsg} className="mt-3" compact />
                 )}
               </div>
             )}

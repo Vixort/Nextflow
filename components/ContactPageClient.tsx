@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowLeft, Clock3, Lock, Mail, ShieldCheck, Zap } from 'lucide-react'
 import Navbar from '@/components/Navbar'
@@ -17,8 +18,10 @@ const promises = [
 ]
 
 export default function ContactPageClient() {
-  const [settings, setSettings] = useState<{ enabled: boolean; content: ContactContent } | null>(null)
+  const [settings, setSettings] = useState<{ enabled: boolean; content: ContactContent; support_email?: string } | null>(null)
   const [loaded, setLoaded] = useState(false)
+  const searchParams = useSearchParams()
+  const initialService = searchParams.get('service') ?? undefined
 
   useEffect(() => {
     let cancelled = false
@@ -26,7 +29,7 @@ export default function ContactPageClient() {
       .then((res) => (res.ok ? res.json() : null))
       .then((d) => {
         if (cancelled || !d?.data) return
-        setSettings({ enabled: !!d.data.enabled, content: d.data.content })
+        setSettings({ enabled: !!d.data.enabled, content: d.data.content, support_email: d.data.support_email || undefined })
       })
       .catch(() => {})
       .finally(() => {
@@ -157,13 +160,21 @@ export default function ContactPageClient() {
                         {settings.content.closed_text}
                       </p>
                     )}
+                    {settings?.support_email && (
+                      <a
+                        href={`mailto:${settings.support_email}`}
+                        className="relative mt-4 inline-flex items-center gap-2 text-xs font-bold text-cyan-300 hover:text-cyan-200 transition-colors"
+                      >
+                        <Mail size={13} /> {settings.support_email}
+                      </a>
+                    )}
                     <p className="relative mt-8 text-[10px] text-[#52525b] font-semibold uppercase tracking-widest">
                       Please check back later
                     </p>
                   </div>
                 </motion.div>
               ) : (
-                <ContactForm key="form" content={settings?.content} />
+                <ContactForm key={initialService ?? 'form'} content={settings?.content} initialServiceType={initialService} />
               )}
             </AnimatePresence>
           </motion.div>

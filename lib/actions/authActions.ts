@@ -62,7 +62,7 @@ export async function registerAction(input: RegisterInput): Promise<ActionResult
         email: validatedInput.email,
         username: validatedInput.username,
         password_hash: passwordHash,
-        role: validatedInput.role,
+        role: 'user', // always 'user' — admin roles are granted by admins only
       })
       .select('id, email, username, role, created_at')
       .single()

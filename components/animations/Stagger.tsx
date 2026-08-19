@@ -74,16 +74,18 @@ export function StaggerItem({
   children,
   className,
   direction,
+  onClick,
 }: {
   children: ReactNode
   className?: string
   direction?: Direction
+  onClick?: () => void
 }) {
   const inherited = useContext(DirectionContext)
   const dir = direction ?? inherited
 
   return (
-    <motion.div className={className} custom={dir} variants={itemVariants}>
+    <motion.div className={className} custom={dir} variants={itemVariants} onClick={onClick}>
       {children}
     </motion.div>
   )

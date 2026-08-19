@@ -4,6 +4,7 @@ import { hashPassword } from '@/lib/auth/password'
 import { signToken } from '@/lib/auth/jwt'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { logger } from '@/lib/logger'
+import { getGeneralSettings, getSecuritySettings } from '@/lib/auth/securitySettings'
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,7 +23,20 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { email, username, password, role } = parseResult.data
+    // Public registration can be disabled from admin Settings.
+    const general = await getGeneralSettings()
+    if (!general.public_registration) {
+      return NextResponse.json(
+        {
+          status: 403,
+          error: 'Registration is currently disabled',
+          message: 'การสมัครสมาชิกถูกปิดชั่วคราว กรุณาติดต่อผู้ดูแลระบบ',
+        },
+        { status: 403 }
+      )
+    }
+
+    const { email, username, password } = parseResult.data
     const supabase = createAdminClient()
 
     // Check Duplicate Email or Username
@@ -53,7 +67,7 @@ export async function POST(request: NextRequest) {
         email,
         username,
         password_hash: passwordHash,
-        role,
+        role: 'user', // always 'user' — admin roles are granted by admins only
       })
       .select('id, email, username, role, created_at')
       .single()
@@ -66,13 +80,17 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Issue JWT Token
-    const token = await signToken({
-      id: newUser.id,
-      email: newUser.email,
-      username: newUser.username,
-      role: newUser.role,
-    })
+    // Issue JWT Token (expiry follows System Settings → Security → Session Expiry)
+    const security = await getSecuritySettings()
+    const token = await signToken(
+      {
+        id: newUser.id,
+        email: newUser.email,
+        username: newUser.username,
+        role: newUser.role,
+      },
+      `${security.session_timeout_days}d`
+    )
 
     const response = NextResponse.json(
       {

@@ -135,10 +135,43 @@ export type AiChatLog = {
   created_at: string
 }
 
+export type AuthLockout = {
+  lock_key: string
+  failed_count: number
+  locked_until: string | null
+  last_fail_at: string
+}
+
+export type RateLimit = {
+  fingerprint: string
+  endpoint: string
+  window_start: string
+  count: number
+}
+
 type ContactSessionEvent = {
   t: number
   k: string
   v: string
+}
+
+export type Service = {
+  id: string
+  title: string
+  slug: string
+  icon: string
+  color: string
+  description: string
+  features: string[]
+  outcome: string
+  deliverables: string[]
+  best_for: string[]
+  timeline: string
+  contact_service: string
+  sort_order: number
+  is_active: boolean
+  created_at: string
+  updated_at: string
 }
 
 export type ContactSession = {
@@ -171,6 +204,7 @@ export type Database = {
           full_name: string | null
           avatar_url: string | null
           role: UserRole
+          token_version: number
           created_at: string
           updated_at: string
         }
@@ -182,6 +216,7 @@ export type Database = {
           full_name?: string | null
           avatar_url?: string | null
           role?: UserRole
+          token_version?: number
           created_at?: string
           updated_at?: string
         }
@@ -193,6 +228,7 @@ export type Database = {
           full_name?: string | null
           avatar_url?: string | null
           role?: UserRole
+          token_version?: number
           created_at?: string
           updated_at?: string
         }
@@ -287,12 +323,42 @@ export type Database = {
           },
         ]
       }
+      services: {
+        Row: Service
+        Insert: Omit<Service, 'id' | 'created_at' | 'updated_at'>
+        Update: Partial<Service>
+        Relationships: []
+      }
+      auth_lockouts: {
+        Row: AuthLockout
+        Insert: AuthLockout
+        Update: Partial<AuthLockout>
+        Relationships: []
+      }
+      rate_limits: {
+        Row: RateLimit
+        Insert: Pick<RateLimit, 'fingerprint' | 'endpoint' | 'window_start'> & Partial<Pick<RateLimit, 'count'>>
+        Update: Partial<RateLimit>
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      rate_limit_tick: {
+        Args: {
+          p_fingerprint: string
+          p_endpoint: string
+          p_window_start: string
+          p_max: number
+        }
+        Returns: number
+      }
+      bump_token_versions: {
+        Args: Record<string, never>
+        Returns: number
+      }
     }
     Enums: {
       [_ in never]: never

@@ -13,7 +13,7 @@ import {
   Mail, MessageSquare, CheckCircle2, SlidersHorizontal, Sparkles, Menu,
   ArrowUp, ArrowDown, Plus, EyeOff, FileText, HelpCircle, DollarSign,
   Layout, MessageSquareQuote, Image as ImageIcon, Monitor, Smartphone,
-  LayoutTemplate, Copy, Download, FileUp, Bot, KeyRound, Power
+  LayoutTemplate, Copy, Download, FileUp, Bot, KeyRound, Power, Boxes
 } from 'lucide-react'
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -21,6 +21,8 @@ import {
 } from 'recharts'
 import DynamicCustomSection, { CustomSectionData } from '@/components/DynamicCustomSection'
 import PuckTemplateStudio from '@/components/PuckTemplateStudio'
+import ServicesTab from '@/components/admin/ServicesTab'
+import { Alert } from '@/components/ui/alert'
 import { WebsiteTemplate } from '@/types/supabase'
 import { LUMINA_WHITE_STUDIO_PROJECT } from '@/lib/puck/multiPageUtils'
 import { PRESET_TAG_GROUPS } from '@/lib/puck/templateTags'
@@ -113,6 +115,7 @@ const NAV_ITEMS = [
   { id: 'Users', icon: Users, label: 'Users' },
   { id: 'Templates', icon: LayoutTemplate, label: 'Website Templates' },
   { id: 'Sections', icon: Layers, label: 'Page Components' },
+  { id: 'Services', icon: Boxes, label: 'Services' },
   { id: 'AI', icon: Bot, label: 'AI Assistant' },
   { id: 'Contact', icon: Mail, label: 'Contact Inbox' },
   { id: 'Logs', icon: ScrollText, label: 'Audit Trail' },
@@ -300,6 +303,7 @@ export default function NextflowAdminDashboard() {
           {activeTab === 'Users' && <UsersTab allUsers={allUsers} currentUser={adminUser} onRefresh={fetchAll} />}
           {activeTab === 'Templates' && <TemplatesTab onOpenStudio={template => setActiveStudioTemplate(template)} />}
           {activeTab === 'Sections' && <SectionsTab />}
+          {activeTab === 'Services' && <ServicesTab />}
           {activeTab === 'AI' && <AiSettingsTab />}
           {activeTab === 'Contact' && <ContactTab />}
           {activeTab === 'Logs' && <LogsTab />}
@@ -473,15 +477,10 @@ function UsersTab({ allUsers, currentUser, onRefresh }: { allUsers: UserRecord[]
       </div>
 
       {error && (
-        <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-semibold">
-          <AlertTriangle size={15} /> {error}
-          <button onClick={() => setError(null)} className="ml-auto hover:text-white"><X size={14} /></button>
-        </div>
+        <Alert type="error" message={error} onDismiss={() => setError(null)} />
       )}
       {successMsg && (
-        <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold">
-          <Check size={15} /> {successMsg}
-        </div>
+        <Alert type="success" message={successMsg} iconSize={15} />
       )}
 
       <div className="flex gap-3 flex-wrap">
@@ -1069,14 +1068,10 @@ function TemplatesTab({ onOpenStudio }: { onOpenStudio: (tpl: Partial<WebsiteTem
             </div>
 
             {impSuccess && (
-              <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-bold">
-                <CheckCircle2 size={15} /> {impSuccess}
-              </div>
+              <Alert type="success" message={impSuccess} compact />
             )}
             {impError && (
-              <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-rose-500/15 border border-rose-500/30 text-rose-300 font-bold">
-                <AlertTriangle size={15} /> {impError}
-              </div>
+              <Alert type="error" message={impError} compact />
             )}
 
             <div className="space-y-3">
@@ -1372,13 +1367,11 @@ function SectionsTab() {
       </div>
 
       {feedback && (
-        <div className={`flex items-center gap-3 px-4 py-2.5 rounded-xl border text-xs font-bold ${
-          feedback.type === 'success' ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300' : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
-        }`}>
-          {feedback.type === 'success' ? <CheckCircle2 size={16} /> : <AlertTriangle size={16} />}
-          <span>{feedback.message}</span>
-          <button onClick={() => setFeedback(null)} className="ml-auto text-slate-400 hover:text-white"><X size={14} /></button>
-        </div>
+        <Alert
+          type={feedback.type}
+          message={feedback.message}
+          onDismiss={() => setFeedback(null)}
+        />
       )}
 
       {/* Section List Table / Cards */}
@@ -1860,19 +1853,49 @@ function EventTypeBadge({ type }: { type: ActivityLogItem['event_type'] }) {
    SETTINGS TAB
    ═══════════════════════════════════════════════════════════ */
 
-type SettingsCategory = 'general' | 'security' | 'workflow' | 'notifications'
+type SettingsCategory = 'general' | 'security' | 'traffic'
 
 function SettingsTab() {
   const [activeCategory, setActiveCategory] = useState<SettingsCategory>('general')
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [settingsData, setSettingsData] = useState<any>({
-    general: { platform_name: 'NEXTFLOW', support_email: 'support@nextflow.dev', maintenance_mode: false, public_registration: true },
-    security: { session_timeout_days: 7, max_login_attempts: 5, require_email_verify: false, mfa_required: false },
-    workflow: { max_concurrent_jobs: 10, default_timeout_minutes: 30, log_retention_days: 30, auto_retry_failed: true },
-    notifications: { alert_email: 'admin@nextflow.com', slack_webhook: '', notify_on_failure: true },
+    general: { platform_name: 'NEXTFLOW', support_email: 'support@nextflow.dev', maintenance_mode: false, maintenance_message: '', public_registration: true },
+    security: { session_timeout_days: 7, max_login_attempts: 5, lockout_minutes: 15 },
+    traffic: { rate_limit_enabled: true, rate_limit_per_min: 60, payload_limit_mb: 1 },
   })
   const [feedback, setFeedback] = useState<{ type: 'success' | 'error'; message: string } | null>(null)
+  const [confirmRelogin, setConfirmRelogin] = useState(false)
+  const [reloginBusy, setReloginBusy] = useState(false)
+
+  const handleForceRelogin = async () => {
+    if (!confirmRelogin) {
+      setConfirmRelogin(true)
+      setTimeout(() => setConfirmRelogin(false), 5000)
+      return
+    }
+    setReloginBusy(true)
+    setFeedback(null)
+    try {
+      const res = await fetch('/api/admin/settings', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'force-relogin' }),
+      })
+      const d = await res.json()
+      if (res.ok) {
+        setFeedback({ type: 'success', message: d.message || 'All sessions revoked.' })
+        setTimeout(() => setFeedback(null), 4000)
+      } else {
+        setFeedback({ type: 'error', message: d.error || 'Failed to revoke sessions.' })
+      }
+    } catch {
+      setFeedback({ type: 'error', message: 'Network error.' })
+    } finally {
+      setConfirmRelogin(false)
+      setReloginBusy(false)
+    }
+  }
 
   const fetchSettings = useCallback(async () => {
     setLoading(true)
@@ -1907,8 +1930,8 @@ function SettingsTab() {
       const data = await res.json()
 
       if (res.ok) {
-        setFeedback({ type: 'success', message: `Saved "${categoryKey}" settings to Supabase.` })
-        setTimeout(() => setFeedback(null), 3500)
+        setFeedback({ type: 'success', message: `Saved "${categoryKey}" settings — live now (edge cache refreshes within ~15s).` })
+        setTimeout(() => setFeedback(null), 4500)
       } else {
         setFeedback({ type: 'error', message: data.error || 'Failed to save settings.' })
       }
@@ -1930,27 +1953,26 @@ function SettingsTab() {
   }
 
   const categories = [
-    { id: 'general', label: 'General Platform', icon: SlidersHorizontal, desc: 'Platform identity' },
-    { id: 'security', label: 'Security & Auth', icon: Lock, desc: 'Sessions & passwords' },
-    { id: 'workflow', label: 'Workflow Engine', icon: Zap, desc: 'Execution limits' },
-    { id: 'notifications', label: 'Alerts & Webhooks', icon: Bell, desc: 'Failure webhooks' },
+    { id: 'general', label: 'General', icon: SlidersHorizontal, desc: 'Brand & availability' },
+    { id: 'security', label: 'Security & Sessions', icon: Lock, desc: 'Auth, lockout, session expiry' },
+    { id: 'traffic', label: 'Traffic & Protection', icon: Zap, desc: 'Rate & payload limits' },
   ]
+
+  const fieldCls = "w-full h-9 px-3.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white focus:outline-none focus:border-cyan-400 transition-colors"
 
   return (
     <div className="max-w-[1400px] mx-auto space-y-5 animate-in fade-in duration-500">
       <div>
         <h1 className="text-xl font-extrabold text-white tracking-tight">System Settings</h1>
-        <p className="text-xs text-slate-400 mt-0.5">Workspace parameters persisted to Supabase.</p>
+        <p className="text-xs text-slate-400 mt-0.5">Every setting here is enforced by the platform — persisted to Supabase and read at runtime.</p>
       </div>
 
       {feedback && (
-        <div className={`flex items-center gap-3 px-4 py-2.5 rounded-xl border text-xs font-bold ${
-          feedback.type === 'success' ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300' : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
-        }`}>
-          {feedback.type === 'success' ? <CheckCircle2 size={16} /> : <AlertTriangle size={16} />}
-          <span>{feedback.message}</span>
-          <button onClick={() => setFeedback(null)} className="ml-auto text-slate-400 hover:text-white"><X size={14} /></button>
-        </div>
+        <Alert
+          type={feedback.type}
+          message={feedback.message}
+          onDismiss={() => setFeedback(null)}
+        />
       )}
 
       {loading ? (
@@ -1985,7 +2007,8 @@ function SettingsTab() {
             {activeCategory === 'general' && (
               <div className="space-y-6">
                 <div className="border-b border-white/10 pb-3">
-                  <h2 className="text-sm font-bold text-white">General Platform Identity</h2>
+                  <h2 className="text-sm font-bold text-white">General — Brand & Availability</h2>
+                  <p className="text-[10px] text-slate-500 mt-1">Applied to the browser title, maintenance page, and contact closed state. Takes effect instantly (edge cache within ~15s).</p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1995,8 +2018,9 @@ function SettingsTab() {
                       type="text"
                       value={settingsData.general.platform_name}
                       onChange={e => updateField('general', 'platform_name', e.target.value)}
-                      className="w-full h-9 px-3.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white focus:outline-none focus:border-cyan-400 transition-colors"
+                      className={fieldCls}
                     />
+                    <p className="text-[9px] text-slate-500 mt-1">Shown in the browser tab title and maintenance page.</p>
                   </div>
                   <div>
                     <label className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider block mb-1">Support Email</label>
@@ -2004,23 +2028,35 @@ function SettingsTab() {
                       type="email"
                       value={settingsData.general.support_email}
                       onChange={e => updateField('general', 'support_email', e.target.value)}
-                      className="w-full h-9 px-3.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white focus:outline-none focus:border-cyan-400 transition-colors"
+                      className={fieldCls}
                     />
+                    <p className="text-[9px] text-slate-500 mt-1">Shown on the contact page when inquiries are closed.</p>
                   </div>
                 </div>
 
+                <div>
+                  <label className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider block mb-1">Maintenance Message</label>
+                  <textarea
+                    rows={2}
+                    value={settingsData.general.maintenance_message}
+                    onChange={e => updateField('general', 'maintenance_message', e.target.value)}
+                    placeholder="Optional message visitors see during maintenance."
+                    className="w-full px-3.5 py-2.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-400 transition-colors"
+                  />
+                </div>
+
                 <div className="space-y-3 pt-3 border-t border-white/10">
+                  <SettingToggleRow
+                    title="Maintenance Mode"
+                    description="Blocks the whole site (pages + API) for non-admin users. Admins keep access to the dashboard."
+                    checked={settingsData.general.maintenance_mode}
+                    onChange={val => updateField('general', 'maintenance_mode', val)}
+                  />
                   <SettingToggleRow
                     title="Public User Registration"
                     description="Allow new users to sign up from the register page."
                     checked={settingsData.general.public_registration}
                     onChange={val => updateField('general', 'public_registration', val)}
-                  />
-                  <SettingToggleRow
-                    title="Maintenance Mode"
-                    description="Restrict user access for platform updates."
-                    checked={settingsData.general.maintenance_mode}
-                    onChange={val => updateField('general', 'maintenance_mode', val)}
                   />
                 </div>
               </div>
@@ -2029,129 +2065,110 @@ function SettingsTab() {
             {activeCategory === 'security' && (
               <div className="space-y-6">
                 <div className="border-b border-white/10 pb-3">
-                  <h2 className="text-sm font-bold text-white">Security & Auth Policies</h2>
+                  <h2 className="text-sm font-bold text-white">Security & Sessions</h2>
+                  <p className="text-[10px] text-slate-500 mt-1">Applied on the next login / failed attempt. Existing sessions keep their original expiry.</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
                     <label className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider block mb-1">Session Expiry (Days)</label>
                     <input
                       type="number"
+                      min={1}
+                      max={365}
                       value={settingsData.security.session_timeout_days}
                       onChange={e => updateField('security', 'session_timeout_days', parseInt(e.target.value, 10) || 7)}
-                      className="w-full h-9 px-3.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white focus:outline-none focus:border-cyan-400 transition-colors"
+                      className={fieldCls}
                     />
+                    <p className="text-[9px] text-slate-500 mt-1">JWT lifetime for new logins.</p>
                   </div>
                   <div>
                     <label className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider block mb-1">Max Failed Logins</label>
                     <input
                       type="number"
+                      min={1}
+                      max={20}
                       value={settingsData.security.max_login_attempts}
                       onChange={e => updateField('security', 'max_login_attempts', parseInt(e.target.value, 10) || 5)}
-                      className="w-full h-9 px-3.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white focus:outline-none focus:border-cyan-400 transition-colors"
+                      className={fieldCls}
                     />
+                    <p className="text-[9px] text-slate-500 mt-1">Failures per IP + account before lockout.</p>
+                  </div>
+                  <div>
+                    <label className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider block mb-1">Lockout Duration (Mins)</label>
+                    <input
+                      type="number"
+                      min={1}
+                      max={1440}
+                      value={settingsData.security.lockout_minutes}
+                      onChange={e => updateField('security', 'lockout_minutes', parseInt(e.target.value, 10) || 15)}
+                      className={fieldCls}
+                    />
+                    <p className="text-[9px] text-slate-500 mt-1">How long a locked account stays blocked.</p>
                   </div>
                 </div>
 
-                <div className="space-y-3 pt-3 border-t border-white/10">
-                  <SettingToggleRow
-                    title="Require Email Verification"
-                    description="Require verification link before account activation."
-                    checked={settingsData.security.require_email_verify}
-                    onChange={val => updateField('security', 'require_email_verify', val)}
-                  />
-                  <SettingToggleRow
-                    title="Enforce Multi-Factor Auth (MFA)"
-                    description="Require 2-step verification for Admin/Owner roles."
-                    checked={settingsData.security.mfa_required}
-                    onChange={val => updateField('security', 'mfa_required', val)}
-                  />
+                <div className="pt-3 border-t border-white/10">
+                  <p className="text-xs font-bold text-white mb-1">Force Re-Login</p>
+                  <p className="text-[10px] text-slate-500 mb-3">Immediately invalidate every active session (including your own) — all users must sign in again.</p>
+                  <button
+                    onClick={handleForceRelogin}
+                    disabled={reloginBusy}
+                    className={`w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-extrabold border transition-colors cursor-pointer disabled:opacity-50 ${
+                      confirmRelogin
+                        ? 'bg-rose-500 text-white border-rose-500'
+                        : 'bg-rose-500/10 border-rose-500/30 text-rose-300 hover:bg-rose-500/20'
+                    }`}
+                  >
+                    {reloginBusy ? <Loader2 size={14} className="animate-spin" /> : confirmRelogin ? <AlertTriangle size={14} /> : <ShieldAlert size={14} />}
+                    {reloginBusy ? 'Revoking…' : confirmRelogin ? 'Click again to confirm — logs out EVERYONE including you' : 'Force Re-Login (revoke all sessions)'}
+                  </button>
                 </div>
               </div>
             )}
 
-            {activeCategory === 'workflow' && (
+            {activeCategory === 'traffic' && (
               <div className="space-y-6">
                 <div className="border-b border-white/10 pb-3">
-                  <h2 className="text-sm font-bold text-white">Workflow Engine Rules</h2>
+                  <h2 className="text-sm font-bold text-white">Traffic & Protection</h2>
+                  <p className="text-[10px] text-slate-500 mt-1">Enforced by middleware at the edge. Changes apply within ~15 seconds (instantly in dev).</p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div>
-                    <label className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider block mb-1">Max Concurrent Jobs</label>
-                    <input
-                      type="number"
-                      value={settingsData.workflow.max_concurrent_jobs}
-                      onChange={e => updateField('workflow', 'max_concurrent_jobs', parseInt(e.target.value, 10) || 10)}
-                      className="w-full h-9 px-3.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white focus:outline-none focus:border-cyan-400 transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider block mb-1">Timeout (Mins)</label>
-                    <input
-                      type="number"
-                      value={settingsData.workflow.default_timeout_minutes}
-                      onChange={e => updateField('workflow', 'default_timeout_minutes', parseInt(e.target.value, 10) || 30)}
-                      className="w-full h-9 px-3.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white focus:outline-none focus:border-cyan-400 transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider block mb-1">Log Retention (Days)</label>
-                    <input
-                      type="number"
-                      value={settingsData.workflow.log_retention_days}
-                      onChange={e => updateField('workflow', 'log_retention_days', parseInt(e.target.value, 10) || 30)}
-                      className="w-full h-9 px-3.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white focus:outline-none focus:border-cyan-400 transition-colors"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-3 pt-3 border-t border-white/10">
+                <div className="space-y-3 pt-1">
                   <SettingToggleRow
-                    title="Auto-Retry Failed Builds"
-                    description="Automatically retry failed workflow jobs."
-                    checked={settingsData.workflow.auto_retry_failed}
-                    onChange={val => updateField('workflow', 'auto_retry_failed', val)}
+                    title="Rate Limiting"
+                    description="Distributed per-fingerprint budget for /api and /auth routes. Turn off only for load testing."
+                    checked={settingsData.traffic.rate_limit_enabled}
+                    onChange={val => updateField('traffic', 'rate_limit_enabled', val)}
                   />
-                </div>
-              </div>
-            )}
-
-            {activeCategory === 'notifications' && (
-              <div className="space-y-6">
-                <div className="border-b border-white/10 pb-3">
-                  <h2 className="text-sm font-bold text-white">Alerts & Integration Webhooks</h2>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider block mb-1">Admin Alert Email</label>
+                    <label className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider block mb-1">Default Rate Limit (req/min)</label>
                     <input
-                      type="email"
-                      value={settingsData.notifications.alert_email}
-                      onChange={e => updateField('notifications', 'alert_email', e.target.value)}
-                      className="w-full h-9 px-3.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs text-white focus:outline-none focus:border-cyan-400 transition-colors"
+                      type="number"
+                      min={1}
+                      max={10000}
+                      value={settingsData.traffic.rate_limit_per_min}
+                      onChange={e => updateField('traffic', 'rate_limit_per_min', parseInt(e.target.value, 10) || 60)}
+                      className={fieldCls}
                     />
+                    <p className="text-[9px] text-slate-500 mt-1">Global budget. Sensitive endpoints (login, contact, AI chat) keep their own stricter limits.</p>
                   </div>
                   <div>
-                    <label className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider block mb-1">Slack Webhook URL</label>
+                    <label className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider block mb-1">Payload Limit (MB)</label>
                     <input
-                      type="url"
-                      placeholder="https://hooks.slack.com/..."
-                      value={settingsData.notifications.slack_webhook}
-                      onChange={e => updateField('notifications', 'slack_webhook', e.target.value)}
-                      className="w-full h-9 px-3.5 rounded-lg bg-white/[0.04] border border-white/10 text-xs font-mono text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-400 transition-colors"
+                      type="number"
+                      min={0.1}
+                      max={50}
+                      step={0.1}
+                      value={settingsData.traffic.payload_limit_mb}
+                      onChange={e => updateField('traffic', 'payload_limit_mb', parseFloat(e.target.value) || 1)}
+                      className={fieldCls}
                     />
+                    <p className="text-[9px] text-slate-500 mt-1">Max request body for POST/PUT/PATCH API routes (template ZIP import is exempt).</p>
                   </div>
-                </div>
-
-                <div className="space-y-3 pt-3 border-t border-white/10">
-                  <SettingToggleRow
-                    title="Instant Failure Alerts"
-                    description="Send immediate alerts when workflow jobs fail."
-                    checked={settingsData.notifications.notify_on_failure}
-                    onChange={val => updateField('notifications', 'notify_on_failure', val)}
-                  />
                 </div>
               </div>
             )}
@@ -2569,13 +2586,11 @@ function ContactTab() {
   return (
     <div className="space-y-5">
       {feedback && (
-        <div className={`flex items-center gap-3 px-4 py-2.5 rounded-xl border text-xs font-bold ${
-          feedback.type === 'success' ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300' : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
-        }`}>
-          {feedback.type === 'success' ? <CheckCircle2 size={16} /> : <AlertTriangle size={16} />}
-          <span>{feedback.message}</span>
-          <button onClick={() => setFeedback(null)} className="ml-auto text-slate-400 hover:text-white"><X size={14} /></button>
-        </div>
+        <Alert
+          type={feedback.type}
+          message={feedback.message}
+          onDismiss={() => setFeedback(null)}
+        />
       )}
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">
@@ -3127,13 +3142,11 @@ function AiSettingsTab() {
       </div>
 
       {feedback && (
-        <div className={`flex items-center gap-3 px-4 py-2.5 rounded-xl border text-xs font-bold ${
-          feedback.type === 'success' ? 'bg-emerald-500/15 border-emerald-500/30 text-emerald-300' : 'bg-rose-500/15 border-rose-500/30 text-rose-300'
-        }`}>
-          {feedback.type === 'success' ? <CheckCircle2 size={16} /> : <AlertTriangle size={16} />}
-          <span>{feedback.message}</span>
-          <button onClick={() => setFeedback(null)} className="ml-auto text-slate-400 hover:text-white"><X size={14} /></button>
-        </div>
+        <Alert
+          type={feedback.type}
+          message={feedback.message}
+          onDismiss={() => setFeedback(null)}
+        />
       )}
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-5">

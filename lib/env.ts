@@ -8,6 +8,10 @@ const envSchema = z.object({
   RESEND_API_KEY: z.string().optional(), // Contact form email delivery (Resend). Optional: DB still stores submissions without it.
   CONTACT_RECIPIENT_EMAIL: z.string().email().optional(), // Inbox that receives contact form inquiries
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
+  // JWT_SECRET is validated separately: REQUIRED in production (a
+  // missing secret would fall back to the hardcoded dev key and make
+  // every session token forgeable).
+  JWT_SECRET: z.string().min(32).optional(),
 })
 
 export function getEnv() {
@@ -19,6 +23,7 @@ export function getEnv() {
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     CONTACT_RECIPIENT_EMAIL: process.env.CONTACT_RECIPIENT_EMAIL,
     NODE_ENV: process.env.NODE_ENV,
+    JWT_SECRET: process.env.JWT_SECRET,
   })
 
   if (!result.success) {
@@ -35,6 +40,12 @@ export function getEnv() {
       isValid: false,
       errors: result.error.flatten().fieldErrors,
     }
+  }
+
+  // Hard requirement: the JWT signing secret must never be the
+  // hardcoded dev fallback in production.
+  if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
+    throw new Error('JWT_SECRET must be set in production — without it every session token is forgeable')
   }
 
   return { ...result.data, isValid: true }

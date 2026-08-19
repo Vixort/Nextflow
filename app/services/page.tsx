@@ -1,81 +1,21 @@
-'use client'
-
+import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import { motion } from 'framer-motion'
 import { Stagger, StaggerItem } from '@/components/animations/Stagger'
 import Reveal from '@/components/animations/Reveal'
 import { GooeyTextReveal } from '@/components/ui/gooey-text-reveal'
 import {
-  Globe,
-  Cpu,
-  Smartphone,
-  Boxes,
-  ShieldCheck,
-  Rocket,
   ArrowUpRight,
   Check,
   Zap,
   Activity,
   Layers,
+  ArrowRight,
 } from 'lucide-react'
+import { getServices } from '@/lib/services/catalog'
+import { SERVICE_ICONS, SERVICE_ICON_COLORS, type ServiceIconName } from '@/lib/services/icons'
 
-const services = [
-  {
-    id: '01',
-    title: 'Custom Web Platforms',
-    icon: Globe,
-    color: 'from-cyan-400 to-blue-600',
-    description:
-      'Awwwards-grade websites and full-scale web platforms built with modern frameworks. Blazing-fast, SEO-optimized, and engineered to scale from launch day.',
-    features: ['Enterprise Next.js apps', 'High-performance front-ends', 'Headless CMS & e-commerce'],
-  },
-  {
-    id: '02',
-    title: 'SaaS & Cloud Architecture',
-    icon: Boxes,
-    color: 'from-purple-400 to-indigo-600',
-    description:
-      'We design resilient, multi-tenant SaaS products — from data modeling and auth to billing, observability, and infrastructure that holds under real load.',
-    features: ['Multi-tenant backends', 'Cloud infrastructure (AWS/GCP)', 'CI/CD & observability'],
-  },
-  {
-    id: '03',
-    title: 'Mobile Applications',
-    icon: Smartphone,
-    color: 'from-emerald-400 to-teal-600',
-    description:
-      'Native and cross-platform mobile apps with a mobile-first philosophy. Seamless UX, offline support, and app-store-ready quality.',
-    features: ['iOS & Android', 'React Native / Flutter', 'Push, payments & offline'],
-  },
-  {
-    id: '04',
-    title: 'Event Technology',
-    icon: Cpu,
-    color: 'from-orange-400 to-pink-600',
-    description:
-      'Hardware and software integration for events — interactive booths, live IoT, real-time telemetry, and immersive digital orchestration.',
-    features: ['Interactive booths & kiosks', 'Live IoT & sensors', 'Real-time dashboards'],
-  },
-  {
-    id: '05',
-    title: 'Bespoke Software Projects',
-    icon: Rocket,
-    color: 'from-sky-400 to-cyan-600',
-    description:
-      'Custom platforms, internal tools, and complex integrations. We turn unique operational challenges into streamlined digital solutions that scale.',
-    features: ['Internal tools & portals', 'System integrations', 'Legacy modernization'],
-  },
-  {
-    id: '06',
-    title: 'Security & Reliability',
-    icon: ShieldCheck,
-    color: 'from-amber-400 to-red-600',
-    description:
-      'Security is not an afterthought. We build SOC-2-minded systems with audit trails, encrypted data, RBAC, and reliability baked into the architecture.',
-    features: ['Security audits', 'RBAC & encryption', 'SLOs & uptime guarantees'],
-  },
-]
+export const dynamic = 'force-dynamic'
 
 const process = [
   { step: '01', title: 'Discover', text: 'We map your goals, users, and constraints to define what success looks like.' },
@@ -84,18 +24,18 @@ const process = [
   { step: '04', title: 'Scale & Support', text: 'Post-launch monitoring, optimization, and a long-term partnership.' },
 ]
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getServices(true)
+
   return (
     <>
       <main className="min-h-screen bg-[#09090b] text-slate-100 relative overflow-hidden">
         <Navbar />
 
-        {/* ── TIGHT & COHESIVE SERVICES HERO ─────────────────────────────────── */}
+        {/* ── HERO ─────────────────────────────────────────────── */}
         <section className="relative pt-36 pb-20 px-6 flex flex-col items-center justify-center text-center max-w-5xl mx-auto">
-          {/* Ambient Lighting Background */}
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-cyan-500/[0.07] blur-[140px] rounded-full pointer-events-none" />
 
-          {/* Badge */}
           <Reveal direction="up">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold uppercase tracking-[0.2em]">
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
@@ -103,44 +43,33 @@ export default function ServicesPage() {
             </div>
           </Reveal>
 
-          {/* Unified Static Headline with staggered fade-in */}
           <div className="mt-8 overflow-hidden">
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.05] flex flex-wrap justify-center items-center gap-3 sm:gap-4">
-              <motion.span
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              >
-                WE
-              </motion.span>
-              <motion.span
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-                className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-violet-300 to-purple-400 inline-block"
-              >
-                DESIGN, BUILD & SHIP.
-              </motion.span>
+              <Reveal direction="up">
+                <span>WE</span>
+              </Reveal>
+              <Reveal direction="up" delay={0.15}>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-violet-300 to-purple-400 inline-block">
+                  DESIGN, BUILD & SHIP.
+                </span>
+              </Reveal>
             </h1>
           </div>
 
-          {/* Subtitle & Description */}
           <Reveal direction="up" delay={0.1} className="mt-5 space-y-4 max-w-2xl">
             <p className="text-xs sm:text-sm font-extrabold uppercase tracking-[0.25em] text-cyan-400/90">
               Full-Cycle Software Engineering
             </p>
-
             <p className="text-slate-300 text-base sm:text-xl font-light leading-relaxed">
               A software house that takes your product from a bold idea to production —
               architecture, engineering, and reliability under one roof.
             </p>
           </Reveal>
 
-          {/* Micro Capability Badges */}
           <Reveal direction="up" delay={0.2} className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-bold text-slate-300">
               <Layers size={14} className="text-cyan-400" />
-              <span>6 Core Disciplines</span>
+              <span>{services.length} Core Disciplines</span>
             </div>
             <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs font-bold text-slate-300">
               <Zap size={14} className="text-amber-400" />
@@ -153,74 +82,89 @@ export default function ServicesPage() {
           </Reveal>
         </section>
 
-        {/* ── Services Grid ───────────────────────────────────────── */}
+        {/* ── SERVICES GRID ────────────────────────────────────── */}
         <section className="relative py-20 px-6 max-w-[1400px] mx-auto border-t border-white/5">
-          <div className="mb-12">
-            <GooeyTextReveal mode="scroll" start="top 80%" duration={1.2} stagger={0.12}>
-              <h2 className="text-3xl sm:text-5xl font-extrabold tracking-[-0.04em] text-white leading-tight">
-                What we do best
-              </h2>
-            </GooeyTextReveal>
-            <Reveal direction="up" delay={0.1}>
-              <p className="text-slate-400 mt-4 max-w-xl">
-                Six core disciplines that cover the entire lifecycle of a digital product.
-              </p>
+          <div className="mb-12 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+            <div>
+              <GooeyTextReveal mode="scroll" start="top 80%" duration={1.2} stagger={0.12}>
+                <h2 className="text-3xl sm:text-5xl font-extrabold tracking-[-0.04em] text-white leading-tight">
+                  What we do best
+                </h2>
+              </GooeyTextReveal>
+              <Reveal direction="up" delay={0.1}>
+                <p className="text-slate-400 mt-4 max-w-xl">
+                  {services.length} core disciplines that cover the entire lifecycle of a digital product.
+                </p>
+              </Reveal>
+            </div>
+            <Reveal direction="up" delay={0.15}>
+              <Link
+                href="/contact"
+                className="group inline-flex items-center gap-2 px-5 py-3 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 text-xs font-bold uppercase tracking-widest hover:bg-cyan-500/20 transition-all"
+              >
+                Not sure what you need?
+                <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
+              </Link>
             </Reveal>
           </div>
 
           <Stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {services.map((service) => {
-              const Icon = service.icon
+            {services.map((service, index) => {
+              const Icon = SERVICE_ICONS[service.icon as ServiceIconName] ?? SERVICE_ICONS.Globe
+              const iconColor = SERVICE_ICON_COLORS[service.color] ?? 'text-cyan-400'
               return (
-                <StaggerItem
-                  key={service.id}
-                  className="group relative p-8 rounded-3xl bg-[#0d0e15] border border-white/5 overflow-hidden hover:bg-[#12141d] hover:border-white/10 transition-all duration-300 active:scale-[0.98] cursor-pointer flex flex-col justify-between"
-                >
-                  <div className={`absolute -right-20 -bottom-20 w-64 h-64 bg-gradient-to-br ${service.color} opacity-5 group-hover:opacity-20 blur-[80px] transition-opacity duration-700`} />
+                <StaggerItem key={service.id}>
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className="group relative flex flex-col justify-between h-full p-8 rounded-3xl bg-[#0d0e15] border border-white/5 overflow-hidden hover:bg-[#12141d] hover:border-white/15 transition-all duration-300 active:scale-[0.98] block"
+                  >
+                    {/* Ambient gradient glow */}
+                    <div className={`absolute -right-20 -bottom-20 w-64 h-64 bg-gradient-to-br ${service.color} opacity-[0.08] group-hover:opacity-25 blur-[80px] transition-opacity duration-700`} />
+                    {/* Top accent line */}
+                    <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${service.color} opacity-0 group-hover:opacity-60 transition-opacity duration-300`} />
 
-                  <div>
-                    <div className="flex items-start justify-between relative z-10">
-                      <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500 ease-out">
-                        <Icon className="w-6 h-6 text-slate-300 group-hover:text-cyan-400 transition-colors duration-300" />
+                    <div className="relative z-10">
+                      <div className="flex items-start justify-between">
+                        <Icon className={`w-7 h-7 ${iconColor} group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-500 ease-out`} strokeWidth={1.75} />
+                        <span className="text-3xl font-black text-white/[0.06] group-hover:text-white/[0.12] transition-colors">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
                       </div>
-                      <span className="text-xs font-mono text-slate-600 group-hover:text-slate-400 transition-colors">
-                        /{service.id}
+
+                      <h3 className="mt-6 text-2xl font-bold text-white tracking-tight">
+                        {service.title}
+                      </h3>
+                      <p className="mt-3 text-slate-400 text-sm leading-relaxed font-light">
+                        {service.description}
+                      </p>
+
+                      <ul className="mt-6 space-y-2.5">
+                        {service.features.map((f) => (
+                          <li key={f} className="flex items-center gap-2.5 text-sm text-slate-300">
+                            <Check className="w-4 h-4 text-cyan-400 shrink-0" />
+                            {f}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="mt-8 pt-6 border-t border-white/5 flex items-center justify-between relative z-10">
+                      <span className="flex items-center gap-2 text-xs uppercase tracking-wider text-slate-400 group-hover:text-cyan-300 transition-colors font-bold">
+                        Learn more
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </span>
+                      <span className="w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-slate-300 group-hover:bg-cyan-500 group-hover:border-cyan-400 group-hover:text-slate-950 transition-all duration-300">
+                        <ArrowUpRight className="w-4 h-4" />
                       </span>
                     </div>
-
-                    <h3 className="mt-6 text-2xl font-bold text-white tracking-tight relative z-10">
-                      {service.title}
-                    </h3>
-
-                    <p className="mt-3 text-slate-400 text-sm leading-relaxed font-light relative z-10">
-                      {service.description}
-                    </p>
-
-                    <ul className="mt-6 space-y-2.5 relative z-10">
-                      {service.features.map((f) => (
-                        <li key={f} className="flex items-center gap-2.5 text-sm text-slate-300">
-                          <Check className="w-4 h-4 text-cyan-400 shrink-0" />
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="mt-8 pt-6 border-t border-white/5 flex items-center justify-between relative z-10">
-                    <span className="text-xs uppercase tracking-wider text-slate-500 group-hover:text-slate-300 transition-colors font-bold">
-                      Learn more
-                    </span>
-                    <div className="w-9 h-9 rounded-full border border-white/10 bg-white/5 flex items-center justify-center group-hover:bg-cyan-500 group-hover:border-cyan-400 group-hover:text-slate-950 transition-all duration-300">
-                      <ArrowUpRight className="w-4 h-4" />
-                    </div>
-                  </div>
+                  </Link>
                 </StaggerItem>
               )
             })}
           </Stagger>
         </section>
 
-        {/* ── Process ─────────────────────────────────────────────── */}
+        {/* ── PROCESS ──────────────────────────────────────────── */}
         <section className="py-20 px-6 max-w-[1400px] mx-auto border-t border-white/5">
           <div className="mb-12 text-center">
             <GooeyTextReveal mode="scroll" start="top 85%" duration={1.2} stagger={0.12}>
@@ -244,7 +188,7 @@ export default function ServicesPage() {
           </Stagger>
         </section>
 
-        {/* ── CTA ─────────────────────────────────────────────────── */}
+        {/* ── CTA ──────────────────────────────────────────────── */}
         <section className="py-24 px-6 border-t border-white/5">
           <Reveal direction="up" className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-[-0.04em] text-white leading-tight">
@@ -253,9 +197,12 @@ export default function ServicesPage() {
             <p className="text-slate-400 mt-4 text-lg font-light">
               Tell us about your project. No sales pitch — just technical expertise.
             </p>
-            <button className="mt-8 px-8 py-4 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm tracking-wide transition-colors active:scale-95 cursor-pointer shadow-[0_0_25px_rgba(6,182,212,0.4)]">
-              Start a conversation
-            </button>
+            <Link
+              href="/contact"
+              className="mt-8 inline-flex items-center gap-2 px-8 py-4 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-sm tracking-wide transition-colors active:scale-95 shadow-[0_0_25px_rgba(6,182,212,0.4)]"
+            >
+              Start a conversation <ArrowRight size={16} />
+            </Link>
           </Reveal>
         </section>
       </main>

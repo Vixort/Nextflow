@@ -10,25 +10,26 @@ const DEFAULT_SETTINGS = {
     platform_name: 'NEXTFLOW',
     support_email: 'support@nextflow.dev',
     maintenance_mode: false,
+    maintenance_message: '',
     public_registration: true,
   },
   security: {
     session_timeout_days: 7,
     max_login_attempts: 5,
-    require_email_verify: false,
-    mfa_required: false,
+    lockout_minutes: 15,
   },
-  workflow: {
-    max_concurrent_jobs: 10,
-    default_timeout_minutes: 30,
-    log_retention_days: 30,
-    auto_retry_failed: true,
+  traffic: {
+    rate_limit_enabled: true,
+    rate_limit_per_min: 60,
+    payload_limit_mb: 1,
   },
-  notifications: {
-    alert_email: 'admin@nextflow.com',
-    slack_webhook: '',
-    notify_on_failure: true,
-  },
+}
+
+// Every category only accepts its own keys — anything else is dropped.
+const ALLOWED_KEYS: Record<string, string[]> = {
+  general: ['platform_name', 'support_email', 'maintenance_mode', 'maintenance_message', 'public_registration'],
+  security: ['session_timeout_days', 'max_login_attempts', 'lockout_minutes'],
+  traffic: ['rate_limit_enabled', 'rate_limit_per_min', 'payload_limit_mb'],
 }
 
 /**
@@ -50,10 +51,16 @@ export async function GET(request: NextRequest) {
 
     if (!error && dbSettings && dbSettings.length > 0) {
       dbSettings.forEach(item => {
-        if (item.key in mergedSettings) {
-          (mergedSettings as any)[item.key] = {
+        if (item.key in mergedSettings && item.value && typeof item.value === 'object') {
+          // Keep only known keys for this category (drops dead/legacy fields).
+          const allowed = ALLOWED_KEYS[item.key] ?? []
+          const clean: Record<string, unknown> = {}
+          for (const key of allowed) {
+            if (key in (item.value as Record<string, unknown>)) clean[key] = (item.value as Record<string, unknown>)[key]
+          }
+          ;(mergedSettings as any)[item.key] = {
             ...(mergedSettings as any)[item.key],
-            ...(item.value as any),
+            ...clean,
           }
         }
       })
@@ -78,14 +85,51 @@ export async function PATCH(request: NextRequest) {
 
   try {
     const body = await request.json()
+    const { action } = body
+
+    // Special action: invalidate every issued session token.
+    if (action === 'force-relogin') {
+      const supabase = createAdminClient()
+      const { data: affected, error } = await supabase.rpc('bump_token_versions')
+      if (error) {
+        console.error('[Settings Force Relogin Error]:', error)
+        return NextResponse.json({ status: 500, error: 'Failed to revoke sessions' }, { status: 500 })
+      }
+
+      logActivity({
+        userId: session.id,
+        username: session.username,
+        userRole: session.role,
+        eventType: 'admin.action',
+        action: 'FORCE_RELOGIN',
+        description: `Admin "${session.username}" revoked all active sessions (${affected ?? 0} accounts)`,
+        path: '/admin',
+        metadata: { affected_accounts: affected ?? 0 },
+        request,
+      }).catch(() => {})
+
+      return NextResponse.json({
+        status: 200,
+        message: `All active sessions revoked (${affected ?? 0} accounts). Every user must log in again.`,
+        data: { affected: affected ?? 0 },
+      })
+    }
+
     const { category, settings } = body
 
     if (!category || !settings || typeof settings !== 'object') {
       return NextResponse.json({ status: 400, error: 'Invalid settings payload' }, { status: 400 })
     }
 
-    if (!['general', 'security', 'workflow', 'notifications'].includes(category)) {
+    if (!(category in ALLOWED_KEYS)) {
       return NextResponse.json({ status: 400, error: 'Invalid settings category' }, { status: 400 })
+    }
+
+    // Keep only known keys for this category (drops dead/legacy fields).
+    const allowed = ALLOWED_KEYS[category]
+    const clean: Record<string, unknown> = {}
+    for (const key of allowed) {
+      if (key in settings) clean[key] = (settings as Record<string, unknown>)[key]
     }
 
     const supabase = createAdminClient()
@@ -96,7 +140,7 @@ export async function PATCH(request: NextRequest) {
       .upsert(
         {
           key: category,
-          value: settings,
+          value: clean,
           updated_at: new Date().toISOString(),
           updated_by: session.id || null,
         },

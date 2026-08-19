@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getContactSettings } from '@/lib/contact/settings'
+import { getGeneralSettings } from '@/lib/auth/securitySettings'
 
 export const dynamic = 'force-dynamic'
 
@@ -9,7 +10,14 @@ export const dynamic = 'force-dynamic'
 export async function GET() {
   try {
     const settings = await getContactSettings()
-    return NextResponse.json({ data: { enabled: settings.enabled, content: settings.content } })
+    const general = await getGeneralSettings()
+    return NextResponse.json({
+      data: {
+        enabled: settings.enabled,
+        content: settings.content,
+        support_email: general.support_email,
+      },
+    })
   } catch (err) {
     console.warn('[Contact Settings GET]', err)
     // Fail open to the built-in defaults so the page never breaks.
@@ -39,6 +47,7 @@ export async function GET() {
           budgets: ['Under ฿50K', '฿50K – ฿200K', '฿200K – ฿1M', '฿1M+', 'Not sure yet'],
           channels: ['Email', 'Phone', 'WhatsApp'],
         },
+        support_email: 'support@nextflow.dev',
       },
     })
   }

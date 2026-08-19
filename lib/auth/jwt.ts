@@ -1,5 +1,6 @@
 import { SignJWT, jwtVerify } from 'jose'
 import { NextRequest } from 'next/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import type { UserRole } from '@/types/supabase'
 
 export interface JWTPayload {
@@ -7,14 +8,18 @@ export interface JWTPayload {
   email: string
   username: string
   role: UserRole
+  tv: number // token_version — bumped to force re-login
 }
 
 const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || 'super-secret-jwt-key-nextflow-2026-secure-hash'
 )
 
-export async function signToken(payload: JWTPayload, expiresIn: string = '7d'): Promise<string> {
-  return new SignJWT({ ...payload })
+export async function signToken(
+  payload: Omit<JWTPayload, 'tv'> & { tv?: number },
+  expiresIn: string = '7d'
+): Promise<string> {
+  return new SignJWT({ ...payload, tv: payload.tv ?? 0 })
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime(expiresIn)
@@ -30,18 +35,41 @@ export async function verifyToken(token: string): Promise<JWTPayload | null> {
   }
 }
 
+// Checks the token's embedded token_version against the live users row.
+// A mismatch (e.g. admin bumped the version to force re-login) rejects
+// the session. Server-only; one indexed PK lookup per request.
+export async function isTokenVersionValid(payload: JWTPayload): Promise<boolean> {
+  if (typeof payload.tv !== 'number' || !payload.id) return false
+  try {
+    const supabase = createAdminClient()
+    const { data } = await supabase
+      .from('users')
+      .select('token_version')
+      .eq('id', payload.id)
+      .maybeSingle()
+    if (!data) return false // user deleted
+    return data.token_version === payload.tv
+  } catch {
+    return false
+  }
+}
+
 export async function getAuthSession(request: NextRequest): Promise<JWTPayload | null> {
   // Check Authorization Header
   const authHeader = request.headers.get('authorization')
   if (authHeader && authHeader.startsWith('Bearer ')) {
     const token = authHeader.split(' ')[1]
-    return verifyToken(token)
+    const payload = await verifyToken(token)
+    if (payload && (await isTokenVersionValid(payload))) return payload
+    return null
   }
 
   // Check HTTP-Only Cookie
   const cookieToken = request.cookies.get('token')?.value
   if (cookieToken) {
-    return verifyToken(cookieToken)
+    const payload = await verifyToken(cookieToken)
+    if (payload && (await isTokenVersionValid(payload))) return payload
+    return null
   }
 
   return null

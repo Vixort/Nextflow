@@ -8,7 +8,6 @@ export const registerSchema = z.object({
     .max(30, 'Username cannot exceed 30 characters')
     .regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores'),
   password: z.string().min(6, 'Password must be at least 6 characters long'),
-  role: z.enum(['user', 'admin']).default('user'),
 })
 
 export const loginSchema = z.object({
