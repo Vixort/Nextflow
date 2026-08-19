@@ -57,12 +57,16 @@ The user wants you to rewrite the copy of the SELECTED template to fit their pro
 "{{request}}"
 
 Below is the EDITABLE TEXT INVENTORY of the chosen template — every text field of every
-component instance, identified by its page id and component id, with the current value in quotes.
+component or HTML element, identified by its id (Puck: "pageId/componentId"; static HTML:
+"file/slotId") with the current value in quotes.
 
 Rules:
 - Rewrite copy across the WHOLE template: hero, navbar, features, stats, pricing,
-  testimonials, FAQ, CTA banners, and footer. Target MANY component ids, not one.
-- You may ONLY target componentId + field pairs listed in the inventory. Never invent ids or fields.
+  testimonials, FAQ, CTA banners, and footer. Target MANY ids, not one.
+- You may ONLY target ids listed in the inventory. Never invent ids or fields.
+- For Puck templates (inventory lines like "pageId/componentId (Type): field=\"value\""),
+  return overrides with componentId + field. For static HTML templates (inventory lines like
+  "file/slotId [tag]: text"), return overrides with file + id. Match the format of the inventory.
 - Values must be short, punchy, on-brand plain text under 40 words. Do not touch urls, css, images.
 - Keep every fact (prices, emails, phone numbers, addresses, existing brand names) unless the
   user explicitly asks to change it.
@@ -79,6 +83,8 @@ You MUST respond strictly in the following JSON format:
     { "componentId": "hero-1", "field": "title", "value": "Train Harder. Recover Faster." }
   ]
 }
+For static templates the overrides entries look like:
+{ "file": "index.html", "id": "i0", "value": "New nav label" }
 Include only items you actually changed. Do not include any markdown formatting like \`\`\`json. Return only raw JSON.
   `.trim(),
 

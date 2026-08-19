@@ -27,19 +27,7 @@ function sanitizeText(value: unknown): string {
 }
 
 // Tags whose text content is code or not visible copy.
-const SKIP_TAGS = new Set([
-  'script',
-  'style',
-  'noscript',
-  'template',
-  'textarea',
-  'select',
-  'option',
-  'title',
-  'head',
-  'svg',
-  'math',
-])
+import { SKIP_TAGS, MAX_ITEMS, MAX_TEXT_LEN, collapse } from './htmlRules'
 
 function isSkipElement(el: Element | null): boolean {
   while (el && el.nodeType === Node.ELEMENT_NODE) {
@@ -51,11 +39,6 @@ function isSkipElement(el: Element | null): boolean {
   }
   return false
 }
-
-const MAX_ITEMS = 25
-const MAX_TEXT_LEN = 200
-
-const collapse = (s: string) => s.replace(/\s+/g, ' ').trim()
 
 // Walks the DOM in document order and collects visible, deduped text snippets
 // with enough context (tag name) for Gemini to rewrite them sensibly.

@@ -92,7 +92,8 @@ export async function GET(request: NextRequest, context: StaticRouteCtx) {
     if (edits.length > 0) {
       const src = Buffer.from(finalBody).toString('utf8')
       const { html } = applyHtmlTextEdits(src, edits)
-      finalBody = Buffer.from(html, 'utf8').buffer as ArrayBuffer
+      const out = Buffer.from(html, 'utf8')
+      finalBody = out.buffer.slice(out.byteOffset, out.byteOffset + out.byteLength) as ArrayBuffer
     }
   }
 

@@ -6,9 +6,11 @@ import { sanitizeText } from "@/lib/static/htmlTextEdits";
 import { createAdminClient } from "@/lib/db/client";
 import {
   collectInstanceTexts,
+  collectHtmlTexts,
   fetchBuildableTemplates,
   formatCatalog,
   validateBuildOverrides,
+  validateHtmlBuildOverrides,
 } from "@/lib/ai/build";
 
 export async function POST(request: NextRequest) {
@@ -220,7 +222,7 @@ async function runBuildPipeline(
   if (catalog.length === 0) {
     return NextResponse.json({
       reply:
-        "ยังไม่มี template ที่ build ได้ (ต้องเป็น Puck template ที่บันทึกแบบ v2 แล้ว) — ลองเข้า Studio แล้วบันทึก template อีกครั้ง",
+        "ยังไม่มี template ที่ build ได้ (ต้องเป็น Puck template ที่บันทึกแบบ v2 หรือ HTML template ที่แยก content แล้ว) — ลองเข้า Studio บันทึก template หรือ import HTML template อีกครั้ง",
       suggestedTag: null,
       templateId: null,
       overrides: [],
@@ -261,12 +263,58 @@ async function runBuildPipeline(
   }
 
   // STAGE 2 — read the chosen template's structure + texts from the DB
-  // (component ids from puck_layout, current copy from puck_texts).
+  // (Puck: component ids from puck_layout, copy from puck_texts;
+  //  static: slot ids from html_layout, copy from html_texts).
   const { data: row } = await createAdminClient()
     .from("website_templates")
-    .select("puck_layout, puck_texts")
+    .select("puck_layout, puck_texts, html_layout, html_texts")
     .eq("id", chosen.id)
     .single();
+
+  if (chosen.renderMode === "static") {
+    const { slots, inventory } = collectHtmlTexts(row?.html_layout, row?.html_texts);
+
+    if (!row?.html_layout || inventory.trim() === "") {
+      return NextResponse.json({
+        reply: `เลือก "${chosen.name}" ไว้แล้ว แต่ยังไม่มีข้อความที่แก้ได้ใน database — ลอง import template ใหม่ (หรือ re-extract)`,
+        suggestedTag: null,
+        templateId: null,
+        overrides: [],
+        applied: [],
+      });
+    }
+
+    const buildSystem = renderPrompt(
+      "template_build",
+      { request: message, inventory },
+      settings.prompts,
+    );
+    const buildResult = await runAi({
+      context: "templates",
+      mode: "build-static",
+      path: userInfo.path,
+      system: buildSystem,
+      user: message,
+      history: cleanHistory,
+      user_id: userInfo.user_id,
+      username: userInfo.username,
+      ip: userInfo.ip,
+      userAgent: userInfo.userAgent,
+    });
+    const built = extractJsonObject<{ reply?: unknown; overrides?: unknown }>(buildResult.text);
+    const { overrides, applied } = validateHtmlBuildOverrides(built?.overrides, slots);
+    const buildReply = typeof built?.reply === "string" ? built.reply : "";
+
+    return NextResponse.json({
+      reply: buildReply || pickReply,
+      suggestedTag: null,
+      templateId: chosen.id,
+      templateName: chosen.name,
+      mode: "static",
+      overrides,
+      applied,
+    });
+  }
 
   const { instances, inventory } = collectInstanceTexts(row?.puck_layout, row?.puck_texts);
 
@@ -306,6 +354,7 @@ async function runBuildPipeline(
     suggestedTag: null,
     templateId: chosen.id,
     templateName: chosen.name,
+    mode: "puck",
     overrides,
     applied,
   });

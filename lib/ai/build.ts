@@ -18,18 +18,19 @@ export interface BuildableTemplate {
   category: string | null
   tags: string[] | null
   description: string | null
+  renderMode: 'puck' | 'static'
 }
 
-// Only Puck templates with v2 storage can be built: their editable text is
-// in puck_texts and the structure in puck_layout (both server-readable).
+// Both engine families are buildable: Puck templates with v2 storage
+// (puck_layout + puck_texts) and static HTML templates with separated
+// content (html_layout + html_texts) — their editable copy lives in the DB.
 export async function fetchBuildableTemplates(): Promise<BuildableTemplate[]> {
   const supabase = createAdminClient()
   const { data, error } = await supabase
     .from('website_templates')
-    .select('id, name, category, tags, description')
+    .select('id, name, category, tags, description, render_mode')
     .eq('is_active', true)
-    .eq('render_mode', 'puck')
-    .not('puck_layout', 'is', null)
+    .or('render_mode.eq.puck,puck_layout.not.is.null|render_mode.eq.static,html_layout.not.is.null')
     .order('updated_at', { ascending: false })
     .limit(40)
 
@@ -37,7 +38,17 @@ export async function fetchBuildableTemplates(): Promise<BuildableTemplate[]> {
     console.error('Failed to fetch buildable templates:', error)
     return []
   }
-  return (data ?? []) as BuildableTemplate[]
+  return ((data ?? []) as unknown[]).map((row) => {
+    const r = row as Record<string, unknown>
+    return {
+      id: String(r.id ?? ''),
+      name: String(r.name ?? ''),
+      category: r.category == null ? null : String(r.category),
+      tags: Array.isArray(r.tags) ? (r.tags as string[]) : null,
+      description: r.description == null ? null : String(r.description),
+      renderMode: r.render_mode === 'static' ? 'static' : 'puck',
+    }
+  })
 }
 
 export function formatCatalog(templates: BuildableTemplate[]): string {
@@ -45,7 +56,8 @@ export function formatCatalog(templates: BuildableTemplate[]): string {
     .map((t) => {
       const tags = Array.isArray(t.tags) && t.tags.length > 0 ? `tags: ${t.tags.join(', ')}` : 'tags: none'
       const desc = t.description ? ` — ${t.description}` : ''
-      return `[id: ${t.id}] ${t.name} (category: ${t.category || 'General'} | ${tags})${desc}`
+      const engine = t.renderMode === 'static' ? ' [static HTML]' : ''
+      return `[id: ${t.id}] ${t.name}${engine} (category: ${t.category || 'General'} | ${tags})${desc}`
     })
     .join('\n')
 }
@@ -136,6 +148,83 @@ export function validateBuildOverrides(
     if (!instance || !(field in instance.fields)) continue
     overrides.push({ componentId, field, value })
     applied.push(`${instance.pageId}/${componentId}.${field}`)
+  }
+
+  return { overrides, applied }
+}
+
+// ====================================================================
+// Static HTML engine: inventory from html_layout/html_texts
+// ====================================================================
+
+export interface HtmlSlotEntry {
+  file: string
+  slotId: string
+  tag: string
+  text: string
+}
+
+// Reads the stored structure/copy split of a static template and lists every
+// editable slot (id + tag + current copy) — the direct analog of
+// collectInstanceTexts for the Puck engine.
+export function collectHtmlTexts(
+  layout: unknown,
+  texts: unknown,
+): { slots: Map<string, HtmlSlotEntry>; inventory: string } {
+  const slots = new Map<string, HtmlSlotEntry>()
+  const lines: string[] = []
+
+  const layoutObj = (layout ?? {}) as { files?: Record<string, { title?: string; slots?: { id: string; tag: string; path?: string }[] }> }
+  const textsObj = (texts ?? {}) as { files?: Record<string, Record<string, unknown>> }
+
+  for (const [file, fileLayout] of Object.entries(layoutObj.files ?? {})) {
+    const fileTexts = textsObj.files?.[file] ?? {}
+    for (const slot of fileLayout?.slots ?? []) {
+      const value = fileTexts[slot.id]
+      let text = ''
+      if (value && typeof value === 'object') {
+        const v = value as Record<string, unknown>
+        if (typeof v.alt === 'string') text = v.alt
+        else if (typeof v.text === 'string') text = v.text
+      }
+      if (!text.trim()) continue
+      const key = `${file}/${slot.id}`
+      slots.set(key, { file, slotId: slot.id, tag: slot.tag || 'text', text })
+      lines.push(`${key} [${slot.tag || 'text'}]: ${text}`)
+    }
+  }
+
+  return { slots, inventory: lines.join('\n') }
+}
+
+export interface HtmlBuildOverride {
+  file: string
+  id: string
+  value: string
+}
+
+// Filters the AI's slot overrides down to real files + real slot ids of the
+// chosen static template. Values are sanitized exactly like the Puck path.
+export function validateHtmlBuildOverrides(
+  rawOverrides: unknown,
+  slots: Map<string, HtmlSlotEntry>,
+): { overrides: HtmlBuildOverride[]; applied: string[] } {
+  const overrides: HtmlBuildOverride[] = []
+  const applied: string[] = []
+
+  if (!Array.isArray(rawOverrides)) return { overrides, applied }
+
+  for (const raw of rawOverrides) {
+    const ov = raw as Record<string, unknown> | null
+    if (!ov || typeof ov !== 'object') continue
+    const file = typeof ov.file === 'string' ? ov.file.trim() : ''
+    const id = typeof ov.id === 'string' ? ov.id.trim() : ''
+    const value = sanitizeText(ov.value)
+    if (!file || !id || !value) continue
+    const key = `${file}/${id}`
+    if (!slots.has(key)) continue
+    overrides.push({ file, id, value })
+    applied.push(key)
   }
 
   return { overrides, applied }

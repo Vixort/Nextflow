@@ -125,6 +125,8 @@ CREATE TABLE IF NOT EXISTS website_templates (
   puck_data         JSON          NOT NULL,
   puck_layout       JSON          NULL,
   puck_texts        JSON          NULL,
+  html_layout       JSON          NULL,
+  html_texts        JSON          NULL,
   global_css        LONGTEXT      NULL,
   render_mode       VARCHAR(16)   NOT NULL DEFAULT 'puck',
   storage_path      VARCHAR(1024) NULL,
@@ -144,6 +146,11 @@ CREATE TABLE IF NOT EXISTS website_templates (
   CONSTRAINT fk_website_templates_updated_by FOREIGN KEY (updated_by) REFERENCES users (id) ON DELETE SET NULL,
   CONSTRAINT chk_website_templates_mode CHECK (render_mode IN ('puck', 'static'))
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+-- Columns added after the first release (idempotent for existing installs).
+ALTER TABLE website_templates
+  ADD COLUMN IF NOT EXISTS html_layout JSON NULL AFTER puck_texts,
+  ADD COLUMN IF NOT EXISTS html_texts JSON NULL AFTER html_layout;
 
 -- ------------------------------------------------------------
 -- 6b. Template tags (selectable presets + admin-added custom tags)

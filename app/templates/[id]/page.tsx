@@ -136,6 +136,38 @@ export default function TemplatePreviewPage({
 
   const isStatic = template?.render_mode === "static";
 
+  // AI ADAPT COPY (static templates): map /build overrides to string edits
+  // for the preview iframe (?aiEdits=), matching each override id to the
+  // rawText the server stored/validated at import time.
+  useEffect(() => {
+    if (!template || !isStatic || !aiOverrides || aiOverrides.length === 0) return;
+    let cancelled = false;
+    fetch(`/api/templates/${template.id}/content?path=index.html`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((json) => {
+        if (cancelled || !json?.data?.inventory) return;
+        const byId = new Map<string, string>();
+        for (const it of json.data.inventory) {
+          if (it && typeof it.id === "string" && typeof it.rawText === "string") {
+            byId.set(it.id, it.rawText);
+          }
+        }
+        const next: HtmlTextEdit[] = [];
+        for (const ov of aiOverrides) {
+          const o = ov as { file?: unknown; id?: unknown; value?: unknown };
+          if (o.file !== undefined && o.file !== "index.html") continue;
+          if (typeof o.id !== "string" || typeof o.value !== "string") continue;
+          const rawText = byId.get(o.id);
+          if (!rawText) continue;
+          next.push({ oldText: rawText, value: o.value });
+        }
+        if (next.length > 0) setEdits(next);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [template, isStatic, aiOverrides]);
+
   const staticSrc = useMemo(() => {
     if (!template || !isStatic || !template.storage_path) return null;
     const q = new URLSearchParams();
@@ -384,15 +416,25 @@ export default function TemplatePreviewPage({
     return () => els.forEach(removeEditable);
   }, [editText, isStatic, template]);
 
-  // AI copy editor — fetch the raw HTML once (cached), build the text inventory.
+  // AI copy editor — load the separated copy from the DB-backed content
+  // endpoint (fallback: re-extract from the raw HTML on the client).
   const openAiPanel = useCallback(async () => {
     setAiOpen((v) => !v);
-    if (aiOpen || htmlRef.current || !template || !isStatic) return;
+    if (aiOpen || inventory || !template || !isStatic) return;
     setAiFetching(true);
     try {
-      const res = await fetch(`/api/templates/${template.id}/static/index.html`);
-      if (!res.ok) throw new Error("failed to fetch template");
-      const html = await res.text();
+      const res = await fetch(`/api/templates/${template.id}/content?path=index.html`);
+      if (res.ok) {
+        const json = await res.json();
+        const items = json?.data?.inventory;
+        if (Array.isArray(items) && items.length > 0) {
+          setInventory(items);
+          return;
+        }
+      }
+      const htmlRes = await fetch(`/api/templates/${template.id}/static/index.html`);
+      if (!htmlRes.ok) throw new Error("failed to fetch template");
+      const html = await htmlRes.text();
       htmlRef.current = html;
       setInventory(extractHtmlTextInventory(html));
     } catch {
@@ -403,7 +445,7 @@ export default function TemplatePreviewPage({
     } finally {
       setAiFetching(false);
     }
-  }, [aiOpen, template, isStatic]);
+  }, [aiOpen, inventory, template, isStatic]);
 
   // Send the request to the static copy editor and apply text swaps live.
   const sendAiChat = useCallback(
@@ -746,7 +788,7 @@ export default function TemplatePreviewPage({
                     AI Adapted Copy
                   </span>
                   <span className="text-[11px] font-medium text-cyan-700 truncate">
-                    {aiApplied.length} text field(s) rewritten on this Puck template
+                    {aiApplied.length} text field(s) rewritten on this template
                   </span>
                 </div>
                 <button

@@ -11,6 +11,8 @@ import {
   unpackTemplateZip,
   TemplateImportError,
 } from '@/lib/templateZip'
+import { extractHtmlContent } from '@/lib/static/htmlContent'
+import type { HtmlLayout, HtmlTexts } from '@/lib/static/htmlContent'
 
 function isEditor(role: string): boolean {
   return role === 'owner' || role === 'admin'
@@ -144,6 +146,30 @@ export async function POST(request: NextRequest) {
     )
   }
 
+  // Split each HTML file into structure (html_layout) + copy (html_texts),
+  // mirroring puck_layout/puck_texts for raw HTML sites. Per-file extraction
+  // is tolerant: a file that fails to parse is skipped, not fatal.
+  const htmlFiles = unpacked.files.filter((f) => /\.(html?|htm)$/i.test(f.relPath))
+  const htmlLayouts: HtmlLayout['files'] = {}
+  const htmlTextFiles: HtmlTexts['files'] = {}
+  for (const f of htmlFiles) {
+    try {
+      const key = f.relPath === unpacked.entryHtml ? 'index.html' : f.relPath
+      const { layout, texts } = extractHtmlContent(
+        Buffer.from(f.content).toString('utf8'),
+      )
+      if (layout.slots.length > 0) {
+        htmlLayouts[key] = layout
+        htmlTextFiles[key] = texts
+      }
+    } catch (err) {
+      console.warn(`Skipped HTML content extraction for "${f.relPath}":`, err)
+    }
+  }
+  const hasHtmlContent = Object.keys(htmlLayouts).length > 0
+  const htmlLayout: HtmlLayout | null = hasHtmlContent ? { schema_version: 1, files: htmlLayouts } : null
+  const htmlTexts: HtmlTexts | null = hasHtmlContent ? { schema_version: 1, files: htmlTextFiles } : null
+
   // Create or update the template row.
   let created
   if (reimportId) {
@@ -155,6 +181,8 @@ export async function POST(request: NextRequest) {
         category,
         tags,
         thumbnail_url: thumbnailUrl,
+        html_layout: htmlLayout,
+        html_texts: htmlTexts,
         storage_path: folder,
         file_name: typeof file.name === 'string' ? file.name.slice(0, 255) : null,
         storage_size_bytes: totalBytes,
@@ -181,6 +209,8 @@ export async function POST(request: NextRequest) {
         puck_data: {},
         puck_layout: null,
         puck_texts: null,
+        html_layout: htmlLayout,
+        html_texts: htmlTexts,
         global_css: '',
         render_mode: 'static',
         storage_path: folder,
