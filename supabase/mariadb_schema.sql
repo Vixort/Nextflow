@@ -146,6 +146,20 @@ CREATE TABLE IF NOT EXISTS website_templates (
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------
+-- 6b. Template tags (selectable presets + admin-added custom tags)
+-- ------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS template_tags (
+  id          CHAR(36)     NOT NULL DEFAULT (UUID()),
+  name        VARCHAR(40)  NOT NULL,
+  group_name  VARCHAR(60)  NULL,
+  is_preset   TINYINT(1)   NOT NULL DEFAULT 0,
+  created_at  DATETIME(3)  NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (id),
+  UNIQUE KEY uq_template_tags_name (name),
+  KEY idx_template_tags_preset (is_preset)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+-- ------------------------------------------------------------
 -- 7. Inquiries (contact form submissions)
 -- ------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS inquiries (

@@ -22,10 +22,10 @@ import {
 import DynamicCustomSection, { CustomSectionData } from '@/components/DynamicCustomSection'
 import PuckTemplateStudio from '@/components/PuckTemplateStudio'
 import ServicesTab from '@/components/admin/ServicesTab'
+import TagPicker from '@/components/admin/TagPicker'
 import { Alert } from '@/components/ui/alert'
 import { WebsiteTemplate } from '@/types/supabase'
 import { LUMINA_WHITE_STUDIO_PROJECT } from '@/lib/puck/multiPageUtils'
-import { PRESET_TAG_GROUPS } from '@/lib/puck/templateTags'
 import { PROMPT_KEYS } from '@/lib/ai/types'
 import {
   SERVICE_TYPES,
@@ -587,7 +587,7 @@ function TemplatesTab({ onOpenStudio }: { onOpenStudio: (tpl: Partial<WebsiteTem
   const [newName, setNewName] = useState('')
   const [newCat, setNewCat] = useState('Landing Page')
   const [newDesc, setNewDesc] = useState('')
-  const [newTags, setNewTags] = useState('')
+  const [newTags, setNewTags] = useState<string[]>([])
   const [creating, setCreating] = useState(false)
 
   // Static HTML/CSS/JS ZIP import state
@@ -597,7 +597,7 @@ function TemplatesTab({ onOpenStudio }: { onOpenStudio: (tpl: Partial<WebsiteTem
   const [impName, setImpName] = useState('')
   const [impCat, setImpCat] = useState('Landing Page')
   const [impDesc, setImpDesc] = useState('')
-  const [impTags, setImpTags] = useState('')
+  const [impTags, setImpTags] = useState<string[]>([])
   const [impThumb, setImpThumb] = useState('')
   const [impFile, setImpFile] = useState<File | null>(null)
   const [impError, setImpError] = useState<string | null>(null)
@@ -611,13 +611,13 @@ function TemplatesTab({ onOpenStudio }: { onOpenStudio: (tpl: Partial<WebsiteTem
       setImpName(target.name)
       setImpCat(target.category || 'Landing Page')
       setImpDesc(target.description || '')
-      setImpTags((target.tags || []).join(', '))
+      setImpTags(target.tags || [])
       setImpThumb(target.thumbnail_url || '')
     } else {
       setImpName('')
       setImpCat('Landing Page')
       setImpDesc('')
-      setImpTags('')
+      setImpTags([])
       setImpThumb('')
     }
     setImpFile(null)
@@ -647,7 +647,7 @@ function TemplatesTab({ onOpenStudio }: { onOpenStudio: (tpl: Partial<WebsiteTem
       fd.append('name', impName.trim())
       fd.append('category', impCat)
       fd.append('description', impDesc.trim())
-      fd.append('tags', impTags)
+      fd.append('tags', impTags.join(','))
       if (impThumb.trim()) fd.append('thumbnail_url', impThumb.trim())
       if (importTarget !== 'new') fd.append('template_id', (importTarget as WebsiteTemplate).id)
       const res = await fetch('/api/admin/templates/import', { method: 'POST', body: fd })
@@ -700,7 +700,7 @@ function TemplatesTab({ onOpenStudio }: { onOpenStudio: (tpl: Partial<WebsiteTem
           name: newName,
           category: newCat,
           description: newDesc || 'Custom Puck Studio website template',
-          tags: newTags.split(',').map(t => t.trim()).filter(Boolean),
+          tags: newTags,
         }),
       })
 
@@ -709,7 +709,7 @@ function TemplatesTab({ onOpenStudio }: { onOpenStudio: (tpl: Partial<WebsiteTem
         setCreateModalOpen(false)
         setNewName('')
         setNewDesc('')
-        setNewTags('')
+        setNewTags([])
         // Open in Studio Mode
         onOpenStudio(data.data.template)
       } else {
@@ -992,49 +992,7 @@ function TemplatesTab({ onOpenStudio }: { onOpenStudio: (tpl: Partial<WebsiteTem
 
               <div>
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">Tags</label>
-                <input
-                  type="text"
-                  value={newTags}
-                  onChange={e => setNewTags(e.target.value)}
-                  placeholder="Comma-separated, e.g. SaaS, Dark, Minimal"
-                  className="w-full h-9 px-3.5 rounded-xl bg-[#161a29] border border-white/10 text-xs text-white focus:outline-none focus:border-cyan-400"
-                />
-                <p className="text-[10px] text-slate-500 mt-1.5 mb-2">Or tap preset tags to add:</p>
-                <div className="max-h-44 overflow-y-auto space-y-3 pr-1">
-                  {PRESET_TAG_GROUPS.map(({ group, tags: groupTags }) => {
-                    const selectedTags = newTags.split(',').map(t => t.trim()).filter(Boolean)
-                    return (
-                      <div key={group}>
-                        <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">{group}</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {groupTags.map(tag => {
-                            const active = selectedTags.includes(tag)
-                            return (
-                              <button
-                                key={tag}
-                                type="button"
-                                onClick={() => {
-                                  setNewTags(prev => {
-                                    const cur = prev.split(',').map(t => t.trim()).filter(Boolean)
-                                    const next = active ? cur.filter(t => t !== tag) : Array.from(new Set([...cur, tag])).slice(0, 20)
-                                    return next.join(', ')
-                                  })
-                                }}
-                                className={`px-2.5 py-1 rounded-full text-[11px] font-bold border transition-colors cursor-pointer ${
-                                  active
-                                    ? 'bg-cyan-500/20 border-cyan-500/40 text-cyan-200'
-                                    : 'bg-white/[0.03] border-white/10 text-slate-400 hover:text-white hover:border-white/25'
-                                }`}
-                              >
-                                #{tag}
-                              </button>
-                            )
-                          })}
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
+                <TagPicker value={newTags} onChange={setNewTags} placeholder="Add a new tag, e.g. new tone..." />
               </div>
             </div>
 
@@ -1129,13 +1087,7 @@ function TemplatesTab({ onOpenStudio }: { onOpenStudio: (tpl: Partial<WebsiteTem
 
               <div>
                 <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">Tags</label>
-                <input
-                  type="text"
-                  value={impTags}
-                  onChange={e => setImpTags(e.target.value)}
-                  placeholder="Comma-separated, e.g. SaaS, Dark, Minimal"
-                  className="w-full h-9 px-3.5 rounded-xl bg-[#161a29] border border-white/10 text-xs text-white focus:outline-none focus:border-emerald-400"
-                />
+                <TagPicker accent="emerald" value={impTags} onChange={setImpTags} />
               </div>
 
               <div>
