@@ -3,7 +3,8 @@ import { randomUUID } from 'node:crypto'
 import path from 'node:path'
 import { getAuthSession } from '@/lib/auth/jwt'
 import { logActivity } from '@/lib/activity'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
+import { getStorage } from '@/lib/storage'
 import {
   TEMPLATE_ASSETS_BUCKET,
   assertZipSize,
@@ -115,7 +116,7 @@ export async function POST(request: NextRequest) {
   if (reimportId) {
     // Clear obsolete assets before overwriting.
     try {
-      await supabase.storage.from(TEMPLATE_ASSETS_BUCKET).remove([`${folder}/`])
+      await getStorage().remove([`${folder}/`])
     } catch { /* fresh folder */ }
   }
 
@@ -123,17 +124,15 @@ export async function POST(request: NextRequest) {
     for (const f of unpacked.files) {
       const storagePath =
         f.relPath === unpacked.entryHtml ? entryFilePath : `${folder}/${f.relPath}`
-      const { error } = await supabase.storage
-        .from(TEMPLATE_ASSETS_BUCKET)
-        .upload(storagePath, f.content, { contentType: contentTypeFor(f.relPath), upsert: true })
-      if (error) {
-        throw new Error(`Storage upload failed for ${f.relPath}: ${error.message}`)
-      }
+      await getStorage().upload(storagePath, f.content, {
+        contentType: contentTypeFor(f.relPath),
+        upsert: true,
+      })
     }
   } catch (err) {
     // Cleanup partial uploads.
     try {
-      await supabase.storage.from(TEMPLATE_ASSETS_BUCKET).remove([`${folder}/`])
+      await getStorage().remove([`${folder}/`])
     } catch { /* ignore */ }
     if (!reimportId) {
       await supabase.from('website_templates').delete().eq('id', templateId)

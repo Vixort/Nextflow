@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAuthSession } from '@/lib/auth/jwt'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import { comparePassword, hashPassword } from '@/lib/auth/password'
 import { logActivity } from '@/lib/activity'
 

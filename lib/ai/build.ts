@@ -1,4 +1,4 @@
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import { sanitizeText } from '@/lib/static/htmlTextEdits'
 import type { LayoutProject, PuckTextsByPage } from '@/lib/puck/textMerge'
 

@@ -1,6 +1,6 @@
 import { SignJWT, jwtVerify } from 'jose'
 import { NextRequest } from 'next/server'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import type { UserRole } from '@/types/supabase'
 
 export interface JWTPayload {

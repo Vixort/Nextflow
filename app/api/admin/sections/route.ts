@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAuthSession } from '@/lib/auth/jwt'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import { logActivity } from '@/lib/activity'
 
 export const DEFAULT_HOME_SECTIONS = [

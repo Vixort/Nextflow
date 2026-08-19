@@ -19,7 +19,7 @@ import {
 import { Alert } from '@/components/ui/alert'
 import { SERVICE_ICONS, SERVICE_ICON_NAMES, SERVICE_COLORS, SERVICE_ICON_COLORS, type ServiceIconName } from '@/lib/services/icons'
 import { SERVICE_TYPES } from '@/lib/validations/contact'
-import { slugify } from '@/lib/services/catalog'
+import { slugify } from '@/lib/utils/slugify'
 import type { Service } from '@/types/supabase'
 
 const EMPTY_FORM = {

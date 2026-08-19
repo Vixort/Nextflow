@@ -1,4 +1,4 @@
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 
 // ====================================================================
 // Reads the admin-editable settings from the system_settings KV rows.

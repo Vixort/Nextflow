@@ -4,7 +4,7 @@ import { getAuthSession } from '@/lib/auth/jwt'
 import { logActivity } from '@/lib/activity'
 import { assertTemplateProject, createEmptyTemplateProject } from '@/lib/puck/project'
 import { mergeStoredTemplate } from '@/lib/puck/textMerge'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import type { Json } from '@/types/supabase'
 
 const templateInputSchema = z.object({

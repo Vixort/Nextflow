@@ -4,7 +4,7 @@ import { safeAction, ActionResult } from '@/lib/utils/actionHandler'
 import { loginSchema, registerSchema, LoginInput, RegisterInput } from '@/lib/validations/auth'
 import { hashPassword, comparePassword } from '@/lib/auth/password'
 import { signToken } from '@/lib/auth/jwt'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 
 export async function loginAction(input: LoginInput): Promise<ActionResult<{ user: any; token: string }>> {
   return safeAction('loginAction', loginSchema, input, async (validatedInput) => {

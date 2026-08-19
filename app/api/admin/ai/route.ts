@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { getAuthSession } from '@/lib/auth/jwt'
 import { isAdminLevel } from '@/types/supabase'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import { getAiSettings, maskKey, resolveKeySecret, envFallbackKeys } from '@/lib/ai'
 
 export const dynamic = 'force-dynamic'
@@ -184,7 +184,7 @@ export async function GET(request: NextRequest) {
           byUser: [...byUser.values()].sort((a, b) => b.requests - a.requests),
           byProvider: [...byProvider.values()].sort((a, b) => b.requests - a.requests),
         },
-        analytics: buildWeekAnalytics(weekRes.data || []),
+        analytics: buildWeekAnalytics((weekRes.data || []) as unknown as Parameters<typeof buildWeekAnalytics>[0]),
         logs: logsRes.data || [],
       },
     })

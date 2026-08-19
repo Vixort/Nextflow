@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import { mergeStoredTemplate } from '@/lib/puck/textMerge'
 import type { NextRequest } from 'next/server'
 

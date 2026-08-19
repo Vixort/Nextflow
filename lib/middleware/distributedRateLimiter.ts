@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import { logger } from '@/lib/logger'
 import { getRuntimeSettings } from '@/lib/settings/runtime'
 

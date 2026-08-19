@@ -1,4 +1,4 @@
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 
 // ====================================================================
 // Services catalog — every service card and its full "Learn more"
@@ -112,12 +112,7 @@ export async function deleteService(id: string): Promise<void> {
 }
 
 /** URL-safe slug from a title (e.g. "Custom Web Platforms" → "custom-web-platforms"). */
-export function slugify(title: string): string {
-  return title
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '')
-}
+// Re-export the pure helper so existing callers of catalog.slugify keep
+// working; client components should import from '@/lib/utils/slugify'
+// directly to avoid pulling the DB layer (mysql2) into their bundle.
+export { slugify } from '@/lib/utils/slugify'

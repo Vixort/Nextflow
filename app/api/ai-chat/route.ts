@@ -3,7 +3,7 @@ import { getAuthSession } from "@/lib/auth/jwt";
 import { getAiSettings, renderPrompt, extractJsonObject } from "@/lib/ai";
 import { AiError } from "@/lib/ai/types";
 import { sanitizeText } from "@/lib/static/htmlTextEdits";
-import { createAdminClient } from "@/lib/supabase/admin";
+import { createAdminClient } from "@/lib/db/client";
 import {
   collectInstanceTexts,
   fetchBuildableTemplates,

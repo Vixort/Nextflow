@@ -1,4 +1,4 @@
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import { Database } from '@/types/supabase'
 import { logger } from '@/lib/logger'
 import { withRetry } from '@/lib/utils/retry'
@@ -12,7 +12,7 @@ export async function getProfileById(userId: string): Promise<Profile | null> {
   return withRetry(async () => {
     const supabase = createAdminClient()
     const { data, error } = await supabase
-      .from('profiles')
+      .from<Profile>('profiles')
       .select('*')
       .eq('id', userId)
       .single()
@@ -33,7 +33,7 @@ export async function updateProfile(userId: string, input: UpdateProfileInput): 
   return withRetry(async () => {
     const supabase = createAdminClient()
     const { data, error } = await supabase
-      .from('profiles')
+      .from<Profile>('profiles')
       .update({ ...input, updated_at: new Date().toISOString() })
       .eq('id', userId)
       .select()

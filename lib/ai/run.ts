@@ -1,4 +1,4 @@
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import { getAiSettings, pickKeyPool, envFallbackKeys } from './settings'
 import { generateText } from './providers'
 import { AiError, type AiProviderId, type PromptKey } from './types'

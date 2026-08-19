@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import { mergeStoredTemplate } from '@/lib/puck/textMerge'
 
 export async function GET(request: NextRequest, context: RouteContext<'/api/templates/[id]'>) {

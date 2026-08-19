@@ -4,7 +4,8 @@ import { getAuthSession } from '@/lib/auth/jwt'
 import { logActivity } from '@/lib/activity'
 import { assertTemplateProject } from '@/lib/puck/project'
 import { mergeStoredTemplate } from '@/lib/puck/textMerge'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
+import { getStorage } from '@/lib/storage'
 import type { Json } from '@/types/supabase'
 
 const templatePatchSchema = z.object({
@@ -104,10 +105,7 @@ export async function DELETE(request: NextRequest, context: RouteContext<'/api/a
 
   if (existing?.render_mode === 'static' && existing.storage_path) {
     try {
-      await supabase
-        .storage
-        .from('template-assets')
-        .remove([`${existing.storage_path}/`])
+      await getStorage().remove([`${existing.storage_path}/`])
     } catch (err) {
       console.warn('Failed to remove template storage assets on delete:', err)
     }

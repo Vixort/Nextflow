@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { buildContactSchema } from '@/lib/validations/contact'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import { logger } from '@/lib/logger'
 import { getEnv } from '@/lib/env'
 import { getContactSettings } from '@/lib/contact/settings'

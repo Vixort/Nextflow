@@ -1,4 +1,4 @@
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import { getEnv } from '@/lib/env'
 import type { AiKeyRow, AiProviderId, AiSettings } from './types'
 

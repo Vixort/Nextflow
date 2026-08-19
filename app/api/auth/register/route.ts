@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { registerSchema } from '@/lib/validations/auth'
 import { hashPassword } from '@/lib/auth/password'
 import { signToken } from '@/lib/auth/jwt'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import { logger } from '@/lib/logger'
 import { getGeneralSettings, getSecuritySettings } from '@/lib/auth/securitySettings'
 

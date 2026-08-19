@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import { getAuthSession } from '@/lib/auth/jwt'
 
 export interface LogParams {

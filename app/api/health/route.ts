@@ -1,7 +1,7 @@
-import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import { logger } from '@/lib/logger'
 import { getEnv } from '@/lib/env'
+import { createAdminClient } from '@/lib/db/client'
 
 export async function GET() {
   const env = getEnv()
@@ -19,15 +19,14 @@ export async function GET() {
   }
 
   try {
-    const supabase = await createClient()
-    const { data, error } = await supabase.auth.getSession()
-
+    // Simple connectivity probe against the MariaDB backend.
+    const { data, error } = await createAdminClient().from('users').select('id').limit(1)
     if (error) {
-      logger.warn('Health check: Supabase connection error', { error: error.message })
+      logger.warn('Health check: database connection error', { error: error.message })
       return NextResponse.json(
         {
           status: 'degraded',
-          reason: 'Database session check warning',
+          reason: 'Database check warning',
           details: error.message,
           timestamp: new Date().toISOString(),
         },
@@ -39,15 +38,16 @@ export async function GET() {
       status: 'healthy',
       database: 'connected',
       environment: env.NODE_ENV,
+      rowsProbed: Array.isArray(data) ? data.length : 0,
       timestamp: new Date().toISOString(),
     })
-  } catch (err: any) {
-    logger.error('Health check endpoint error', err)
+  } catch (err: unknown) {
+    logger.error('Health check endpoint error', err instanceof Error ? err : String(err))
     return NextResponse.json(
       {
         status: 'unhealthy',
         reason: 'Internal server failure',
-        message: process.env.NODE_ENV === 'development' ? err.message : 'System service error',
+        message: process.env.NODE_ENV === 'development' ? (err instanceof Error ? err.message : String(err)) : 'System service error',
         timestamp: new Date().toISOString(),
       },
       { status: 500 }

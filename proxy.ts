@@ -6,7 +6,7 @@ import { verifyToken } from '@/lib/auth/jwt'
 import { isAdminLevel } from '@/types/supabase'
 
 // ====================================================================
-// Middleware — edge runtime.
+// Proxy (Next 16) — nodejs runtime (mysql2/DB-backed checks allowed).
 // 1. Maintenance mode (admin sessions bypass)
 // 2. Payload size limit (configurable via System Settings → Traffic)
 // 3. Distributed rate limiting for /api and /auth
@@ -74,7 +74,7 @@ async function isAdminRequest(request: NextRequest): Promise<boolean> {
   }
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   // 1. Maintenance mode — blocks every route for non-admin users.
   // Admin sessions bypass so the dashboard stays reachable during updates.
   const runtime = await getRuntimeSettings()

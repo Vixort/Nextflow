@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import path from 'node:path'
-import { createAdminClient } from '@/lib/supabase/admin'
-import { TEMPLATE_ASSETS_BUCKET } from '@/lib/templateZip'
+import { createAdminClient } from '@/lib/db/client'
+import { getStorage } from '@/lib/storage'
 import { applyHtmlTextEdits, sanitizeText, type HtmlTextEdit } from '@/lib/static/htmlTextEdits'
 
 type StaticRouteCtx = {
@@ -64,18 +64,17 @@ export async function GET(request: NextRequest, context: StaticRouteCtx) {
       ? `${template.storage_path}/index.html`
       : `${template.storage_path}/${fileName}`
 
-  const { data, error } = await supabase.storage
-    .from(TEMPLATE_ASSETS_BUCKET)
-    .download(storagePath)
-
-  if (error || !data) {
+  let fileBody: Uint8Array
+  try {
+    fileBody = await getStorage().download(storagePath)
+  } catch {
     return new NextResponse('Not found', { status: 404 })
   }
 
   const ext = path.extname(fileName).toLowerCase()
   const contentType = CONTENT_TYPES[ext] || 'application/octet-stream'
 
-  const body = Buffer.from(await data.arrayBuffer())
+  const body = Buffer.from(fileBody)
 
   // Inject visitor theme overrides (colors only) for the HTML entry.
   const isHtml = /\.html?$/i.test(fileName)

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { createAdminClient } from '@/lib/supabase/admin'
+import { createAdminClient } from '@/lib/db/client'
 import { getContactSettings } from '@/lib/contact/settings'
 import { isValidSessionKey, sanitizeEvents, type SessionEvent } from '@/lib/contact/session'
 

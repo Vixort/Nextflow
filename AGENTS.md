@@ -16,17 +16,17 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Auth is custom — NOT Supabase Auth
 - **Do not use `supabase.auth`.** Auth is custom: `bcryptjs` password hashing + `jose` JWT signed HS256, stored in an httpOnly `token` cookie (see `app/api/auth/login/route.ts`, `lib/auth/password.ts`, `lib/auth/jwt.ts`).
 - Server routes authenticate via `getAuthSession(request)` (`lib/auth/jwt.ts:33`), which accepts a `Bearer` header or the `token` cookie.
-- `SUPABASE_SERVICE_ROLE_KEY` is only for server-side clients; never expose it client-side or in `NEXT_PUBLIC_*`.
-- Supabase is used as a plain Postgres DB through `lib/supabase/admin.ts` (`createAdminClient`) and `lib/supabase/server.ts` (`createServerClient`). Env is validated by `lib/env.ts`.
 
-## Environment
-- `.env*` is gitignored; copy `.env.example` → `.env.local`. Required: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `JWT_SECRET`. `lib/auth/jwt.ts` falls back to a hardcoded dev secret if `JWT_SECRET` is absent — set it for anything non-local.
-- Schema is applied manually (no Supabase CLI config): `supabase/schema.sql` and `supabase/migrations/full_nextflow_setup.sql`. `scripts/seed-admin.js` creates `admin@nextflow.com` / `admin123` and errors with `42P01` if the schema hasn't been run.
+## Database is local MariaDB (this branch) — NOT Supabase
+- The whole stack runs on **MariaDB** (see `supabase/mariadb_schema.sql`, applied via `scripts/init-mariadb.sh`; seed = `scripts/seed-admin.mjs`). No `@supabase/*` packages are installed.
+- Data access goes through `lib/db/client.ts` — a supabase-js-compatible query builder over `mysql2` (`createAdminClient()` from `@/lib/db/client`). JSON columns are auto stringified on write and parsed on read; datetimes are stored as UTC-naive `YYYY-MM-DD HH:MM:SS.SSS`.
+- Env is validated by `lib/env.ts`; required: `JWT_SECRET` (fallback hardcoded dev secret if absent), `DB_HOST/DB_PORT/DB_USER/DB_PASSWORD/DB_NAME` (local defaults in `scripts/init-mariadb.sh`).
+- Static template assets use the local storage driver `lib/storage/` (`./storage/`, gitignored).
+- Next 16: network boundary is `proxy.ts` (NOT `middleware.ts`), Node.js runtime — DB-backed checks run there.
 
 ## Conventions & gotchas
-- `middleware.ts` enforces a **1MB payload limit** on POST/PUT/PATCH `/api` routes and **distributed rate limiting (60 req/min)** on `/api` and `/auth`.
+- `proxy.ts` (Next 16, Node.js runtime — replaces the deprecated `middleware.ts`) enforces a **1MB payload limit** on POST/PUT/PATCH `/api` routes and **distributed rate limiting (60 req/min)** on `/api` and `/auth`.
 - Server actions use the `safeAction` wrapper + zod schema (`lib/utils/actionHandler.ts`, schemas in `lib/validations/`). API routes validate with zod directly.
 - `logger` (`lib/logger.ts`) redacts sensitive keys — don't log tokens/passwords yourself.
 - Some user-facing error strings are in Thai; keep that when editing existing messages.
-- Load the `supabase` / `supabase-postgres-best-practices` skills (`.agents/skills/`) before changing anything DB-related.
 
