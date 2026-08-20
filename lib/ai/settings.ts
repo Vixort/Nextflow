@@ -2,7 +2,7 @@ import { createAdminClient } from '@/lib/db/client'
 import { getEnv } from '@/lib/env'
 import type { AiKeyRow, AiProviderId, AiSettings } from './types'
 
-// Defaults mirror supabase/schema.sql seed for the 'ai' system_settings row.
+// Defaults mirror the 'ai' system_settings seed in supabase/mariadb_schema.sql.
 const DEFAULT_SETTINGS: AiSettings = {
   enabled: true,
   contact_enabled: true,

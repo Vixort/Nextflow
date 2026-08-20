@@ -1,7 +1,8 @@
 -- ============================================================
 -- NEXTFLOW MARIA DB SCHEMA & SEED SCRIPT (MariaDB 12.x)
--- Translation of supabase/schema.sql + migrations from
--- Postgres/Supabase to MariaDB. Idempotent — safe to re-run.
+-- Idempotent — safe to re-run. The single source of truth for the
+-- database schema (translated from the original Supabase/Postgres
+-- schema, which was removed).
 --
 -- Notes vs the Postgres original:
 --   * UUIDs: CHAR(36) with DEFAULT (UUID())
