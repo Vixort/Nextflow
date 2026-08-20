@@ -42,3 +42,4 @@ next-env.d.ts
 
 # Local storage assets (lib/storage local driver)
 /storage/
+out/
